@@ -11,34 +11,32 @@ import {
   TouchableHighlight,
 } from 'react-native';
 
+import { AppConsumer } from './Context';
+import { Actions } from 'react-native-router-flux';
+
 
 export default class ProfileScreen extends Component {
 
-  constructor() {
-    super();
-
-    // Set initial state here
-    this.state = {
-      user: 'dfd'
-    };
-
-  }
-
-  componentDidMount(){
-    alert(this.props.name)
+  constructor(props) {
+    super(props);
   }
 
   render() {
     return (
-      <View style={styles.outer} >
-        <View style={styles.inner} >
-
-          <Text style={styles.titleText}>
-            PROFILE
-          </Text>
-
-        </View>
-      </View>
+      <AppConsumer>
+        {({ user }) => (
+          <View style={styles.outer} >
+            <View style={styles.inner} >
+              <Text
+                style={styles.titleText}
+                onPress={() => Actions.dashboard()}
+              >
+                PROFILE: {user}
+              </Text>
+            </View>
+          </View>
+        )}
+      </AppConsumer>
     );
   }
 

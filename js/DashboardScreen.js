@@ -12,11 +12,12 @@ import {
   Button,
 } from 'react-native';
 
+import { AppConsumer } from './Context';
 
 export default class Dashboard extends Component {
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
       latitude: 37.78825,
@@ -28,15 +29,17 @@ export default class Dashboard extends Component {
 
   }
 
-
   render() {
     return (
-        <View>
-          <Text style={styles.titleText}>
-            DASHBOARD
-          </Text>
-
-        </View>
+      <AppConsumer>
+        {({ user }) => (
+          <View>
+            <Text style={styles.titleText}>
+              DASHBOARD: {user}
+            </Text>
+          </View>
+        )}
+      </AppConsumer>
     );
   }
 

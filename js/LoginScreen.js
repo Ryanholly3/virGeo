@@ -12,7 +12,7 @@ import {
   Button
 } from 'react-native';
 
-import { createStackNavigator, createAppContainer } from 'react-navigation';
+import { AppConsumer } from './Context';
 
 export default class LoginScreen extends Component {
 
@@ -28,31 +28,17 @@ export default class LoginScreen extends Component {
     };
   }
 
-
-
-  signInForm =()=>{
-    this.setState({
-      logIn: false
-    })
-  }
-
-  logInForm =()=>{
-    this.setState({
-      logIn: true
-    })
-  }
-
-  logIn = () =>{
-    this.props.navigation.navigate('Profile')
-  }
-
   render() {
     return (
-      <View style={styles.outer} >
-        <Button title="Log in" onPress={this.logInForm} />
-        <Button title="Sign in" onPress={this.signInForm} />
-        <Button title="GO" onPress={this.logIn} />
-      </View>
+      <AppConsumer>
+        {({ user }) => (
+          <View style={styles.outer} >
+            <Button title="Log in" onPress={this.logInForm} />
+            <Button title="Sign in" onPress={this.signInForm} />
+            <Button title="GO" onPress={this.logIn} />
+          </View>
+        )}
+      </AppConsumer>
     );
   }
 }
