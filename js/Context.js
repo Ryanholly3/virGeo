@@ -7,9 +7,11 @@ export class AppProvider extends Component {
     super(props);
 
     this.state = {
-      user: 'ryan'
+      user: 'ryan',
+      loggedIn: false
     };
   }
+
 
   render() {
     const { children } = this.props;
@@ -17,7 +19,8 @@ export class AppProvider extends Component {
     return (
       <AppContext.Provider
         value={{
-          user: this.state.user
+          user: this.state.user,
+          loggedIn: this.state.loggedIn
         }}
       >
         {children}

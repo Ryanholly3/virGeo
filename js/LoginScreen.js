@@ -16,10 +16,6 @@ import { AppConsumer } from './Context';
 
 export default class LoginScreen extends Component {
 
-  static navigationOptions = {
-    header: 'none'
-  }
-
   constructor() {
     super();
     // Set initial state here

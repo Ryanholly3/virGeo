@@ -39,7 +39,6 @@ export default class ProfileScreen extends Component {
       </AppConsumer>
     );
   }
-
 }
 
 var styles = StyleSheet.create({
