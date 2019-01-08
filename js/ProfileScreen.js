@@ -19,9 +19,13 @@ export default class ProfileScreen extends Component {
 
     // Set initial state here
     this.state = {
-      user: 'ryan'
+      user: 'dfd'
     };
 
+  }
+
+  componentDidMount(){
+    alert(this.props.name)
   }
 
   render() {

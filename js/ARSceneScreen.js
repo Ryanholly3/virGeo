@@ -52,14 +52,7 @@ export default class ARSceneScreen extends Component {
 
     return (
       <ViroARScene onTrackingUpdated={this._onInitialized} >
-        <ViroAmbientLight color="#FFFFFF" />
-        <Viro3DObject source={require('./res/doctor_mario/scene.gltf')}
-          type="GLTF"
-          position={[this.state.objX, 0, this.state.objZ]}
-          rotation={[0,0,0]}
-          scale={[0.2, 0.2, 0.2]}
-          onClick={this._onClick}
-       />
+
       </ViroARScene>
     );
   }
@@ -112,7 +105,7 @@ export default class ARSceneScreen extends Component {
 
   _onClick = () => {
     var answer = this.bearingPhoneToObj(39.7575767, -105.0069728, 39.757611, -105.006963)
-    alert(answer)
+    // alert(answer)
     // this.setState({
     //   pos: Math.random()*(-5)
     // })
@@ -142,7 +135,7 @@ export default class ARSceneScreen extends Component {
 
     let display = ` ${phoneLat} ${phoneLong} distBetweenPhoneObj: ${distBetweenPhoneObj}, headingPhoneToObj:
     ${headingPhoneToObj}, objX: ${objX}, objZ: ${objZ}`
-    alert(display)
+    // alert(display)
 
     this.setState({
       objX: objX,
@@ -155,11 +148,6 @@ export default class ARSceneScreen extends Component {
 
 }
 
-ViroMaterials.createMaterials({
-  grid: {
-    diffuseTexture: require('./res/PictureOfMe.jpg'),
-  },
-});
 
 ViroMaterials.createMaterials({
   blueColor: {

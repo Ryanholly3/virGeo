@@ -12,39 +12,49 @@ import {
   Button
 } from 'react-native';
 
+import { createStackNavigator, createAppContainer } from 'react-navigation';
 
 export default class LoginScreen extends Component {
 
+  static navigationOptions = {
+    header: 'none'
+  }
+
   constructor() {
     super();
-
     // Set initial state here
     this.state = {
-      logIn: true,
+      logIn: false,
     };
   }
 
-  signIn =()=>{
+
+
+  signInForm =()=>{
     this.setState({
       logIn: false
     })
   }
 
-  logIn =()=>{
+  logInForm =()=>{
     this.setState({
       logIn: true
     })
   }
 
+  logIn = () =>{
+    this.props.navigation.navigate('Profile')
+  }
+
   render() {
     return (
       <View style={styles.outer} >
-        <Button title="Log in" onPress={this.logIn} />
-        <Button title="Sign in" onPress={this.signIn} />
+        <Button title="Log in" onPress={this.logInForm} />
+        <Button title="Sign in" onPress={this.signInForm} />
+        <Button title="GO" onPress={this.logIn} />
       </View>
     );
   }
-
 }
 
 var styles = StyleSheet.create({
