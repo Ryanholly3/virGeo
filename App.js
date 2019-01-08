@@ -6,7 +6,7 @@ import {
   Text
 } from "react-native";
 
-import { AppProvider, AppConsumer } from './js/Context';
+import { AppProvider, AppConsumer, AppContext } from './js/Context';
 import { Router, Scene, Tabs } from 'react-native-router-flux';
 
 import ProfileScreen from './js/ProfileScreen';
@@ -17,15 +17,13 @@ import LoginScreen from './js/LoginScreen';
 export default class App extends Component{
   constructor(props){
     super(props)
-
   }
 
   render(){
-
     return (
       <AppProvider>
         <AppConsumer>
-          {({ loggedIn }) =>(
+          {({ user, loggedIn, users }) =>(
             <Router>
               <Scene
                 key="root"
