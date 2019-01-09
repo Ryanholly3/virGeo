@@ -9,10 +9,12 @@ import {
   StyleSheet,
   PixelRatio,
   TouchableHighlight,
+  ImageBackground
 } from 'react-native';
 
 import { AppConsumer } from './Context';
 import { Actions } from 'react-native-router-flux';
+const gridBackground = require('./res/grid_background.png')
 
 
 export default class ProfileScreen extends Component {
@@ -25,7 +27,10 @@ export default class ProfileScreen extends Component {
     return (
       <AppConsumer>
         {({ user }) => (
-          <View style={styles.outer} >
+          <ImageBackground
+            style={{height: '100%', width: '100%', resizeMode: 'stretch'}}
+            source={gridBackground}
+          >
             <View style={styles.inner} >
               <Text
                 style={styles.titleText}
@@ -34,7 +39,7 @@ export default class ProfileScreen extends Component {
                 PROFILE
               </Text>
             </View>
-          </View>
+          </ImageBackground>
         )}
       </AppConsumer>
     );

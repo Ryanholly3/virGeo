@@ -10,9 +10,12 @@ import {
   PixelRatio,
   TouchableHighlight,
   Button,
+  ImageBackground
 } from 'react-native';
 
 import { AppConsumer } from './Context';
+const gridBackground = require('./res/grid_background.png')
+
 
 export default class Dashboard extends Component {
 
@@ -33,11 +36,14 @@ export default class Dashboard extends Component {
     return (
       <AppConsumer>
         {({ user }) => (
-          <View>
+          <ImageBackground
+            style={{height: '100%', width: '100%', resizeMode: 'stretch'}}
+            source={gridBackground}
+          >
             <Text style={styles.titleText}>
               DASHBOARD
             </Text>
-          </View>
+          </ImageBackground>
         )}
       </AppConsumer>
     );

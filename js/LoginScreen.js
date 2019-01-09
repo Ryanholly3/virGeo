@@ -10,10 +10,12 @@ import {
   PixelRatio,
   TouchableHighlight,
   Button,
-  Picker
+  Picker,
+  ImageBackground
 } from 'react-native';
 
 import { AppConsumer } from './Context';
+const gridBackground = require('./res/grid_background.png')
 
 export default class LoginScreen extends Component {
 
@@ -28,7 +30,10 @@ export default class LoginScreen extends Component {
     return (
       <AppConsumer>
         {({ user, loggedIn, users, login }) => (
-          <View style={styles.outer} >
+          <ImageBackground
+            style={{height: '100%', width: '100%', resizeMode: 'stretch'}}
+            source={gridBackground}
+          >
             <Button title="Log in"  />
             <Button title="Sign in" />
             <Button title="GO Logan" onPress={() => login(2)} />
@@ -46,8 +51,7 @@ export default class LoginScreen extends Component {
               <Picker.Item label="Logan" value={2} />
               <Picker.Item label="Stephan" value={3} />
             </Picker>
-
-          </View>
+          </ImageBackground>
         )}
       </AppConsumer>
     );
