@@ -36,11 +36,8 @@ export default class Dashboard extends Component {
     return (
       <AppConsumer>
         {({ user }) => (
-          <ImageBackground
-            style={{height: '100%', width: '100%', resizeMode: 'stretch'}}
-            source={gridBackground}
-          >
-            <Text style={styles.titleText}>
+          <ImageBackground style={styles.gridBackground} source={gridBackground}>
+            <Text>
               DASHBOARD
             </Text>
           </ImageBackground>
@@ -53,6 +50,15 @@ export default class Dashboard extends Component {
 }
 
 var styles = StyleSheet.create({
+  gridBackground :{
+    height: '100%',
+    width: '100%',
+    resizeMode: 'stretch',
+    flex: 1,
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
   container: {
    flex: 1,
    justifyContent: 'center',

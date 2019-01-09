@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
+import { Actions } from 'react-native-router-flux';
+
+var baseUrl = 'https://13b22f8c.ngrok.io'
 
 export const AppContext = React.createContext();
-var baseUrl = 'https://13b22f8c.ngrok.io'
+
 
 
 export class AppProvider extends Component {
@@ -30,16 +33,23 @@ export class AppProvider extends Component {
   }
 
   login = (userId) =>{
-    var currentUser = []
-
-    for(let i=0; i < this.state.users.length; i++){
-      if(userId === this.state.users[i].id){
-        currentUser.push(this.state.users[i])
-      }
-    }
+    // var currentUser = []
+    //
+    // for(let i=0; i < this.state.users.length; i++){
+    //   if(userId === this.state.users[i].id){
+    //     currentUser.push(this.state.users[i])
+    //   }
+    // }
+    // this.setState({
+    //   user: currentUser
+    // })
     this.setState({
-      user: currentUser
+      loggedIn: true
     })
+    .then(()=>{
+      return Actions.profile()
+    })
+
   }
 
   render() {

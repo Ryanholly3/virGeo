@@ -27,15 +27,9 @@ export default class ProfileScreen extends Component {
     return (
       <AppConsumer>
         {({ user }) => (
-          <ImageBackground
-            style={{height: '100%', width: '100%', resizeMode: 'stretch'}}
-            source={gridBackground}
-          >
-            <View style={styles.inner} >
-              <Text
-                style={styles.titleText}
-                onPress={() => Actions.dashboard()}
-              >
+          <ImageBackground style={styles.gridBackground} source={gridBackground}>
+            <View>
+              <Text>
                 PROFILE
               </Text>
             </View>
@@ -47,9 +41,14 @@ export default class ProfileScreen extends Component {
 }
 
 var styles = StyleSheet.create({
-  viroContainer :{
-    flex : 1,
-    backgroundColor: "black",
+  gridBackground :{
+    height: '100%',
+    width: '100%',
+    resizeMode: 'stretch',
+    flex: 1,
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center'
   },
   outer : {
     flex : 1,

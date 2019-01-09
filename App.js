@@ -23,7 +23,7 @@ export default class App extends Component{
     return (
       <AppProvider>
         <AppConsumer>
-          {({ user, loggedIn, users }) =>(
+          {({ user, loggedIn, users, login }) =>(
             <Router>
               <Scene
                 key="root"
@@ -34,7 +34,7 @@ export default class App extends Component{
                   tabBarPosition="top"
                   headerMode="none"
                   key="tabbar"
-                  hideTabBar={!loggedIn}
+                  hideTabBar={loggedIn}
                 >
                   <Scene
                     key="login"

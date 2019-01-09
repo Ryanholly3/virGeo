@@ -15,6 +15,8 @@ import {
   TextInput
 } from 'react-native';
 
+import { Actions } from 'react-native-router-flux';
+
 import { AppConsumer } from './Context';
 const gridBackground = require('./res/grid_background.png')
 
@@ -23,7 +25,7 @@ export default class LoginScreen extends Component {
   constructor(props) {
     super(props);
     this.state={
-      selectedUser: 'Ryan',
+      selectedUser: 1,
       loginForm: true,
       userNameField: '',
       passwordField: '',
@@ -66,7 +68,7 @@ export default class LoginScreen extends Component {
               borderColor: 'black',
               borderWidth: 2,
             }}
-            placeholder={'Username'}
+            placeholder={' Username'}
           />
           <TextInput
             style={{
@@ -76,7 +78,7 @@ export default class LoginScreen extends Component {
               borderColor: 'black',
               borderWidth: 2,
             }}
-            placeholder={'Password'}
+            placeholder={' Password'}
           />
           <Picker
             selectedValue={this.state.selectedUser}
@@ -86,6 +88,7 @@ export default class LoginScreen extends Component {
             <Picker.Item label="Logan" value={2} />
             <Picker.Item label="Stephan" value={3} />
           </Picker>
+          <Button title="GO" onPress={() => Actions.profile()} />
         </View>
       )
     }
@@ -114,7 +117,7 @@ export default class LoginScreen extends Component {
               borderColor: 'black',
               borderWidth: 2,
             }}
-            placeholder={'Full Name'}
+            placeholder={' Full Name'}
           />
           <TextInput
             style={{
@@ -124,7 +127,7 @@ export default class LoginScreen extends Component {
               borderColor: 'black',
               borderWidth: 2,
             }}
-            placeholder={'Username'}
+            placeholder={' Username'}
           />
           <TextInput
             style={{
@@ -134,7 +137,7 @@ export default class LoginScreen extends Component {
               borderColor: 'black',
               borderWidth: 2,
             }}
-            placeholder={'Password'}
+            placeholder={' Password'}
           />
         </View>
       )
@@ -146,15 +149,7 @@ export default class LoginScreen extends Component {
       <AppConsumer>
         {({ user, loggedIn, users, login }) => (
           <ImageBackground
-            style={{
-              height: '100%',
-              width: '100%',
-              resizeMode: 'stretch',
-              flex: 1,
-              flexDirection: 'column',
-              alignItems: 'center',
-              justifyContent: 'center'
-            }}
+            style={styles.gridBackground}
             source={gridBackground}
           >
             <View
@@ -185,7 +180,6 @@ export default class LoginScreen extends Component {
             </View>
               { this.loginForm() }
               { this.signupForm() }
-            <Button title="GO" onPress={() => login(2)} />
             <Text>
               { users && users[0] && users[0].user_name }
             </Text>
@@ -200,9 +194,14 @@ export default class LoginScreen extends Component {
 }
 
 var styles = StyleSheet.create({
-  viroContainer :{
-    flex : 1,
-    backgroundColor: "black",
+  gridBackground :{
+    height: '100%',
+    width: '100%',
+    resizeMode: 'stretch',
+    flex: 1,
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center'
   },
   outer : {
     color: "black",
