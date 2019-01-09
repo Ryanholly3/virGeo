@@ -8,7 +8,7 @@ export class AppProvider extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      user: 'ryan',
+      user: [],
       userObjs: [],
       users: [],
       droppedObjs: [],
@@ -29,6 +29,19 @@ export class AppProvider extends Component {
     })
   }
 
+  login = (userId) =>{
+    var currentUser = []
+
+    for(let i=0; i < this.state.users.length; i++){
+      if(userId === this.state.users[i].id){
+        currentUser.push(this.state.users[i])
+      }
+    }
+    this.setState({
+      user: currentUser
+    })
+  }
+
   render() {
     const { children } = this.props;
 
@@ -37,7 +50,8 @@ export class AppProvider extends Component {
         value={{
           user: this.state.user,
           loggedIn: this.state.loggedIn,
-          users: this.state.users
+          users: this.state.users,
+          login: this.login,
         }}
       >
         {children}

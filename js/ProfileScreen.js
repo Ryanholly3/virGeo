@@ -31,7 +31,7 @@ export default class ProfileScreen extends Component {
                 style={styles.titleText}
                 onPress={() => Actions.dashboard()}
               >
-                PROFILE: {user}
+                PROFILE
               </Text>
             </View>
           </View>

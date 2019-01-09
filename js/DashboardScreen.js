@@ -35,7 +35,7 @@ export default class Dashboard extends Component {
         {({ user }) => (
           <View>
             <Text style={styles.titleText}>
-              DASHBOARD: {user}
+              DASHBOARD
             </Text>
           </View>
         )}
