@@ -12,6 +12,7 @@ import { Router, Scene, Tabs } from 'react-native-router-flux';
 import ProfileScreen from './js/ProfileScreen';
 import DashboardScreen from './js/DashboardScreen';
 import LoginScreen from './js/LoginScreen';
+import LogoutScreen from './js/LogoutScreen';
 
 
 export default class App extends Component{
@@ -30,18 +31,18 @@ export default class App extends Component{
                 headerMode="none"
               >
                 <Scene
+                  key="login"
+                  component={LoginScreen}
+                  headerMode="none"
+                  initial={true}
+                />
+                <Scene
                   tabs={true}
                   tabBarPosition="top"
                   headerMode="none"
                   key="tabbar"
-                  hideTabBar={loggedIn}
+                  hideTabBar={false}
                 >
-                  <Scene
-                    key="login"
-                    component={LoginScreen}
-                    headerMode="none"
-                    initial={true}
-                  />
                   <Scene
                     key="profile"
                     component={ProfileScreen}
@@ -50,6 +51,11 @@ export default class App extends Component{
                   <Scene
                     key="dashboard"
                     component={DashboardScreen}
+                    headerMode="none"
+                  />
+                  <Scene
+                    key="logout"
+                    component={LogoutScreen}
                     headerMode="none"
                   />
                 </Scene>
