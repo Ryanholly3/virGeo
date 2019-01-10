@@ -248,19 +248,6 @@ var styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: 'blue',
   },
-  outer : {
-    color: "black",
-    flex : 1,
-    flexDirection: 'row',
-    alignItems:'center',
-    backgroundColor: "white",
-  },
-  inner: {
-    flex : 1,
-    flexDirection: 'column',
-    alignItems:'center',
-    backgroundColor: "black",
-  },
   titleText: {
     paddingTop: 30,
     paddingBottom: 20,

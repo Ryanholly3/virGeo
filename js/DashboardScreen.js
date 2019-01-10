@@ -8,6 +8,7 @@ import {
   View,
   StyleSheet,
   PixelRatio,
+  TouchableOpacity,
   TouchableHighlight,
   Button,
   ImageBackground
@@ -19,6 +20,8 @@ import {
 
 import { AppConsumer } from './Context';
 const gridBackground = require('./res/grid_background.png')
+import { Actions } from 'react-native-router-flux';
+
 
 var sharedProps = {
   apiKey:"912A3CB8-1A43-42D2-BFDF-2659B6DA962E",
@@ -70,12 +73,20 @@ export default class DashboardScreen extends Component {
 
   getARNavigator() {
     return (
-      <ViroARSceneNavigator
-        apiKey="912A3CB8-1A43-42D2-BFDF-2659B6DA962E"
-        initialScene={{scene: ARSceneScreen}}
-        worldAlignment={"GravityAndHeading"}
-        viroAppProps={this.state.viroAppProps}
-      />
+      <View style={styles.flex}>
+        <ViroARSceneNavigator
+          apiKey="912A3CB8-1A43-42D2-BFDF-2659B6DA962E"
+          initialScene={{scene: ARSceneScreen}}
+          worldAlignment={"GravityAndHeading"}
+        />
+        <View style={{flex: 0, flexDirection: 'row',}}>
+          <TouchableOpacity style={styles.exitButtonFlex} onPress={() => this._exitAr()}>
+            <View style={styles.exitButton}>
+              <Text style={{color: 'white'}}>EXIT AR MODE</Text>
+            </View>
+          </TouchableOpacity>
+        </View>
+      </View>
     );
   }
 
@@ -103,38 +114,19 @@ var styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center'
   },
-  container: {
-   flex: 1,
-   justifyContent: 'center',
-   alignItems: 'center',
-   backgroundColor: '#fff'
-   },
-  viroContainer :{
-    flex : 1,
-    backgroundColor: "black",
+  flex : {
+    flex: 1,
   },
-  outer : {
-    flex : 1,
+  exitButtonFlex : {
+    flex: 1,
     flexDirection: 'row',
-    alignItems:'center',
-    backgroundColor: "black",
+    alignItems: 'center'
   },
-  inner: {
-    flex : 1,
-    flexDirection: 'column',
-    alignItems:'center',
-    backgroundColor: "black",
+  exitButton : {
+    height: 40,
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'red',
   },
-  titleText: {
-    paddingTop: 30,
-    paddingBottom: 20,
-    color:'#fff',
-    textAlign:'center',
-    fontSize : 25
-  },
-  map: {
-    width: 200,
-    height: 300,
-    flex: 1
-    }
 });

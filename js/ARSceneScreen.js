@@ -45,28 +45,13 @@ export default class ARSceneScreen extends Component {
       <AppConsumer>
         {({ user }) => (
           <ViroARScene>
-          <ViroCamera position={[0,0,0]} active={true} >
-            <ViroBox
-              position={[-.024, .045, -.1]}
-              width={.01}
-              length={.01}
-              height={.01}
-              materials={["exit"]}
-              onClick={this.exitAr}
-            />
-          </ViroCamera>
+
             {this.renderObj()}
           </ViroARScene>
         )}
       </AppConsumer>
     );
   }
-
-  exitAr(){
-    // alert('you pressed me')
-    this.props.sceneNavigator.viroAppProps._exitAr()
-  }
-
 
   renderObj = ()=> {
     if (this.state.box === true){
