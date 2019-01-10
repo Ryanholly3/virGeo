@@ -13,11 +13,20 @@ import {
   ImageBackground
 } from 'react-native';
 
+import {
+  ViroARSceneNavigator
+} from 'react-viro';
+
 import { AppConsumer } from './Context';
 const gridBackground = require('./res/grid_background.png')
 
+var sharedProps = {
+  apiKey:"912A3CB8-1A43-42D2-BFDF-2659B6DA962E",
+}
 
-export default class Dashboard extends Component {
+var ARSceneScreen = require('./ARSceneScreen');
+
+export default class DashboardScreen extends Component {
 
   constructor(props) {
     super(props);
@@ -27,12 +36,24 @@ export default class Dashboard extends Component {
       longitude: -122.4324,
       latitudeDelta: 0.0922,
       longitudeDelta: 0.0421,
-      user: ''
+      viroAppProps: {_exitAr: this._exitAr},
+      arOn: false,
+      user: '',
     };
+
+    this._exitAr = this._exitAr.bind(this);
 
   }
 
   render() {
+    if(!this.state.arOn){
+      return this.dashboardMode();
+    } else if (this.state.arOn === true){
+      return this.getARNavigator()
+    }
+  }
+
+  dashboardMode(){
     return (
       <AppConsumer>
         {({ user }) => (
@@ -40,12 +61,35 @@ export default class Dashboard extends Component {
             <Text>
               DASHBOARD
             </Text>
+            <Button title="Enter AR" onPress={() => this.enterAr() }/>
           </ImageBackground>
         )}
       </AppConsumer>
     );
   }
 
+  getARNavigator() {
+    return (
+      <ViroARSceneNavigator
+        apiKey="912A3CB8-1A43-42D2-BFDF-2659B6DA962E"
+        initialScene={{scene: ARSceneScreen}}
+        worldAlignment={"GravityAndHeading"}
+        viroAppProps={this.state.viroAppProps}
+      />
+    );
+  }
+
+  enterAr(){
+    this.setState({
+      arOn: true
+    })
+  }
+
+  _exitAr(){
+    this.setState({
+      arOn: false
+    })
+  }
 
 }
 

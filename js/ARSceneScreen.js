@@ -2,11 +2,18 @@
 
 import React, { Component } from 'react';
 
-import {StyleSheet} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 
 import {
   ViroARScene,
   ViroConstants,
+  ViroCamera,
+  ViroFlexView,
+  ViroButton,
   ViroParticleEmitter,
   ViroGeometry,
   ViroSphere,
@@ -21,51 +28,59 @@ import {
   ViroAnimations
 } from 'react-viro';
 
+import { AppConsumer } from './Context';
+
+
 export default class ARSceneScreen extends Component {
 
   constructor() {
     super();
-
-    // Set initial state here
-    this.state = {
-      arSceneOn: false,
-      phoneLat: 0,
-      phoneLong: 0,
-      phoneObjAngleRad: 0,
-      objLat: 39.68106649,
-      objLong: -104.95752880,
-      objX: 0,
-      objY: 0,
-      objZ: 0,
-    };
-
-    // bind 'this' to functions
-    this._onInitialized = this._onInitialized.bind(this);
+    this.state={
+      box: true
+    }
   }
-
-  componentDidMount(){
-    this.getInitialCoordinates()
-  }
-
 
   render() {
-
     return (
-      <ViroARScene onTrackingUpdated={this._onInitialized} >
-
-      </ViroARScene>
+      <AppConsumer>
+        {({ user }) => (
+          <ViroARScene>
+          <ViroCamera position={[0,0,0]} active={true} >
+            <ViroBox
+              position={[-.024, .045, -.1]}
+              width={.01}
+              length={.01}
+              height={.01}
+              materials={["exit"]}
+              onClick={this.exitAr}
+            />
+          </ViroCamera>
+            {this.renderObj()}
+          </ViroARScene>
+        )}
+      </AppConsumer>
     );
   }
 
-  _onInitialized(state, reason) {
-    if (state == ViroConstants.TRACKING_NORMAL) {
-      this.setState({
-        arSceneOn: true
-      });
-    } else if (state == ViroConstants.TRACKING_NONE) {
-      // Handle loss of tracking
+  exitAr(){
+    // alert('you pressed me')
+    this.props.sceneNavigator.viroAppProps._exitAr()
+  }
+
+
+  renderObj = ()=> {
+    if (this.state.box === true){
+      return(
+        <ViroBox
+          position={[0,0,-5]}
+          height={.3}
+          length={.3}
+          width={.3}
+          materials={["blueColor"]} />
+      )
     }
   }
+
 
   latLongToDistanceAway = (lat1, long1, lat2, long2) =>{
     var radiusEarth = 6371e3;
@@ -153,6 +168,9 @@ ViroMaterials.createMaterials({
   blueColor: {
     diffuseColor: "#0000FF"
   },
+  exit: {
+    diffuseTexture: require('./res/exit.png'),
+  }
 });
 
 ViroAnimations.registerAnimations({
@@ -173,3 +191,5 @@ var styles = StyleSheet.create({
     textAlign: 'center',
   },
 });
+
+module.exports = ARSceneScreen;
