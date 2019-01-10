@@ -6,13 +6,12 @@ var baseUrl = 'https://13b22f8c.ngrok.io'
 export const AppContext = React.createContext();
 
 
-
 export class AppProvider extends Component {
   constructor(props) {
     super(props);
     this.state = {
       loggedIn: false,
-      user: {},
+      user: [],
 
       users: [],
       objects: [],
@@ -39,8 +38,28 @@ export class AppProvider extends Component {
     this.setState({
       users: userjson.virgeo_users,
       objects: objjson.objects,
-      droppedObjs: droppedObjjson.dropped_object,
+      droppedObjs: droppedObjjson.objects,
     })
+  }
+
+  login = (userId) =>{
+    // var currentUser = []
+    //
+    // for(let i=0; i < this.state.users.length; i++){
+    //   if(userId === this.state.users[i].id){
+    //     currentUser.push(this.state.users[i])
+    //   }
+    // }
+    // this.setState({
+    //   user: currentUser
+    // })
+    this.setState({
+      loggedIn: true
+    })
+    .then(()=>{
+      return Actions.profile()
+    })
+
   }
 
   fetchDroppedObjs(){
@@ -48,7 +67,7 @@ export class AppProvider extends Component {
       .then(response => response.json())
       .then(json => {
         this.setState({
-          droppedObjs: json.dropped_objects
+          droppedObjs: json.objects
         })
       })
   }
@@ -58,12 +77,12 @@ export class AppProvider extends Component {
       .then(response => response.json())
       .then(json => {
         this.setState({
-          user: json.virgeo_user
+          user: json.user
         })
       })
   }
 
-  dropObj(objToDrop, userId){
+  dropObj(objToDrop){
     let userObjId = objToDrop.user_object_id
 
     navigator.geolocation.getCurrentPosition(
@@ -72,11 +91,13 @@ export class AppProvider extends Component {
           currentLat: position.coords.latitude,
           currentLong: position.coords.longitude,
         })
-        return {
+
+        let obj = {
           latitude: position.coords.latitude,
           longitude: position.coords.longitude,
-          object_id: objToDrop.object_id
+          object_id: objToDrop.user_object_id
         }
+        return obj
       },
       (error) => this.setState({ navError: true }),
       { enableHighAccuracy: true, timeout: 20000, maximumAge: 10000 },
@@ -103,31 +124,33 @@ export class AppProvider extends Component {
     })
   }
 
-  login = (userId) =>{
-    // var currentUser = []
-    //
-    // for(let i=0; i < this.state.users.length; i++){
-    //   if(userId === this.state.users[i].id){
-    //     currentUser.push(this.state.users[i])
-    //   }
-    // }
-    // this.setState({
-    //   user: currentUser
-    // })
-    this.setState({
-      loggedIn: true
+  pickUpObj(objToPickUp){
+    let userObjId = objToPickUp.id
+    let obj = {
+      virgeo_user_id: this.state.user[0].virgeo_user_id,
+      object_id: this.state.user[0].objects.object_id,
+    }
+
+    fetch(`${baseUrl}/user_objects`, {
+      method: 'POST',
+      body: JSON.stringify(obj),
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      }
     })
     .then(()=>{
-      return Actions.profile()
+      return this.fetchUser(this.state.user[0].virgeo_user_id)
     })
-
+    .then(()=>{
+      return fetch(`${baseUrl}/dropped_objects/${userObjId}`, {
+        method: 'DELETE',
+      })
+    })
+    .then(()=>{
+      return this.fetchDroppedObjs()
+    })
   }
-
-  pickUpObj = () =>{
-
-  }
-
-
 
 
   render() {
@@ -136,12 +159,21 @@ export class AppProvider extends Component {
     return (
       <AppContext.Provider
         value={{
-          user: this.state.user,
           loggedIn: this.state.loggedIn,
+          user: this.state.user,
+
           users: this.state.users,
-          login: this.login,
+          objects: this.state.objects,
           droppedObjs: this.state.droppedObjs,
+
+          currentLat: this.state.currentLat,
+          currentLong: this.state.currentLong,
+
+          objToDrop: this.state.objToDrop,
           objToSearch: this.state.objToSearch,
+
+          login: this.login,
+          login: this.login,
           pickUpObj: this.pickUpObj,
           dropObj: this.dropObj
         }}
