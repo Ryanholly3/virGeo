@@ -36,36 +36,160 @@ export default class ARSceneScreen extends Component {
   constructor() {
     super();
     this.state={
-      box: true
+      gold: false,
+      penny: false,
+      ruby: true,
+      diamond: false,
+      stick: false,
+
+
     }
   }
 
   render() {
+    if(this.state.gold === true){
+      return this.goldRender()
+    } else if (this.state.penny === true){
+      return this.pennyRender()
+    } else if (this.state.ruby === true){
+      return this.rubyRender()
+    } else if (this.state.diamond === true){
+      return this.diamondRender()
+    } else if (this.state.stick === true){
+      return this.stickRender()
+    } else {
+      return this.noItemRender()
+    }
+  }
+
+  goldRender(){
     return (
       <AppConsumer>
         {({ user }) => (
-          <ViroARScene>
-
-            {this.renderObj()}
-          </ViroARScene>
+        <ViroARScene>
+          <ViroAmbientLight color="#FFFFFF" />
+          <Viro3DObject source={require('./res/low-poly_gold_coin/scene.gltf')}
+            type="GLTF"
+            position={[0, 0, -5]}
+            rotation={[0,0,0]}
+            scale={[0.2, 0.2, 0.2]}
+            onClick={this._onClick}
+            animation={{
+              name:'animateImage',
+              run: true,
+              loop: true
+            }}
+          />
+        </ViroARScene>
         )}
       </AppConsumer>
     );
   }
 
-  renderObj = ()=> {
-    if (this.state.box === true){
-      return(
-        <ViroBox
-          position={[0,0,-5]}
-          height={.3}
-          length={.3}
-          width={.3}
-          materials={["blueColor"]} />
-      )
-    }
+  pennyRender(){
+    return (
+      <AppConsumer>
+        {({ user }) => (
+        <ViroARScene>
+          <ViroAmbientLight color="#FFFFFF" />
+          <Viro3DObject source={require('./res/penny_coin/scene.gltf')}
+            type="GLTF"
+            position={[0, 0, -5]}
+            rotation={[0,0,0]}
+            scale={[0.01, 0.01, 0.01]}
+            onClick={this._onClick}
+            animation={{
+              name:'animateImage',
+              run: true,
+              loop: true
+            }}
+          />
+        </ViroARScene>
+        )}
+      </AppConsumer>
+    );
   }
 
+  rubyRender(){
+    return (
+      <AppConsumer>
+        {({ user }) => (
+        <ViroARScene>
+          <ViroAmbientLight color="#FFFFFF" />
+          <Viro3DObject source={require('./res/low_poly_ruby/scene.gltf')}
+            resources={[require('./res/low_poly_ruby/scene.bin')]}
+            type="GLTF"
+            position={[0, 0, -5]}
+            rotation={[0,0,0]}
+            scale={[0.4, 0.4, 0.4]}
+            onClick={this._onClick}
+            animation={{
+              name:'animateImage',
+              run: true,
+              loop: true
+            }}
+          />
+        </ViroARScene>
+        )}
+      </AppConsumer>
+    );
+  }
+
+  diamondRender(){
+    return (
+      <AppConsumer>
+        {({ user }) => (
+        <ViroARScene>
+          <ViroAmbientLight color="#FFFFFF" />
+          <Viro3DObject source={require('./res/diamond/scene.gltf')}
+            resources={[require('./res/diamond/scene.bin')]}
+            type="GLTF"
+            position={[0, 0, -5]}
+            rotation={[0,0,0]}
+            scale={[0.2, 0.2, 0.2]}
+            onClick={this._onClick}
+            animation={{
+              name:'animateImage',
+              run: true,
+              loop: true
+            }}
+          />
+        </ViroARScene>
+        )}
+      </AppConsumer>
+    );
+  }
+
+  stickRender(){
+    return (
+      <AppConsumer>
+        {({ user }) => (
+        <ViroARScene>
+          <ViroAmbientLight color="#FFFFFF" />
+          <Viro3DObject source={require('./res/penny_coin/scene.gltf')}
+            type="GLTF"
+            position={[0, 0, -5]}
+            rotation={[0,0,0]}
+            scale={[0.2, 0.2, 0.2]}
+            onClick={this._onClick}
+            animation={{
+              name:'animateImage',
+              run: true,
+              loop: true
+            }}
+          />
+        </ViroARScene>
+        )}
+      </AppConsumer>
+    );
+  }
+
+  noItemRender(){
+    return(
+      <ViroARScene>
+      </ViroARScene>
+    )
+  }
 
   latLongToDistanceAway = (lat1, long1, lat2, long2) =>{
     var radiusEarth = 6371e3;
@@ -104,8 +228,8 @@ export default class ARSceneScreen extends Component {
   }
 
   _onClick = () => {
-    var answer = this.bearingPhoneToObj(39.7575767, -105.0069728, 39.757611, -105.006963)
-    // alert(answer)
+    // var answer = this.bearingPhoneToObj(39.7575767, -105.0069728, 39.757611, -105.006963)
+    alert('you clicked me!')
     // this.setState({
     //   pos: Math.random()*(-5)
     // })
@@ -153,17 +277,11 @@ ViroMaterials.createMaterials({
   blueColor: {
     diffuseColor: "#0000FF"
   },
-  exit: {
-    diffuseTexture: require('./res/exit.png'),
-  }
 });
 
 ViroAnimations.registerAnimations({
     animateImage:{properties:{rotateY:"+=360"},
                   duration: 4000},
-    animateColor:{properties:{material:"blueColor"}, duration:3000},
-    rotateAndColor:[["animateImage"], ["animateColor"]]
-
 });
 
 
