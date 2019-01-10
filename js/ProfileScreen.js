@@ -26,11 +26,11 @@ export default class ProfileScreen extends Component {
   render() {
     return (
       <AppConsumer>
-        {({ user }) => (
+        {({ user, objects, droppedObjs }) => (
           <ImageBackground style={styles.gridBackground} source={gridBackground}>
             <View>
               <Text>
-                PROFILE
+                {droppedObjs[0].latitude}
               </Text>
             </View>
           </ImageBackground>

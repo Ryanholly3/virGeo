@@ -8,6 +8,7 @@ import {
   View,
   StyleSheet,
   PixelRatio,
+  TouchableOpacity,
   TouchableHighlight,
   ImageBackground
 } from 'react-native';
@@ -26,12 +27,19 @@ export default class LogoutScreen extends Component {
   render() {
     return (
       <AppConsumer>
-        {({ user }) => (
+        {({ user, users, logOut, logIn }) => (
           <ImageBackground style={styles.gridBackground} source={gridBackground}>
             <View>
               <Text>
-                Logout?
+                Are you sure you'd like to log out?
               </Text>
+              <View style={styles.logOutButtonFlex}>
+                <TouchableOpacity style={{width: '100%'}} onPress={() => logOut()}>
+                  <View style={styles.logOutButton}>
+                    <Text style={{color: 'white'}}>Log out</Text>
+                  </View>
+                </TouchableOpacity>
+              </View>
             </View>
           </ImageBackground>
         )}
@@ -50,23 +58,19 @@ var styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center'
   },
-  outer : {
-    flex : 1,
+  logOutButtonFlex : {
+    marginTop: 10,
+    borderWidth: 2,
+    height: 40,
+    width: 200,
+    flex: 0,
     flexDirection: 'row',
-    alignItems:'center',
-    backgroundColor: "black",
+    alignItems: 'center'
   },
-  inner: {
-    flex : 1,
-    flexDirection: 'column',
-    alignItems:'center',
-    backgroundColor: "black",
-  },
-  titleText: {
-    paddingTop: 30,
-    paddingBottom: 20,
-    color:'#fff',
-    textAlign:'center',
-    fontSize : 25
+  logOutButton : {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'gray',
   },
 });

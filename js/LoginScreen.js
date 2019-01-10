@@ -46,7 +46,7 @@ export default class LoginScreen extends Component {
     })
   }
 
-  loginForm = () =>{
+  loginForm = (logIn) =>{
     if(this.state.loginForm === true){
       return(
         <View style={styles.loginSignupCard}>
@@ -73,7 +73,7 @@ export default class LoginScreen extends Component {
             <TextInput style={styles.textInputBox} placeholder={' enter password'}/>
           </View>
           <View style={styles.goButtonFlex}>
-            <TouchableOpacity style={{width: '100%'}} onPress={() => Actions.profile()}>
+            <TouchableOpacity style={{width: '100%'}} onPress={() => logIn(1)}>
               <View style={styles.goButton}>
                 <Text style={{color: 'white'}}>GO</Text>
               </View>
@@ -84,7 +84,7 @@ export default class LoginScreen extends Component {
     }
   }
 
-  signupForm = () =>{
+  signupForm = (logIn) =>{
     if(this.state.loginForm === false){
       return(
         <View style={styles.loginSignupCard}>
@@ -113,7 +113,7 @@ export default class LoginScreen extends Component {
           </View>
           <TextInput style={styles.textInputBox} placeholder={' enter username'}/>
           <View style={styles.goButtonFlex}>
-            <TouchableOpacity style={{width: '100%'}} onPress={() => Actions.profile()}>
+            <TouchableOpacity style={{width: '100%'}} onPress={() => logIn(1)}>
               <View style={styles.goButton}>
                 <Text style={{color: 'white'}}>GO</Text>
               </View>
@@ -127,7 +127,7 @@ export default class LoginScreen extends Component {
   render() {
     return (
       <AppConsumer>
-        {({ user, loggedIn, users, login }) => (
+        {({ user, loggedIn, users, logIn }) => (
           <ImageBackground
             style={styles.gridBackground}
             source={gridBackground}
@@ -147,14 +147,8 @@ export default class LoginScreen extends Component {
                 caching app
               </Text>
             </View>
-              { this.loginForm() }
-              { this.signupForm() }
-            <Text>
-              { users && users[0] && users[0].user_name }
-            </Text>
-            <Text>
-              { user && user[0] && user[0].user_name }
-            </Text>
+              { this.loginForm(logIn) }
+              { this.signupForm(logIn) }
           </ImageBackground>
         )}
       </AppConsumer>

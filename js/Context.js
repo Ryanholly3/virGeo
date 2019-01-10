@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Actions } from 'react-native-router-flux';
 
-var baseUrl = 'https://13b22f8c.ngrok.io'
+var baseUrl = 'https://2fab3891.ngrok.io'
 
 export const AppContext = React.createContext();
 
@@ -21,8 +21,8 @@ export class AppProvider extends Component {
       currentLong: null,
       navError: false,
 
-      objToDrop: {},
-      objToSearch: {},
+      objToDrop: [],
+      objToSearch: [],
     }
   }
 
@@ -42,24 +42,31 @@ export class AppProvider extends Component {
     })
   }
 
-  login = (userId) =>{
-    // var currentUser = []
-    //
-    // for(let i=0; i < this.state.users.length; i++){
-    //   if(userId === this.state.users[i].id){
-    //     currentUser.push(this.state.users[i])
-    //   }
-    // }
-    // this.setState({
-    //   user: currentUser
-    // })
-    this.setState({
-      loggedIn: true
-    })
-    .then(()=>{
-      return Actions.profile()
-    })
+  logIn = (userId) =>{
+    fetch(`${baseUrl}/users/${userId}`)
+      .then(response => response.json())
+      .then(json => {
+        return this.setState({
+          user: json.user,
+          loggedIn: true,
+        })
+      })
+      .then(()=>{
+        Actions.profile()
+      })
+  }
 
+  logOut = () =>{
+    this.setState({
+      loggedIn: false,
+      user: [],
+      currentLat: null,
+      currentLong: null,
+      navError: false,
+      objToDrop: [],
+      objToSearch: [],
+    })
+    Actions.login()
   }
 
   fetchDroppedObjs(){
@@ -77,7 +84,7 @@ export class AppProvider extends Component {
       .then(response => response.json())
       .then(json => {
         this.setState({
-          user: json.user
+          user: json.user,
         })
       })
   }
@@ -172,8 +179,8 @@ export class AppProvider extends Component {
           objToDrop: this.state.objToDrop,
           objToSearch: this.state.objToSearch,
 
-          login: this.login,
-          login: this.login,
+          logIn: this.logIn,
+          logOut: this.logOut,
           pickUpObj: this.pickUpObj,
           dropObj: this.dropObj
         }}
