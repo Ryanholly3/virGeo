@@ -39,12 +39,11 @@ export default class DashboardScreen extends Component {
       longitude: -122.4324,
       latitudeDelta: 0.0922,
       longitudeDelta: 0.0421,
-      viroAppProps: {_exitAr: this._exitAr},
       arOn: false,
       user: '',
     };
 
-    this._exitAr = this._exitAr.bind(this);
+    // this._exitAr = this._exitAr.bind(this);
 
   }
 
@@ -59,12 +58,12 @@ export default class DashboardScreen extends Component {
   dashboardMode(){
     return (
       <AppConsumer>
-        {({ user }) => (
+        {({ user, findCoordinates, setCoordinates }) => (
           <ImageBackground style={styles.gridBackground} source={gridBackground}>
             <Text>
               DASHBOARD
             </Text>
-            <Button title="Enter AR" onPress={() => this.enterAr() }/>
+            <Button title="Enter AR" onPress={() => this.enterAr(findCoordinates)}/>
           </ImageBackground>
         )}
       </AppConsumer>
@@ -90,11 +89,22 @@ export default class DashboardScreen extends Component {
     );
   }
 
-  enterAr(){
+  enterAr(findCoordinates){
     this.setState({
       arOn: true
     })
+    // findCoordinates()
   }
+
+  // findCoordinates(setCoordinates){
+  //   navigator.geolocation.getCurrentPosition(
+  //     (position) => {
+  //         setCoordinates(position.coords.latitude, position.coords.longitude)
+  //     },
+  //     (error) => this.setState({ navError: true }),
+  //     { enableHighAccuracy: true, timeout: 20000, maximumAge: 10000 },
+  //   )
+  // }
 
   _exitAr(){
     this.setState({

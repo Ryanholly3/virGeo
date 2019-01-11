@@ -37,8 +37,8 @@ export default class ARSceneScreen extends Component {
     super();
     this.state={
       gold: false,
-      penny: false,
-      ruby: true,
+      penny: true,
+      ruby: false,
       diamond: false,
       stick: false,
 
@@ -65,14 +65,14 @@ export default class ARSceneScreen extends Component {
   goldRender(){
     return (
       <AppConsumer>
-        {({ user }) => (
+        {({ user, currentLat, currentLong }) => (
         <ViroARScene>
           <ViroAmbientLight color="#FFFFFF" />
           <Viro3DObject source={require('./res/low-poly_gold_coin/scene.gltf')}
             type="GLTF"
-            position={[0, 0, -5]}
+            position={[0, 0, -1]}
             rotation={[0,0,0]}
-            scale={[0.2, 0.2, 0.2]}
+            scale={[0.05, 0.05, 0.05]}
             onClick={this._onClick}
             animation={{
               name:'animateImage',
@@ -89,14 +89,14 @@ export default class ARSceneScreen extends Component {
   pennyRender(){
     return (
       <AppConsumer>
-        {({ user }) => (
+        {({ user, currentLat, currentLong }) => (
         <ViroARScene>
           <ViroAmbientLight color="#FFFFFF" />
           <Viro3DObject source={require('./res/penny_coin/scene.gltf')}
             type="GLTF"
-            position={[0, 0, -5]}
+            position={[0, 0, ]}
             rotation={[0,0,0]}
-            scale={[0.01, 0.01, 0.01]}
+            scale={[0.001, 0.001, 0.001]}
             onClick={this._onClick}
             animation={{
               name:'animateImage',
@@ -113,13 +113,13 @@ export default class ARSceneScreen extends Component {
   rubyRender(){
     return (
       <AppConsumer>
-        {({ user }) => (
+        {({ user, currentLat, currentLong }) => (
         <ViroARScene>
           <ViroAmbientLight color="#FFFFFF" />
           <Viro3DObject source={require('./res/low_poly_ruby/scene.gltf')}
             resources={[require('./res/low_poly_ruby/scene.bin')]}
             type="GLTF"
-            position={[0, 0, -5]}
+            position={[0, 0, -1]}
             rotation={[0,0,0]}
             scale={[0.4, 0.4, 0.4]}
             onClick={this._onClick}
@@ -138,13 +138,13 @@ export default class ARSceneScreen extends Component {
   diamondRender(){
     return (
       <AppConsumer>
-        {({ user }) => (
+        {({ user, currentLat, currentLong }) => (
         <ViroARScene>
           <ViroAmbientLight color="#FFFFFF" />
           <Viro3DObject source={require('./res/diamond/scene.gltf')}
             resources={[require('./res/diamond/scene.bin')]}
             type="GLTF"
-            position={[0, 0, -5]}
+            position={[0, 0, -1]}
             rotation={[0,0,0]}
             scale={[0.2, 0.2, 0.2]}
             onClick={this._onClick}
@@ -163,14 +163,14 @@ export default class ARSceneScreen extends Component {
   stickRender(){
     return (
       <AppConsumer>
-        {({ user }) => (
+        {({ user, currentLat, currentLong }) => (
         <ViroARScene>
           <ViroAmbientLight color="#FFFFFF" />
           <Viro3DObject source={require('./res/penny_coin/scene.gltf')}
             type="GLTF"
-            position={[0, 0, -5]}
+            position={[0, 0, -1]}
             rotation={[0,0,0]}
-            scale={[0.2, 0.2, 0.2]}
+            scale={[0.001, 0.001, 0.001]}
             onClick={this._onClick}
             animation={{
               name:'animateImage',
