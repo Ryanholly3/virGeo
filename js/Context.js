@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Actions } from 'react-native-router-flux';
 
-var baseUrl = 'http://10.6.90.187:3101'
+var baseUrl = 'http://192.168.1.60:3101'
 
 export const AppContext = React.createContext();
 
@@ -87,6 +87,24 @@ export class AppProvider extends Component {
           user: json.user,
         })
       })
+  }
+
+  setObjToSearch = (objId) =>{
+    let objToSearch = {}
+
+    // console.log(this.state.droppedObjs)
+
+    for(let i=0; i < this.state.droppedObjs.length; i++){
+      if(objId === this.state.droppedObjs[i].id){
+        objToSearch = this.state.droppedObjs[i]
+      }
+    }
+    console.log(objToSearch)
+    this.setState({
+      objToSearch: objToSearch
+    })
+
+    Actions.dashboard()
   }
 
 
@@ -180,7 +198,8 @@ export class AppProvider extends Component {
           logIn: this.logIn,
           logOut: this.logOut,
           pickUpObj: this.pickUpObj,
-          dropObj: this.dropObj
+          dropObj: this.dropObj,
+          setObjToSearch: this.setObjToSearch
         }}
       >
         {children}

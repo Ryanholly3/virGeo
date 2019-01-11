@@ -59,12 +59,13 @@ export default class DashboardScreen extends Component {
   dashboardMode(){
     return (
       <AppConsumer>
-        {({ user, objToSearch }) => (
+        {({ user, setObjToSearch }) => (
           <ImageBackground style={styles.gridBackground} source={gridBackground}>
             <Text>
               DASHBOARD. list of objects here. On clicking object, change state to choose object.
               decide whether to store this in this component or in context (objToSearch)
             </Text>
+            <Button title="selectItem" onPress={()=> setObjToSearch(1)}/>
             <Button title="Enter AR" onPress={() => this.enterAr(objToSearch)}/>
           </ImageBackground>
         )}
@@ -97,10 +98,10 @@ export default class DashboardScreen extends Component {
   }
 
   enterAr(objToSearch){
+
     var objLat = objToSearch.latitude
     var objLong = objToSearch.longitude
 
-    console.log(objLat, objLong)
     navigator.geolocation.getCurrentPosition(
       (position) => {
 
@@ -110,11 +111,11 @@ export default class DashboardScreen extends Component {
         var angleFromNorth = 0
 
         this.setState({
+          arOn: true,
           userLatitude: position.coords.latitude,
           userLongitude: position.coords.longitude,
           objUserDist: objUserDist,
           angleFromNorth: angleFromNorth,
-          arOn: true
         })
       },
       (error) => this.setState({ navError: true }),
@@ -124,7 +125,11 @@ export default class DashboardScreen extends Component {
 
   _exitAr(){
     this.setState({
-      arOn: false
+      arOn: false,
+      userLatitude: null,
+      userLongitude: null,
+      objUserDist: null,
+      angleFromNorth: null,
     })
   }
 
