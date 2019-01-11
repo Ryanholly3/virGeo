@@ -36,36 +36,23 @@ export default class ARSceneScreen extends Component {
   constructor() {
     super();
     this.state={
-      gold: false,
-      penny: true,
-      ruby: false,
-      diamond: false,
-      stick: false,
-
-      userLatitude: null,
-      userLongitude: null,
-      object: {}
+      objToSearch: {}
     }
   }
 
-  componentDidMount(){
-    this.setState({
-      userLatitude: this.props.sceneNavigator.viroAppProps.latitude,
-      userLongitude: this.props.sceneNavigator.viroAppProps.longitude,
-      object: this.props.sceneNavigator.viroAppProps.object
-    })
-  }
 
   render() {
-    if(this.state.object.object_name === 'gold'){
+    let objProps = this.props.sceneNavigator.viroAppProps.objToSearch.object_info[0].object_name
+
+    if(objProps === 'gold'){
       return this.goldRender()
-    } else if (this.state.object.object_name === 'penny'){
+    } else if (objProps === 'penny'){
       return this.pennyRender()
-    } else if (this.state.object.object_name === 'ruby'){
+    } else if (objProps === 'ruby'){
       return this.rubyRender()
-    } else if (this.state.object.object_name === 'diamond'){
+    } else if (objProps === 'diamond'){
       return this.diamondRender()
-    } else if (this.state.object.object_name === 'stick'){
+    } else if (objProps === 'stick'){
       return this.stickRender()
     } else {
       return this.noItemRender()
@@ -75,12 +62,12 @@ export default class ARSceneScreen extends Component {
   goldRender(){
     return (
       <AppConsumer>
-        {({ user, currentLat, currentLong }) => (
+        {({ user, objPosition, dropObj, pickUpObj }) => (
         <ViroARScene>
           <ViroAmbientLight color="#FFFFFF" />
           <Viro3DObject source={require('./res/low-poly_gold_coin/scene.gltf')}
             type="GLTF"
-            position={[0, 0, -1]}
+            position={[objPosition.posX, 0, objPosition.posZ]}
             rotation={[0,0,0]}
             scale={[0.05, 0.05, 0.05]}
             onClick={this._onClick}
@@ -97,11 +84,10 @@ export default class ARSceneScreen extends Component {
   }
 
   pennyRender(){
-    console.log('state', this.state.userLatitude)
 
     return (
       <AppConsumer>
-        {({ user, currentLat, currentLong }) => (
+        {({ user, objPosition, dropObj, pickUpObj }) => (
         <ViroARScene>
           <ViroAmbientLight color="#FFFFFF" />
           <Viro3DObject source={require('./res/penny_coin/scene.gltf')}
@@ -125,7 +111,7 @@ export default class ARSceneScreen extends Component {
   rubyRender(){
     return (
       <AppConsumer>
-        {({ user, currentLat, currentLong }) => (
+        {({ user, objPosition, dropObj, pickUpObj }) => (
         <ViroARScene>
           <ViroAmbientLight color="#FFFFFF" />
           <Viro3DObject source={require('./res/low_poly_ruby/scene.gltf')}
@@ -150,7 +136,7 @@ export default class ARSceneScreen extends Component {
   diamondRender(){
     return (
       <AppConsumer>
-        {({ user, currentLat, currentLong }) => (
+        {({ user, objPosition, dropObj, pickUpObj }) => (
         <ViroARScene>
           <ViroAmbientLight color="#FFFFFF" />
           <Viro3DObject source={require('./res/diamond/scene.gltf')}
@@ -175,7 +161,7 @@ export default class ARSceneScreen extends Component {
   stickRender(){
     return (
       <AppConsumer>
-        {({ user, currentLat, currentLong }) => (
+        {({ user, objPosition, dropObj, pickUpObj }) => (
         <ViroARScene>
           <ViroAmbientLight color="#FFFFFF" />
           <Viro3DObject source={require('./res/penny_coin/scene.gltf')}
@@ -209,41 +195,6 @@ export default class ARSceneScreen extends Component {
     // this.setState({
     //   pos: Math.random()*(-5)
     // })
-  }
-
-  getInitialCoordinates = () =>{
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        this._mapVirtual(position.coords.latitude, position.coords.longitude, this.state.objLat, this.state.objLong)
-        // could pass position.coords.latitude,long,heading into this if dont want to wait for state to update
-      },
-      (error) => this.setState({ error: error.message }),
-      { enableHighAccuracy: true, timeout: 20000, maximumAge: 10000 },
-    );
-  }
-
-
-  _mapVirtual = async (phoneLat, phoneLong, objLat, objLong) => {
-
-    let distBetweenPhoneObj = await this.latLongToDistanceAway(phoneLat, phoneLong, objLat, objLong)
-    let headingPhoneToObj = await this.bearingPhoneToObj(phoneLat, phoneLong, objLat, objLong)
-
-    let radiansPhoneToObj = (headingPhoneToObj * Math.PI) / 180
-
-    let objZ = -1 * (Math.cos(radiansPhoneToObj) * distBetweenPhoneObj)
-    let objX = Math.sin(radiansPhoneToObj) * distBetweenPhoneObj
-
-    let display = ` ${phoneLat} ${phoneLong} distBetweenPhoneObj: ${distBetweenPhoneObj}, headingPhoneToObj:
-    ${headingPhoneToObj}, objX: ${objX}, objZ: ${objZ}`
-    // alert(display)
-
-    this.setState({
-      objX: objX,
-      objZ: objZ,
-      phoneLat: phoneLat,
-      phoneLong: phoneLong,
-      phoneObjAngleRad: radiansPhoneToObj,
-    })
   }
 
 }

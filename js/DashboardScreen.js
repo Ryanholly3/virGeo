@@ -35,15 +35,7 @@ export default class DashboardScreen extends Component {
     super(props);
 
     this.state = {
-      userLatitude: null,
-      userLongitude: null,
-
-      objUserDist: null,
-      angleFromNoth: null,
-      object: {},
-
       arOn: false,
-      user: '',
     };
 
   }
@@ -59,14 +51,13 @@ export default class DashboardScreen extends Component {
   dashboardMode(){
     return (
       <AppConsumer>
-        {({ user, setObjToSearch }) => (
+        {({ setObjToSearch, objToSearch, calculatedObjPos }) => (
           <ImageBackground style={styles.gridBackground} source={gridBackground}>
             <Text>
-              DASHBOARD. list of objects here. On clicking object, change state to choose object.
-              decide whether to store this in this component or in context (objToSearch)
+              DASHBOARD
             </Text>
             <Button title="selectItem" onPress={()=> setObjToSearch(1)}/>
-            <Button title="Enter AR" onPress={() => this.enterAr(objToSearch)}/>
+            <Button title="Enter AR" onPress={() => this.enterAr(objToSearch, calculatedObjPos)}/>
           </ImageBackground>
         )}
       </AppConsumer>
@@ -75,47 +66,48 @@ export default class DashboardScreen extends Component {
 
   getARNavigator() {
     return (
-      <View style={styles.flex}>
-        <ViroARSceneNavigator
-          apiKey="912A3CB8-1A43-42D2-BFDF-2659B6DA962E"
-          initialScene={{scene: ARSceneScreen}}
-          worldAlignment={"GravityAndHeading"}
-          viroAppProps={{
-            latitude: this.state.userLatitude,
-            longitude: this.state.userLongitude,
-            object: this.state.object,
-          }}
-        />
-        <View style={{flex: 0, flexDirection: 'row',}}>
-          <TouchableOpacity style={styles.exitButtonFlex} onPress={() => this._exitAr()}>
-            <View style={styles.exitButton}>
-              <Text style={{color: 'white'}}>EXIT AR MODE</Text>
+      <AppConsumer>
+        {({ setObjToSearch, objToSearch, calculatedObjPos }) => (
+          <View style={styles.flex}>
+            <ViroARSceneNavigator
+              apiKey="912A3CB8-1A43-42D2-BFDF-2659B6DA962E"
+              initialScene={{scene: ARSceneScreen}}
+              worldAlignment={"GravityAndHeading"}
+              viroAppProps={{
+                objToSearch: objToSearch,
+              }}
+            />
+            <View style={{flex: 0, flexDirection: 'row',}}>
+              <TouchableOpacity style={styles.exitButtonFlex} onPress={() => this._exitAr()}>
+                <View style={styles.exitButton}>
+                  <Text style={{color: 'white'}}>EXIT AR MODE</Text>
+                </View>
+              </TouchableOpacity>
             </View>
-          </TouchableOpacity>
-        </View>
-      </View>
+          </View>
+        )}
+      </AppConsumer>
     );
   }
 
-  enterAr(objToSearch){
-
-    var objLat = objToSearch.latitude
-    var objLong = objToSearch.longitude
-
+  enterAr(objToSearch, calculatedObjPos){
     navigator.geolocation.getCurrentPosition(
       (position) => {
 
-        //THIS IS WHERE YOU SOLVE FOR POSITION OF OBJECT
+        var objLat = objToSearch.latitude
+        var objLong = objToSearch.longitude
+        var userLat = position.coords.latitude
+        var userLong = position.coords.longitude
 
-        var objUserDist = 0
-        var angleFromNorth = 0
+        console.log('triggered')
+
+        this._mapVirtual(userLat, userLong, objLat, objLong)
+          .then((objPos)=>{
+            return calculatedObjPos(objPos)
+          })
 
         this.setState({
           arOn: true,
-          userLatitude: position.coords.latitude,
-          userLongitude: position.coords.longitude,
-          objUserDist: objUserDist,
-          angleFromNorth: angleFromNorth,
         })
       },
       (error) => this.setState({ navError: true }),
@@ -126,10 +118,6 @@ export default class DashboardScreen extends Component {
   _exitAr(){
     this.setState({
       arOn: false,
-      userLatitude: null,
-      userLongitude: null,
-      objUserDist: null,
-      angleFromNorth: null,
     })
   }
 
@@ -147,11 +135,12 @@ export default class DashboardScreen extends Component {
     var a = Math.sin(dlat/2) * Math.sin(dlat/2) + Math.cos(lat1r) * Math.cos(lat2r) * Math.sin(dlong/2) * Math.sin(dlong/2);
     var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
     var d = radiusEarth * c
+    console.log('distance from obj', d)
     return d
+
   }
 
   bearingPhoneToObj = (lat1, long1, lat2, long2) =>{
-
     //convert degrees to radians
     var lat1r = (lat1 * Math.PI)/180
     var lat2r = (lat2 * Math.PI)/180
@@ -165,8 +154,25 @@ export default class DashboardScreen extends Component {
     var x = (Math.cos(lat1r) * Math.sin(lat2r)) - (Math.sin(lat1r) * Math.cos(lat2r) * Math.cos(dlong));
     var brng = (Math.atan2(y, x) * 180) / Math.PI
     //returned in degrees between -180 and +180
-    var result = (brng + 360) % 360
-    return result
+    console.log('bearing', brng)
+    return brng
+  }
+
+  _mapVirtual = async (userLat, userLong, objLat, objLong) => {
+
+    let distBetweenPhoneObj = await this.latLongToDistanceAway(userLat, userLong, objLat, objLong)
+    let headingPhoneToObj = await this.bearingPhoneToObj(userLat, userLong, objLat, objLong)
+
+    let radiansPhoneToObj = (headingPhoneToObj * Math.PI) / 180
+
+    let objZ = -1 * (Math.cos(radiansPhoneToObj) * distBetweenPhoneObj)
+    let objX = Math.sin(radiansPhoneToObj) * distBetweenPhoneObj
+    console.log('objZ', objZ, 'objX', objX)
+
+    return {posX: objX, posZ: objZ}
+
+    // let display = ` ${userLat} ${userLong} distBetweenPhoneObj: ${distBetweenPhoneObj}, headingPhoneToObj:
+    // ${headingPhoneToObj}, objX: ${objX}, objZ: ${objZ}`
   }
 
 }

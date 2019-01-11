@@ -17,12 +17,13 @@ export class AppProvider extends Component {
       objects: [],
       droppedObjs: [],
 
-      currentLat: null,
-      currentLong: null,
+      currentLat: 0,
+      currentLong: 0,
       navError: false,
 
       objToDrop: [],
-      objToSearch: [],
+      objToSearch: {},
+      objPosition: {}
     }
   }
 
@@ -60,8 +61,8 @@ export class AppProvider extends Component {
     this.setState({
       loggedIn: false,
       user: [],
-      currentLat: null,
-      currentLong: null,
+      currentLat: 0,
+      currentLong: 0,
       navError: false,
       objToDrop: [],
       objToSearch: [],
@@ -92,19 +93,21 @@ export class AppProvider extends Component {
   setObjToSearch = (objId) =>{
     let objToSearch = {}
 
-    // console.log(this.state.droppedObjs)
-
     for(let i=0; i < this.state.droppedObjs.length; i++){
       if(objId === this.state.droppedObjs[i].id){
         objToSearch = this.state.droppedObjs[i]
       }
     }
-    console.log(objToSearch)
+    console.log('obj to search', objToSearch)
     this.setState({
       objToSearch: objToSearch
     })
+  }
 
-    Actions.dashboard()
+  calculatedObjPos = (objPosition) =>{
+    this.setState({
+      objPosition: objPosition
+    })
   }
 
 
@@ -194,11 +197,13 @@ export class AppProvider extends Component {
 
           objToDrop: this.state.objToDrop,
           objToSearch: this.state.objToSearch,
+          objPosition: this.state.objPosition,
 
           logIn: this.logIn,
           logOut: this.logOut,
           pickUpObj: this.pickUpObj,
           dropObj: this.dropObj,
+          calculatedObjPos: this.calculatedObjPos,
           setObjToSearch: this.setObjToSearch
         }}
       >
