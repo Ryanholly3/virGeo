@@ -16,6 +16,7 @@ export class AppProvider extends Component {
       users: [],
       objects: [],
       droppedObjs: [],
+      organizedDroppedObjs: [],
 
       currentLat: 0,
       currentLong: 0,
@@ -110,6 +111,67 @@ export class AppProvider extends Component {
     })
   }
 
+  organizeDroppedObj = () =>{
+    var toBeOrganized = this.state.droppedObjs
+
+    navigator.geolocation.getCurrentPosition(
+      async (position) => {
+        let userLat = position.coords.latitude
+        let userLong = position.coords.longitude
+
+        for(let i=0; i< toBeOrganized.length;i++){
+          let calcDistance = await latLongToDistanceAway(userLat, userLong, toBeOrganized[i].latitude, toBeOrganized[i].longitude)
+          toBeOrganized[i].distance = calcDistance
+        }
+        let organized = await selectionSort(toBeOrganized)
+        console.log('organized', organized)
+        this.setState({
+          organizedDroppedObjs: organized
+        })
+      },
+      (error) => this.setState({ navError: true }),
+      { enableHighAccuracy: true, timeout: 20000, maximumAge: 10000 },
+    )
+
+    function selectionSort(array) {
+      let min = array[0].distance
+      let minPosition = 0
+      let start = 0
+      while(start < array.length-1){
+        for(let i=start; i < array.length; i++){
+          if(array[i].distance < min ){
+            min = array[i].distance
+            minPosition = i
+          }
+        }
+        array[minPosition]= array[start]
+        array[start]= min
+        start++
+        min = array[start].distance
+        minPosition = start
+      }
+      return array
+    }
+
+    latLongToDistanceAway = (lat1, long1, lat2, long2) =>{
+      var radiusEarth = 6371e3;
+
+      //convert degrees to radians
+      var lat1r = (lat1 * Math.PI)/180
+      var lat2r = (lat2 * Math.PI)/180
+
+      //difference lat and difference long in radians
+      var dlat = (lat2 - lat1) * Math.PI / 180
+      var dlong = (long2 - long1) * Math.PI / 180
+
+      var a = Math.sin(dlat/2) * Math.sin(dlat/2) + Math.cos(lat1r) * Math.cos(lat2r) * Math.sin(dlong/2) * Math.sin(dlong/2);
+      var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+      var d = radiusEarth * c
+      console.log('distance from obj', d)
+      return d
+    }
+
+  }
 
   dropObj(objToDrop){
     let userObjId = objToDrop.user_object_id
@@ -194,6 +256,7 @@ export class AppProvider extends Component {
           users: this.state.users,
           objects: this.state.objects,
           droppedObjs: this.state.droppedObjs,
+          organizedDroppedObjs: this.state.organizedDroppedObjs,
 
           objToDrop: this.state.objToDrop,
           objToSearch: this.state.objToSearch,
@@ -204,7 +267,8 @@ export class AppProvider extends Component {
           pickUpObj: this.pickUpObj,
           dropObj: this.dropObj,
           calculatedObjPos: this.calculatedObjPos,
-          setObjToSearch: this.setObjToSearch
+          setObjToSearch: this.setObjToSearch,
+          organizeDroppedObj: this.organizeDroppedObj
         }}
       >
         {children}

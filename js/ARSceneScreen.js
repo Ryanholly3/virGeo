@@ -67,9 +67,9 @@ export default class ARSceneScreen extends Component {
           <ViroAmbientLight color="#FFFFFF" />
           <Viro3DObject source={require('./res/low-poly_gold_coin/scene.gltf')}
             type="GLTF"
-            position={[objPosition.posX, 0, objPosition.posZ]}
+            position={[3 ,0, 0]}
             rotation={[0,0,0]}
-            scale={[0.05, 0.05, 0.05]}
+            scale={[0.2, 0.2, 0.2]}
             onClick={this._onClick}
             animation={{
               name:'animateImage',

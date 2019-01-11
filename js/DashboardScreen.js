@@ -22,6 +22,8 @@ import { AppConsumer } from './Context';
 const gridBackground = require('./res/grid_background.png')
 import { Actions } from 'react-native-router-flux';
 
+import DroppedObjList from './DroppedObjList';
+
 
 var sharedProps = {
   apiKey:"912A3CB8-1A43-42D2-BFDF-2659B6DA962E",
@@ -36,6 +38,7 @@ export default class DashboardScreen extends Component {
 
     this.state = {
       arOn: false,
+      navError: false
     };
 
   }
@@ -51,11 +54,19 @@ export default class DashboardScreen extends Component {
   dashboardMode(){
     return (
       <AppConsumer>
-        {({ setObjToSearch, objToSearch, calculatedObjPos }) => (
+        {({ setObjToSearch, droppedObjs, organizedDroppedObjs, organizeDroppedObj, objToSearch, calculatedObjPos }) => (
           <ImageBackground style={styles.gridBackground} source={gridBackground}>
-            <Text>
-              DASHBOARD
-            </Text>
+            <View style={styles.titleBox}>
+              <Text style={{ fontSize: 40, fontWeight: 'bold', fontFamily: 'Helvetica' }}>
+                DASH
+              </Text>
+              <Text style={{ fontSize: 40, fontWeight: 'bold', fontFamily: 'Helvetica', color: 'gray' }}>
+                BOARD
+              </Text>
+            </View>
+            <View style={{ flex: 0, height: '60%', width:'60%', flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}>
+              { this.makeTable(organizeDroppedObj) }
+            </View>
             <Button title="selectItem" onPress={()=> setObjToSearch(1)}/>
             <Button title="Enter AR" onPress={() => this.enterAr(objToSearch, calculatedObjPos)}/>
           </ImageBackground>
@@ -63,6 +74,23 @@ export default class DashboardScreen extends Component {
       </AppConsumer>
     );
   }
+
+
+  makeTable = async(organizeDroppedObj) => {
+    var organized = await organizeDroppedObj()
+    console.log('organized', organized)
+    return organized.map((obj, i) => {
+      return (
+        <DroppedObjList
+          key={i}
+          latitude={obj.latitude}
+          longitude={obj.longitude}
+          distance={obj.distance}
+        />
+      )
+    })
+  }
+
 
   getARNavigator() {
     return (
@@ -169,7 +197,7 @@ export default class DashboardScreen extends Component {
     let objX = Math.sin(radiansPhoneToObj) * distBetweenPhoneObj
     console.log('objZ', objZ, 'objX', objX)
 
-    return {posX: objX, posZ: objZ}
+    return {posX: objX, posZ: objZ, disPhoneObj: distBetweenPhoneObj}
 
     // let display = ` ${userLat} ${userLong} distBetweenPhoneObj: ${distBetweenPhoneObj}, headingPhoneToObj:
     // ${headingPhoneToObj}, objX: ${objX}, objZ: ${objZ}`
@@ -188,6 +216,12 @@ var styles = StyleSheet.create({
   },
   flex : {
     flex: 1,
+  },
+  titleBox : {
+    flex: 0,
+    flexDirection: 'row',
+    height: 90,
+    alignItems: 'center'
   },
   exitButtonFlex : {
     flex: 1,
