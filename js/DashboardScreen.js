@@ -104,11 +104,11 @@ export default class DashboardScreen extends Component {
         this._mapVirtual(userLat, userLong, objLat, objLong)
           .then((objPos)=>{
             return calculatedObjPos(objPos)
+          }).then(()=>{
+            return this.setState({
+              arOn: true,
+            })
           })
-
-        this.setState({
-          arOn: true,
-        })
       },
       (error) => this.setState({ navError: true }),
       { enableHighAccuracy: true, timeout: 20000, maximumAge: 10000 },
