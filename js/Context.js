@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Actions } from 'react-native-router-flux';
 
-var baseUrl = 'https://2fab3891.ngrok.io'
+var baseUrl = 'http://10.6.90.187:3101'
 
 export const AppContext = React.createContext();
 
@@ -100,11 +100,11 @@ export class AppProvider extends Component {
           currentLong: position.coords.longitude,
           navError: false,
         })
-
       },
       (error) => this.setState({ navError: true }),
       { enableHighAccuracy: true, timeout: 20000, maximumAge: 10000 },
     )
+    return 'hi'
   }
 
   setCoordinates(latitude, longitude){

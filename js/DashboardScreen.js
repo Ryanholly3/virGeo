@@ -35,10 +35,9 @@ export default class DashboardScreen extends Component {
     super(props);
 
     this.state = {
-      latitude: 37.78825,
-      longitude: -122.4324,
-      latitudeDelta: 0.0922,
-      longitudeDelta: 0.0421,
+      userLatitude: null,
+      userLongitude: null,
+
       arOn: false,
       user: '',
     };
@@ -77,6 +76,10 @@ export default class DashboardScreen extends Component {
           apiKey="912A3CB8-1A43-42D2-BFDF-2659B6DA962E"
           initialScene={{scene: ARSceneScreen}}
           worldAlignment={"GravityAndHeading"}
+          viroAppProps={{
+            latitude: this.state.userLatitude,
+            longitude: this.state.userLongitude,
+          }}
         />
         <View style={{flex: 0, flexDirection: 'row',}}>
           <TouchableOpacity style={styles.exitButtonFlex} onPress={() => this._exitAr()}>
@@ -89,22 +92,19 @@ export default class DashboardScreen extends Component {
     );
   }
 
-  enterAr(findCoordinates){
-    this.setState({
-      arOn: true
-    })
-    // findCoordinates()
+  enterAr(){
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        this.setState({
+          userLatitude: position.coords.latitude,
+          userLongitude: position.coords.longitude,
+          arOn: true
+        })
+      },
+      (error) => this.setState({ navError: true }),
+      { enableHighAccuracy: true, timeout: 20000, maximumAge: 10000 },
+    )
   }
-
-  // findCoordinates(setCoordinates){
-  //   navigator.geolocation.getCurrentPosition(
-  //     (position) => {
-  //         setCoordinates(position.coords.latitude, position.coords.longitude)
-  //     },
-  //     (error) => this.setState({ navError: true }),
-  //     { enableHighAccuracy: true, timeout: 20000, maximumAge: 10000 },
-  //   )
-  // }
 
   _exitAr(){
     this.setState({
@@ -118,7 +118,6 @@ var styles = StyleSheet.create({
   gridBackground :{
     height: '100%',
     width: '100%',
-    resizeMode: 'stretch',
     flex: 1,
     flexDirection: 'column',
     alignItems: 'center',

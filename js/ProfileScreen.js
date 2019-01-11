@@ -44,7 +44,6 @@ var styles = StyleSheet.create({
   gridBackground :{
     height: '100%',
     width: '100%',
-    resizeMode: 'stretch',
     flex: 1,
     flexDirection: 'column',
     alignItems: 'center',

@@ -42,8 +42,16 @@ export default class ARSceneScreen extends Component {
       diamond: false,
       stick: false,
 
-
+      userLatitude: null,
+      userLongitude: null,
     }
+  }
+
+  componentDidMount(){
+    this.setState({
+      userLatitude: this.props.sceneNavigator.viroAppProps.latitude,
+      userLongitude: this.props.sceneNavigator.viroAppProps.longitude,
+    })
   }
 
   render() {
@@ -87,6 +95,8 @@ export default class ARSceneScreen extends Component {
   }
 
   pennyRender(){
+    console.log('state', this.state.userLatitude)
+
     return (
       <AppConsumer>
         {({ user, currentLat, currentLong }) => (

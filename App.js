@@ -24,7 +24,7 @@ export default class App extends Component{
     return (
       <AppProvider>
         <AppConsumer>
-          {({ user, loggedIn, users, login }) =>(
+          {({ loggedIn, users, login }) =>(
             <Router>
               <Scene
                 key="root"
