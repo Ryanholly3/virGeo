@@ -44,6 +44,7 @@ export default class ARSceneScreen extends Component {
 
       userLatitude: null,
       userLongitude: null,
+      object: {}
     }
   }
 
@@ -51,19 +52,20 @@ export default class ARSceneScreen extends Component {
     this.setState({
       userLatitude: this.props.sceneNavigator.viroAppProps.latitude,
       userLongitude: this.props.sceneNavigator.viroAppProps.longitude,
+      object: this.props.sceneNavigator.viroAppProps.object
     })
   }
 
   render() {
-    if(this.state.gold === true){
+    if(this.state.object.object_name === 'gold'){
       return this.goldRender()
-    } else if (this.state.penny === true){
+    } else if (this.state.object.object_name === 'penny'){
       return this.pennyRender()
-    } else if (this.state.ruby === true){
+    } else if (this.state.object.object_name === 'ruby'){
       return this.rubyRender()
-    } else if (this.state.diamond === true){
+    } else if (this.state.object.object_name === 'diamond'){
       return this.diamondRender()
-    } else if (this.state.stick === true){
+    } else if (this.state.object.object_name === 'stick'){
       return this.stickRender()
     } else {
       return this.noItemRender()
@@ -199,42 +201,6 @@ export default class ARSceneScreen extends Component {
       <ViroARScene>
       </ViroARScene>
     )
-  }
-
-  latLongToDistanceAway = (lat1, long1, lat2, long2) =>{
-    var radiusEarth = 6371e3;
-
-    //convert degrees to radians
-    var lat1r = (lat1 * Math.PI)/180
-    var lat2r = (lat2 * Math.PI)/180
-
-    //difference lat and difference long in radians
-    var dlat = (lat2 - lat1) * Math.PI / 180
-    var dlong = (long2 - long1) * Math.PI / 180
-
-    var a = Math.sin(dlat/2) * Math.sin(dlat/2) + Math.cos(lat1r) * Math.cos(lat2r) * Math.sin(dlong/2) * Math.sin(dlong/2);
-    var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-    var d = radiusEarth * c
-    return d
-  }
-
-  bearingPhoneToObj = (lat1, long1, lat2, long2) =>{
-
-    //convert degrees to radians
-    var lat1r = (lat1 * Math.PI)/180
-    var lat2r = (lat2 * Math.PI)/180
-    var long1r = (long1 * Math.PI)/180
-    var long2r = (long2 * Math.PI)/180
-
-    //difference in long in radians
-    var dlong = ((long2 - long1) * Math.PI) / 180
-
-    var y = Math.sin(dlong) * Math.cos(lat2r);
-    var x = (Math.cos(lat1r) * Math.sin(lat2r)) - (Math.sin(lat1r) * Math.cos(lat2r) * Math.cos(dlong));
-    var brng = (Math.atan2(y, x) * 180) / Math.PI
-    //returned in degrees between -180 and +180
-    var result = (brng + 360) % 360
-    return result
   }
 
   _onClick = () => {

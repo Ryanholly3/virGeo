@@ -38,11 +38,13 @@ export default class DashboardScreen extends Component {
       userLatitude: null,
       userLongitude: null,
 
+      objUserDist: null,
+      angleFromNoth: null,
+      object: {},
+
       arOn: false,
       user: '',
     };
-
-    // this._exitAr = this._exitAr.bind(this);
 
   }
 
@@ -57,12 +59,13 @@ export default class DashboardScreen extends Component {
   dashboardMode(){
     return (
       <AppConsumer>
-        {({ user, findCoordinates, setCoordinates }) => (
+        {({ user, objToSearch }) => (
           <ImageBackground style={styles.gridBackground} source={gridBackground}>
             <Text>
-              DASHBOARD
+              DASHBOARD. list of objects here. On clicking object, change state to choose object.
+              decide whether to store this in this component or in context (objToSearch)
             </Text>
-            <Button title="Enter AR" onPress={() => this.enterAr(findCoordinates)}/>
+            <Button title="Enter AR" onPress={() => this.enterAr(objToSearch)}/>
           </ImageBackground>
         )}
       </AppConsumer>
@@ -79,6 +82,7 @@ export default class DashboardScreen extends Component {
           viroAppProps={{
             latitude: this.state.userLatitude,
             longitude: this.state.userLongitude,
+            object: this.state.object,
           }}
         />
         <View style={{flex: 0, flexDirection: 'row',}}>
@@ -92,12 +96,24 @@ export default class DashboardScreen extends Component {
     );
   }
 
-  enterAr(){
+  enterAr(objToSearch){
+    var objLat = objToSearch.latitude
+    var objLong = objToSearch.longitude
+
+    console.log(objLat, objLong)
     navigator.geolocation.getCurrentPosition(
       (position) => {
+
+        //THIS IS WHERE YOU SOLVE FOR POSITION OF OBJECT
+
+        var objUserDist = 0
+        var angleFromNorth = 0
+
         this.setState({
           userLatitude: position.coords.latitude,
           userLongitude: position.coords.longitude,
+          objUserDist: objUserDist,
+          angleFromNorth: angleFromNorth,
           arOn: true
         })
       },
@@ -110,6 +126,42 @@ export default class DashboardScreen extends Component {
     this.setState({
       arOn: false
     })
+  }
+
+  latLongToDistanceAway = (lat1, long1, lat2, long2) =>{
+    var radiusEarth = 6371e3;
+
+    //convert degrees to radians
+    var lat1r = (lat1 * Math.PI)/180
+    var lat2r = (lat2 * Math.PI)/180
+
+    //difference lat and difference long in radians
+    var dlat = (lat2 - lat1) * Math.PI / 180
+    var dlong = (long2 - long1) * Math.PI / 180
+
+    var a = Math.sin(dlat/2) * Math.sin(dlat/2) + Math.cos(lat1r) * Math.cos(lat2r) * Math.sin(dlong/2) * Math.sin(dlong/2);
+    var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+    var d = radiusEarth * c
+    return d
+  }
+
+  bearingPhoneToObj = (lat1, long1, lat2, long2) =>{
+
+    //convert degrees to radians
+    var lat1r = (lat1 * Math.PI)/180
+    var lat2r = (lat2 * Math.PI)/180
+    var long1r = (long1 * Math.PI)/180
+    var long2r = (long2 * Math.PI)/180
+
+    //difference in long in radians
+    var dlong = ((long2 - long1) * Math.PI) / 180
+
+    var y = Math.sin(dlong) * Math.cos(lat2r);
+    var x = (Math.cos(lat1r) * Math.sin(lat2r)) - (Math.sin(lat1r) * Math.cos(lat2r) * Math.cos(dlong));
+    var brng = (Math.atan2(y, x) * 180) / Math.PI
+    //returned in degrees between -180 and +180
+    var result = (brng + 360) % 360
+    return result
   }
 
 }

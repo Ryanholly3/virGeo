@@ -24,9 +24,6 @@ export class AppProvider extends Component {
       objToDrop: [],
       objToSearch: [],
     }
-
-    this.findCoordinates = this.findCoordinates.bind(this);
-
   }
 
   async componentDidMount() {
@@ -92,27 +89,6 @@ export class AppProvider extends Component {
       })
   }
 
-  findCoordinates =() =>{
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        this.setState({
-          currentLat: position.coords.latitude,
-          currentLong: position.coords.longitude,
-          navError: false,
-        })
-      },
-      (error) => this.setState({ navError: true }),
-      { enableHighAccuracy: true, timeout: 20000, maximumAge: 10000 },
-    )
-    return 'hi'
-  }
-
-  setCoordinates(latitude, longitude){
-    this.setState({
-      currentLat: latitude,
-      currentLong: longitude
-    })
-  }
 
   dropObj(objToDrop){
     let userObjId = objToDrop.user_object_id
@@ -198,18 +174,13 @@ export class AppProvider extends Component {
           objects: this.state.objects,
           droppedObjs: this.state.droppedObjs,
 
-          currentLat: this.state.currentLat,
-          currentLong: this.state.currentLong,
-
           objToDrop: this.state.objToDrop,
           objToSearch: this.state.objToSearch,
 
           logIn: this.logIn,
           logOut: this.logOut,
           pickUpObj: this.pickUpObj,
-          dropObj: this.dropObj,
-          findCoordinates: this.findCoordinates,
-          setCoordinates: this.setCoordinates
+          dropObj: this.dropObj
         }}
       >
         {children}
