@@ -65,7 +65,7 @@ export default class DashboardScreen extends Component {
               </Text>
             </View>
             <View style={{ flex: 0, height: '60%', width:'60%', flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}>
-              { this.makeTable(organizeDroppedObj) }
+              { this.makeTable(organizedDroppedObjs) }
             </View>
             <Button title="selectItem" onPress={()=> setObjToSearch(1)}/>
             <Button title="Enter AR" onPress={() => this.enterAr(objToSearch, calculatedObjPos)}/>
@@ -76,10 +76,8 @@ export default class DashboardScreen extends Component {
   }
 
 
-  makeTable = async(organizeDroppedObj) => {
-    var organized = await organizeDroppedObj()
-    console.log('organized', organized)
-    return organized.map((obj, i) => {
+  makeTable = (organizedDroppedObjs) => {
+    return organizedDroppedObjs.map((obj, i) => {
       return (
         <DroppedObjList
           key={i}
@@ -163,7 +161,6 @@ export default class DashboardScreen extends Component {
     var a = Math.sin(dlat/2) * Math.sin(dlat/2) + Math.cos(lat1r) * Math.cos(lat2r) * Math.sin(dlong/2) * Math.sin(dlong/2);
     var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
     var d = radiusEarth * c
-    console.log('distance from obj', d)
     return d
 
   }

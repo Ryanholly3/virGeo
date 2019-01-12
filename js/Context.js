@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Actions } from 'react-native-router-flux';
 
-var baseUrl = 'http://192.168.1.60:3101'
+var baseUrl = 'http://192.168.0.33:3101'
 
 export const AppContext = React.createContext();
 
@@ -29,6 +29,7 @@ export class AppProvider extends Component {
   }
 
   async componentDidMount() {
+
     const userResponse = await fetch(`${baseUrl}/users`)
     const objResponse = await fetch(`${baseUrl}/objects`)
     const droppedObjResponse = await fetch(`${baseUrl}/dropped_objects`)
@@ -36,13 +37,17 @@ export class AppProvider extends Component {
     const userjson = await userResponse.json();
     const objjson = await objResponse.json();
     const droppedObjjson = await droppedObjResponse.json();
+    const organizedDroppedObjs = await this.organizeDroppedObj(droppedObjjson.objects)
 
     this.setState({
       users: userjson.virgeo_users,
       objects: objjson.objects,
       droppedObjs: droppedObjjson.objects,
+      organizedDroppedObjs: organizedDroppedObjs,
     })
   }
+
+
 
   logIn = (userId) =>{
     fetch(`${baseUrl}/users/${userId}`)
@@ -111,49 +116,53 @@ export class AppProvider extends Component {
     })
   }
 
-  organizeDroppedObj = () =>{
-    var toBeOrganized = this.state.droppedObjs
+  organizeDroppedObj = (objs) =>{
+    console.log('triggered!!!!')
+    var toBeOrganized;
+    if (this.state.organizedDroppedObjs === []){
+      toBeOrganized = this.state.droppedObjs
+    } else {
+      toBeOrganized = objs
+    }
 
     navigator.geolocation.getCurrentPosition(
-      async (position) => {
+      (position) => {
         let userLat = position.coords.latitude
         let userLong = position.coords.longitude
-
+        let calcDistance = 0
         for(let i=0; i< toBeOrganized.length;i++){
-          let calcDistance = await latLongToDistanceAway(userLat, userLong, toBeOrganized[i].latitude, toBeOrganized[i].longitude)
+          calcDistance = latLongToDistanceAway(userLat, userLong, toBeOrganized[i].latitude, toBeOrganized[i].longitude)
           toBeOrganized[i].distance = calcDistance
         }
-        let organized = await selectionSort(toBeOrganized)
+        let organized = selectionSort(toBeOrganized)
         console.log('organized', organized)
         this.setState({
           organizedDroppedObjs: organized
         })
+
       },
       (error) => this.setState({ navError: true }),
-      { enableHighAccuracy: true, timeout: 20000, maximumAge: 10000 },
+      { enableHighAccuracy: true, timeout: 10000, maximumAge: 10000 },
     )
 
-    function selectionSort(array) {
-      let min = array[0].distance
-      let minPosition = 0
-      let start = 0
-      while(start < array.length-1){
-        for(let i=start; i < array.length; i++){
-          if(array[i].distance < min ){
-            min = array[i].distance
-            minPosition = i
+    return 'done'
+
+    function selectionSort(array){
+      for(var i = 0; i < array.length; i++){
+        var min = i;
+        for(var j = i+1; j < array.length; j++){
+          if(array[j].distance < array[min].distance){
+           min = j;
           }
         }
-        array[minPosition]= array[start]
-        array[start]= min
-        start++
-        min = array[start].distance
-        minPosition = start
+        var temp = array[i];
+        array[i] = array[min];
+        array[min] = temp;
       }
-      return array
-    }
+      return array;
+    };
 
-    latLongToDistanceAway = (lat1, long1, lat2, long2) =>{
+    function latLongToDistanceAway(lat1, long1, lat2, long2){
       var radiusEarth = 6371e3;
 
       //convert degrees to radians
@@ -166,11 +175,8 @@ export class AppProvider extends Component {
 
       var a = Math.sin(dlat/2) * Math.sin(dlat/2) + Math.cos(lat1r) * Math.cos(lat2r) * Math.sin(dlong/2) * Math.sin(dlong/2);
       var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-      var d = radiusEarth * c
-      console.log('distance from obj', d)
-      return d
+      return radiusEarth * c
     }
-
   }
 
   dropObj(objToDrop){
