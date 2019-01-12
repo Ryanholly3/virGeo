@@ -54,7 +54,7 @@ export default class DashboardScreen extends Component {
   dashboardMode(){
     return (
       <AppConsumer>
-        {({ setObjToSearch, droppedObjs, organizedDroppedObjs, organizeDroppedObj, objToSearch, userLat, userLong, calculatedObjPos, listSelect }) => (
+        {({ droppedObjs, organizedDroppedObjs, organizeDroppedObj, objToSearch, userLat, userLong, calculatedObjPos, listSelect }) => (
           <ImageBackground style={styles.gridBackground} source={gridBackground}>
             <View style={styles.titleBox}>
               <Text style={{ fontSize: 40, fontWeight: 'bold', fontFamily: 'Helvetica' }}>
@@ -117,7 +117,7 @@ export default class DashboardScreen extends Component {
   getARNavigator() {
     return (
       <AppConsumer>
-        {({ setObjToSearch, objToSearch, calculatedObjPos }) => (
+        {({ objToSearch, calculatedObjPos }) => (
           <View style={styles.flex}>
             <ViroARSceneNavigator
               apiKey="912A3CB8-1A43-42D2-BFDF-2659B6DA962E"
@@ -141,7 +141,7 @@ export default class DashboardScreen extends Component {
   }
 
   enterAR(objToSearch, userLat, userLong, calculatedObjPos){
-    console.log('ENTERING AR')
+    console.log('objToSearch', objToSearch, 'userLat', userLat, 'userLong', userLong)
 
     var objLat = objToSearch.latitude
     var objLong = objToSearch.longitude

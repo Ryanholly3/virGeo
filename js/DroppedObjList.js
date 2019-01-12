@@ -35,7 +35,7 @@ class DroppedObjList extends Component {
     if(this.props.listSelect === this.props.objectId){
       return (
         <AppConsumer>
-          {({ setObjToSearch, objToSearch, calculatedObjPos, listSelectFunc }) => (
+          {({ listSelectFunc, objToSearch, calculatedObjPos }) => (
             <TouchableOpacity onPress={() => listSelectFunc(this.props.objectId)} style={{ flex: 1, alignSelf: 'stretch', flexDirection: 'row', backgroundColor: 'gray'}}>
               <View style={styles.tableItem}>
                 <Text>
@@ -62,7 +62,7 @@ class DroppedObjList extends Component {
     } else {
       return (
         <AppConsumer>
-          {({ setObjToSearch, listSelectFunc }) => (
+          {({ listSelectFunc }) => (
             <TouchableOpacity onPress={() => listSelectFunc(this.props.objectId)} style={{ flex: 1, alignSelf: 'stretch', flexDirection: 'row', backgroundColor: 'lightgray'}}>
               <View style={styles.tableItem}>
                 <Text>

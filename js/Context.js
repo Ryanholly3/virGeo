@@ -44,7 +44,7 @@ export class AppProvider extends Component {
       users: userjson.virgeo_users,
       objects: objjson.objects,
       droppedObjs: droppedObjjson.objects,
-      organizedDroppedObjs: organizedDroppedObjs,
+      objToSearch: organizedDroppedObjs[0],
     })
   }
 
@@ -97,21 +97,6 @@ export class AppProvider extends Component {
       })
   }
 
-  setObjToSearch = (objId) =>{
-    let objToSearch = {}
-    console.log('objIdToSearch', objId)
-
-    for(let i=0; i < this.state.droppedObjs.length; i++){
-      if(objId === this.state.droppedObjs[i].id){
-        objToSearch = this.state.droppedObjs[i]
-      }
-    }
-    console.log('obj to search', objToSearch)
-    this.setState({
-      objToSearch: objToSearch
-    })
-  }
-
   calculatedObjPos = (objPosition) =>{
     this.setState({
       objPosition: objPosition
@@ -136,13 +121,15 @@ export class AppProvider extends Component {
           calcDistance = latLongToDistanceAway(userLat, userLong, toBeOrganized[i].latitude, toBeOrganized[i].longitude)
           toBeOrganized[i].distance = calcDistance
         }
-        let organized = selectionSort(toBeOrganized)
+        var organized = selectionSort(toBeOrganized)
         console.log('organized', organized)
         this.setState({
           organizedDroppedObjs: organized,
           userLat: userLat,
           userLong: userLong,
         })
+
+      return organized
 
       },
       (error) => this.setState({ navError: true }),
@@ -184,8 +171,18 @@ export class AppProvider extends Component {
   }
 
   listSelectFunc = (objId) =>{
+    var objToSearch = {}
+
+    for(let i=0; i < this.state.droppedObjs.length; i++){
+      if(objId === this.state.droppedObjs[i].id){
+        objToSearch = this.state.droppedObjs[i]
+      }
+    }
+
+    console.log('this.state.obj' , 'obj to search', objToSearch)
     this.setState({
-      listSelect: objId
+      listSelect: objId,
+      objToSearch: objToSearch
     })
   }
 
@@ -286,7 +283,6 @@ export class AppProvider extends Component {
           pickUpObj: this.pickUpObj,
           dropObj: this.dropObj,
           calculatedObjPos: this.calculatedObjPos,
-          setObjToSearch: this.setObjToSearch,
           organizeDroppedObj: this.organizeDroppedObj,
           listSelectFunc: this.listSelectFunc,
         }}
