@@ -54,7 +54,7 @@ export default class DashboardScreen extends Component {
   dashboardMode(){
     return (
       <AppConsumer>
-        {({ setObjToSearch, droppedObjs, organizedDroppedObjs, organizeDroppedObj, objToSearch, calculatedObjPos }) => (
+        {({ setObjToSearch, droppedObjs, organizedDroppedObjs, organizeDroppedObj, objToSearch, calculatedObjPos, listSelect }) => (
           <ImageBackground style={styles.gridBackground} source={gridBackground}>
             <View style={styles.titleBox}>
               <Text style={{ fontSize: 40, fontWeight: 'bold', fontFamily: 'Helvetica' }}>
@@ -65,7 +65,7 @@ export default class DashboardScreen extends Component {
               </Text>
             </View>
             <View style={{ flex: 0, height: '60%', width:'60%', flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}>
-              { this.makeTable(organizedDroppedObjs, setObjToSearch) }
+              { this.makeTable(organizedDroppedObjs, listSelect) }
             </View>
             <Button title="selectItem" onPress={()=> setObjToSearch(1)}/>
             <Button title="Enter AR" onPress={() => this.enterAr(objToSearch, calculatedObjPos)}/>
@@ -76,7 +76,7 @@ export default class DashboardScreen extends Component {
   }
 
 
-  makeTable = (organizedDroppedObjs) => {
+  makeTable = (organizedDroppedObjs, listSelect) => {
     return organizedDroppedObjs.map((obj, i) => {
       return (
         <DroppedObjList
@@ -85,6 +85,7 @@ export default class DashboardScreen extends Component {
           latitude={obj.latitude}
           longitude={obj.longitude}
           distance={obj.distance}
+          listSelect={listSelect}
         />
       )
     })

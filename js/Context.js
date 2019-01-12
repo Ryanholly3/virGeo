@@ -17,6 +17,7 @@ export class AppProvider extends Component {
       objects: [],
       droppedObjs: [],
       organizedDroppedObjs: [],
+      listSelect: 0,
 
       currentLat: 0,
       currentLong: 0,
@@ -180,6 +181,12 @@ export class AppProvider extends Component {
     }
   }
 
+  listSelectFunc = (objId) =>{
+    this.setState({
+      listSelect: objId
+    })
+  }
+
   dropObj(objToDrop){
     let userObjId = objToDrop.user_object_id
 
@@ -264,6 +271,7 @@ export class AppProvider extends Component {
           objects: this.state.objects,
           droppedObjs: this.state.droppedObjs,
           organizedDroppedObjs: this.state.organizedDroppedObjs,
+          listSelect: this.state.listSelect,
 
           objToDrop: this.state.objToDrop,
           objToSearch: this.state.objToSearch,
@@ -275,7 +283,8 @@ export class AppProvider extends Component {
           dropObj: this.dropObj,
           calculatedObjPos: this.calculatedObjPos,
           setObjToSearch: this.setObjToSearch,
-          organizeDroppedObj: this.organizeDroppedObj
+          organizeDroppedObj: this.organizeDroppedObj,
+          listSelectFunc: this.listSelectFunc,
         }}
       >
         {children}
