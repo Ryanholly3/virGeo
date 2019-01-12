@@ -54,7 +54,7 @@ export default class DashboardScreen extends Component {
   dashboardMode(){
     return (
       <AppConsumer>
-        {({ setObjToSearch, droppedObjs, organizedDroppedObjs, organizeDroppedObj, objToSearch, calculatedObjPos, listSelect }) => (
+        {({ setObjToSearch, droppedObjs, organizedDroppedObjs, organizeDroppedObj, objToSearch, userLat, userLong, calculatedObjPos, listSelect }) => (
           <ImageBackground style={styles.gridBackground} source={gridBackground}>
             <View style={styles.titleBox}>
               <Text style={{ fontSize: 40, fontWeight: 'bold', fontFamily: 'Helvetica' }}>
@@ -64,11 +64,32 @@ export default class DashboardScreen extends Component {
                 BOARD
               </Text>
             </View>
-            <View style={{ flex: 0, height: '60%', width:'60%', flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}>
+            <View style={{ flex: 0, height: '60%', width:'80%', flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}>
+              <View style={{ flex: 1, alignSelf: 'stretch', flexDirection: 'row', backgroundColor: 'blue'}}>
+                <View style={styles.tableHeader}>
+                  <Text style={{ fontWeight: 'bold', color: 'white'}}>
+                    Latitude
+                  </Text>
+                </View>
+                <View style={styles.tableHeader}>
+                  <Text style={{ fontWeight: 'bold', color: 'white'}}>
+                    Longitude
+                  </Text>
+                </View>
+                <View style={styles.tableHeader}>
+                  <Text style={{ fontWeight: 'bold', color: 'white'}}>
+                    Dist (m)
+                  </Text>
+                </View>
+                <View style={styles.tableHeader}>
+                  <Text style={{ fontWeight: 'bold', color: 'white'}}>
+                    AR MODE
+                  </Text>
+                </View>
+              </View>
               { this.makeTable(organizedDroppedObjs, listSelect) }
             </View>
-            <Button title="selectItem" onPress={()=> setObjToSearch(1)}/>
-            <Button title="Enter AR" onPress={() => this.enterAr(objToSearch, calculatedObjPos)}/>
+            <Button title="GO" onPress={() => this.enterAR(objToSearch, userLat, userLong, calculatedObjPos)}/>
           </ImageBackground>
         )}
       </AppConsumer>
@@ -86,6 +107,7 @@ export default class DashboardScreen extends Component {
           longitude={obj.longitude}
           distance={obj.distance}
           listSelect={listSelect}
+          enterAR={this.enterAR}
         />
       )
     })
@@ -118,29 +140,21 @@ export default class DashboardScreen extends Component {
     );
   }
 
-  enterAr(objToSearch, calculatedObjPos){
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
+  enterAR(objToSearch, userLat, userLong, calculatedObjPos){
+    console.log('ENTERING AR')
 
-        var objLat = objToSearch.latitude
-        var objLong = objToSearch.longitude
-        var userLat = position.coords.latitude
-        var userLong = position.coords.longitude
+    var objLat = objToSearch.latitude
+    var objLong = objToSearch.longitude
 
-        console.log('triggered')
+    this._mapVirtual(userLat, userLong, objLat, objLong)
+      .then((objPos)=>{
+        return calculatedObjPos(objPos)
+      }).then(()=>{
+        return this.setState({
+          arOn: true,
+        })
+      })
 
-        this._mapVirtual(userLat, userLong, objLat, objLong)
-          .then((objPos)=>{
-            return calculatedObjPos(objPos)
-          }).then(()=>{
-            return this.setState({
-              arOn: true,
-            })
-          })
-      },
-      (error) => this.setState({ navError: true }),
-      { enableHighAccuracy: true, timeout: 20000, maximumAge: 10000 },
-    )
   }
 
   _exitAr(){
@@ -234,4 +248,11 @@ var styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: 'red',
   },
+  tableHeader : {
+    flex: 1,
+    alignSelf: 'stretch',
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+
 });

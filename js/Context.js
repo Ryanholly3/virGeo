@@ -17,10 +17,10 @@ export class AppProvider extends Component {
       objects: [],
       droppedObjs: [],
       organizedDroppedObjs: [],
-      listSelect: 0,
+      listSelect: 1,
 
-      currentLat: 0,
-      currentLong: 0,
+      userLat: 0,
+      userLong: 0,
       navError: false,
 
       objToDrop: [],
@@ -68,8 +68,8 @@ export class AppProvider extends Component {
     this.setState({
       loggedIn: false,
       user: [],
-      currentLat: 0,
-      currentLong: 0,
+      userLat: 0,
+      userLong: 0,
       navError: false,
       objToDrop: [],
       objToSearch: [],
@@ -119,7 +119,6 @@ export class AppProvider extends Component {
   }
 
   organizeDroppedObj = (objs) =>{
-    console.log('triggered!!!!')
     var toBeOrganized;
     if (this.state.organizedDroppedObjs === []){
       toBeOrganized = this.state.droppedObjs
@@ -127,10 +126,11 @@ export class AppProvider extends Component {
       toBeOrganized = objs
     }
 
-    navigator.geolocation.getCurrentPosition(
+    navigator.geolocation.watchPosition(
       (position) => {
         let userLat = position.coords.latitude
         let userLong = position.coords.longitude
+
         let calcDistance = 0
         for(let i=0; i< toBeOrganized.length;i++){
           calcDistance = latLongToDistanceAway(userLat, userLong, toBeOrganized[i].latitude, toBeOrganized[i].longitude)
@@ -139,12 +139,14 @@ export class AppProvider extends Component {
         let organized = selectionSort(toBeOrganized)
         console.log('organized', organized)
         this.setState({
-          organizedDroppedObjs: organized
+          organizedDroppedObjs: organized,
+          userLat: userLat,
+          userLong: userLong,
         })
 
       },
       (error) => this.setState({ navError: true }),
-      { enableHighAccuracy: true, timeout: 10000, maximumAge: 10000 },
+      { enableHighAccuracy: true, distanceFilter: 1, timeout: 10000, maximumAge: 10000 },
     )
 
     return 'done'
@@ -193,8 +195,8 @@ export class AppProvider extends Component {
     navigator.geolocation.getCurrentPosition(
       (position) => {
         this.setState({
-          currentLat: position.coords.latitude,
-          currentLong: position.coords.longitude,
+          userLat: position.coords.latitude,
+          userLong: position.coords.longitude,
         })
 
         let obj = {
@@ -266,6 +268,8 @@ export class AppProvider extends Component {
         value={{
           loggedIn: this.state.loggedIn,
           user: this.state.user,
+          userLat: this.state.userLat,
+          userLong: this.state.userLong,
 
           users: this.state.users,
           objects: this.state.objects,

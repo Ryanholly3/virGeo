@@ -25,28 +25,35 @@ class DroppedObjList extends Component {
   }
 
   render() {
+    var tooFar;
+    if(this.props.distance < 900){
+      tooFar = false
+    } else {
+      tooFar = true
+    }
+
     if(this.props.listSelect === this.props.objectId){
       return (
         <AppConsumer>
-          {({ setObjToSearch, listSelectFunc }) => (
+          {({ setObjToSearch, objToSearch, calculatedObjPos, listSelectFunc }) => (
             <TouchableOpacity onPress={() => listSelectFunc(this.props.objectId)} style={{ flex: 1, alignSelf: 'stretch', flexDirection: 'row', backgroundColor: 'gray'}}>
-              <View style={{ flex: 1, alignSelf: 'stretch' }}>
+              <View style={styles.tableItem}>
                 <Text>
-                  {this.props.latitude}
+                  {this.props.latitude.toFixed(4)}
                 </Text>
               </View>
-              <View style={{ flex: 1, alignSelf: 'stretch' }}>
+              <View style={styles.tableItem}>
                 <Text>
-                  {this.props.longitude}
+                  {this.props.longitude.toFixed(4)}
                 </Text>
               </View>
-              <View style={{ flex: 1, alignSelf: 'stretch' }}>
+              <View style={styles.tableItem}>
                 <Text>
-                  {this.props.distance}
+                  {this.props.distance.toFixed(1)}
                 </Text>
               </View>
-              <View style={{ flex: 1, alignSelf: 'stretch' }}>
-                <Button title='GO' disabled={true} onPress={()=> setObjToSearch(this.props.objectId)}/>
+              <View style={styles.tableItem}>
+                { this.closeEnoughForAr(tooFar, this.props.enterAR, objToSearch, calculatedObjPos) }
               </View>
             </TouchableOpacity>
           )}
@@ -57,23 +64,22 @@ class DroppedObjList extends Component {
         <AppConsumer>
           {({ setObjToSearch, listSelectFunc }) => (
             <TouchableOpacity onPress={() => listSelectFunc(this.props.objectId)} style={{ flex: 1, alignSelf: 'stretch', flexDirection: 'row', backgroundColor: 'lightgray'}}>
-              <View style={{ flex: 1, alignSelf: 'stretch' }}>
+              <View style={styles.tableItem}>
                 <Text>
-                  {this.props.latitude}
+                  {this.props.latitude.toFixed(4)}
                 </Text>
               </View>
-              <View style={{ flex: 1, alignSelf: 'stretch' }}>
+              <View style={styles.tableItem}>
                 <Text>
-                  {this.props.longitude}
+                  {this.props.longitude.toFixed(4)}
                 </Text>
               </View>
-              <View style={{ flex: 1, alignSelf: 'stretch' }}>
+              <View style={styles.tableItem}>
                 <Text>
-                  {this.props.distance}
+                  {this.props.distance.toFixed(1)}
                 </Text>
               </View>
-              <View style={{ flex: 1, alignSelf: 'stretch' }}>
-                <Button title='GO' onPress={()=> setObjToSearch(this.props.objectId)}/>
+              <View style={styles.tableItem}>
               </View>
             </TouchableOpacity>
           )}
@@ -81,6 +87,30 @@ class DroppedObjList extends Component {
       );
     }
   }
+
+  closeEnoughForAr = (tooFar, enterAR, objToSearch, calculatedObjPos) =>{
+    if (tooFar === false){
+      return(
+        <Button title="GO" onPress={() => enterAR(objToSearch, calculatedObjPos)}/>
+      )
+    } else {
+      return (
+        <Text>
+          Too Far!
+        </Text>
+      )
+    }
+  }
+
 }
+
+var styles = StyleSheet.create({
+tableItem : {
+  flex: 1,
+  alignSelf: 'stretch',
+  alignItems: 'center',
+  justifyContent: 'center'
+},
+})
 
 export default DroppedObjList
