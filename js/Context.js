@@ -98,6 +98,7 @@ export class AppProvider extends Component {
 
   setObjToSearch = (objId) =>{
     let objToSearch = {}
+    console.log('objIdToSearch', objId)
 
     for(let i=0; i < this.state.droppedObjs.length; i++){
       if(objId === this.state.droppedObjs[i].id){

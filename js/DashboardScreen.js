@@ -65,7 +65,7 @@ export default class DashboardScreen extends Component {
               </Text>
             </View>
             <View style={{ flex: 0, height: '60%', width:'60%', flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}>
-              { this.makeTable(organizedDroppedObjs) }
+              { this.makeTable(organizedDroppedObjs, setObjToSearch) }
             </View>
             <Button title="selectItem" onPress={()=> setObjToSearch(1)}/>
             <Button title="Enter AR" onPress={() => this.enterAr(objToSearch, calculatedObjPos)}/>
@@ -81,6 +81,7 @@ export default class DashboardScreen extends Component {
       return (
         <DroppedObjList
           key={i}
+          objectId={obj.id}
           latitude={obj.latitude}
           longitude={obj.longitude}
           distance={obj.distance}
