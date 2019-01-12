@@ -38,22 +38,19 @@ class DroppedObjList extends Component {
           {({ listSelectFunc, objToSearch, calculatedObjPos }) => (
             <TouchableOpacity onPress={() => listSelectFunc(this.props.objectId)} style={{ flex: 1, alignSelf: 'stretch', flexDirection: 'row', backgroundColor: 'gray'}}>
               <View style={styles.tableItem}>
-                <Text>
+                <Text style={styles.textStyles}>
                   {this.props.latitude.toFixed(4)}
                 </Text>
               </View>
               <View style={styles.tableItem}>
-                <Text>
+                <Text style={styles.textStyles}>
                   {this.props.longitude.toFixed(4)}
                 </Text>
               </View>
               <View style={styles.tableItem}>
-                <Text>
+                <Text style={styles.textStyles}>
                   {this.props.distance.toFixed(1)}
                 </Text>
-              </View>
-              <View style={styles.tableItem}>
-                { this.closeEnoughForAr(tooFar, this.props.enterAR, objToSearch, calculatedObjPos) }
               </View>
             </TouchableOpacity>
           )}
@@ -65,21 +62,19 @@ class DroppedObjList extends Component {
           {({ listSelectFunc }) => (
             <TouchableOpacity onPress={() => listSelectFunc(this.props.objectId)} style={{ flex: 1, alignSelf: 'stretch', flexDirection: 'row', backgroundColor: 'lightgray'}}>
               <View style={styles.tableItem}>
-                <Text>
+                <Text style={styles.textStyles}>
                   {this.props.latitude.toFixed(4)}
                 </Text>
               </View>
               <View style={styles.tableItem}>
-                <Text>
+                <Text style={styles.textStyles}>
                   {this.props.longitude.toFixed(4)}
                 </Text>
               </View>
               <View style={styles.tableItem}>
-                <Text>
+                <Text style={styles.textStyles}>
                   {this.props.distance.toFixed(1)}
                 </Text>
-              </View>
-              <View style={styles.tableItem}>
               </View>
             </TouchableOpacity>
           )}
@@ -87,21 +82,6 @@ class DroppedObjList extends Component {
       );
     }
   }
-
-  closeEnoughForAr = (tooFar, enterAR, objToSearch, calculatedObjPos) =>{
-    if (tooFar === false){
-      return(
-        <Button title="GO" onPress={() => enterAR(objToSearch, calculatedObjPos)}/>
-      )
-    } else {
-      return (
-        <Text>
-          Too Far!
-        </Text>
-      )
-    }
-  }
-
 }
 
 var styles = StyleSheet.create({
@@ -110,6 +90,9 @@ tableItem : {
   alignSelf: 'stretch',
   alignItems: 'center',
   justifyContent: 'center'
+},
+textStyles : {
+  fontSize: 15,
 },
 })
 

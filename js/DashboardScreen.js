@@ -67,35 +67,29 @@ export default class DashboardScreen extends Component {
             <View style={{ flex: 0, height: '60%', width:'80%', flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}>
               <View style={{ flex: 1, alignSelf: 'stretch', flexDirection: 'row', backgroundColor: 'blue'}}>
                 <View style={styles.tableHeader}>
-                  <Text style={{ fontWeight: 'bold', color: 'white'}}>
+                  <Text style={styles.headerText}>
                     Latitude
                   </Text>
                 </View>
                 <View style={styles.tableHeader}>
-                  <Text style={{ fontWeight: 'bold', color: 'white'}}>
+                  <Text style={styles.headerText}>
                     Longitude
                   </Text>
                 </View>
                 <View style={styles.tableHeader}>
-                  <Text style={{ fontWeight: 'bold', color: 'white'}}>
+                  <Text style={styles.headerText}>
                     Dist (m)
-                  </Text>
-                </View>
-                <View style={styles.tableHeader}>
-                  <Text style={{ fontWeight: 'bold', color: 'white'}}>
-                    AR MODE
                   </Text>
                 </View>
               </View>
               { this.makeTable(organizedDroppedObjs, listSelect) }
+              { this.enterArButton(objToSearch, userLat, userLong, calculatedObjPos) }
             </View>
-            <Button title="GO" onPress={() => this.enterAR(objToSearch, userLat, userLong, calculatedObjPos)}/>
           </ImageBackground>
         )}
       </AppConsumer>
     );
   }
-
 
   makeTable = (organizedDroppedObjs, listSelect) => {
     return organizedDroppedObjs.map((obj, i) => {
@@ -107,12 +101,35 @@ export default class DashboardScreen extends Component {
           longitude={obj.longitude}
           distance={obj.distance}
           listSelect={listSelect}
-          enterAR={this.enterAR}
         />
       )
     })
   }
 
+  enterArButton = (objToSearch, userLat, userLong, calculatedObjPos)=>{
+    console.log('distance', objToSearch.distance)
+    if(objToSearch.distance < 900){
+      return(
+        <View style={styles.arButtonFlex}>
+          <TouchableOpacity style={{width: '100%'}} onPress={() => this.enterAR(objToSearch, userLat, userLong, calculatedObjPos)}>
+            <View style={styles.arButton1}>
+              <Text style={{color: 'white'}}>ENTER AR MODE</Text>
+            </View>
+          </TouchableOpacity>
+        </View>
+      )
+    } else {
+      return (
+        <View style={styles.arButtonFlex}>
+          <TouchableOpacity disabled={true} style={{width: '100%'}} onPress={() => this.enterAR(objToSearch, userLat, userLong, calculatedObjPos)}>
+            <View style={styles.arButton2}>
+              <Text style={{color: 'white'}}>TOO FAR AWAY</Text>
+            </View>
+          </TouchableOpacity>
+        </View>
+      )
+    }
+  }
 
   getARNavigator() {
     return (
@@ -253,6 +270,31 @@ var styles = StyleSheet.create({
     alignSelf: 'stretch',
     alignItems: 'center',
     justifyContent: 'center'
+  },
+  headerText : {
+    fontSize: 15,
+    fontWeight: 'bold',
+    color: 'white'
+  },
+  arButtonFlex : {
+    borderWidth: 2,
+    height: 40,
+    width: '100%',
+    flex: 0,
+    flexDirection: 'row',
+    alignItems: 'center'
+  },
+  arButton1 : {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'green',
+  },
+  arButton2 : {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'red',
   },
 
 });

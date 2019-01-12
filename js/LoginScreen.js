@@ -141,9 +141,9 @@ export default class LoginScreen extends Component {
               </Text>
             </View>
             <View style={styles.captionBox}>
-              <Text>a </Text><Text style={{fontWeight: 'bold'}}>vir</Text><Text>tual </Text>
-              <Text style={{color: 'gray', fontWeight: 'bold'}}>geo</Text>
-              <Text>
+              <Text style={{fontSize: 18}}>a </Text><Text style={{fontSize: 18, fontWeight: 'bold'}}>vir</Text><Text style={{fontSize: 18}}>tual </Text>
+              <Text style={{ fontSize: 18, color: 'gray', fontWeight: 'bold'}}>geo</Text>
+              <Text style={{fontSize: 18}}>
                 caching app
               </Text>
             </View>
