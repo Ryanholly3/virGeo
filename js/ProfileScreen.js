@@ -28,11 +28,14 @@ export default class ProfileScreen extends Component {
       <AppConsumer>
         {({ user, objects, droppedObjs }) => (
           <ImageBackground style={styles.gridBackground} source={gridBackground}>
-            <View>
-              <Text>
-                {droppedObjs[0].latitude}
-              </Text>
-            </View>
+          <View style={styles.titleBox}>
+            <Text style={{ fontSize: 50, fontWeight: 'bold', fontFamily: 'Helvetica' }}>
+              Hello,
+            </Text><Text> </Text>
+            <Text style={{ fontSize: 50, fontWeight: 'bold', fontFamily: 'Helvetica', color: 'gray' }}>
+              {user[0].user_name}
+            </Text><Text style={{ fontSize: 50, fontWeight: 'bold', fontFamily: 'Helvetica' }}>!</Text>
+          </View>
           </ImageBackground>
         )}
       </AppConsumer>
@@ -49,17 +52,11 @@ var styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center'
   },
-  outer : {
-    flex : 1,
+  titleBox : {
+    flex: 0,
     flexDirection: 'row',
-    alignItems:'center',
-    backgroundColor: "black",
-  },
-  inner: {
-    flex : 1,
-    flexDirection: 'column',
-    alignItems:'center',
-    backgroundColor: "black",
+    height: 90,
+    alignItems: 'center'
   },
   titleText: {
     paddingTop: 30,
