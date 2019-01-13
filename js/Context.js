@@ -12,6 +12,7 @@ export class AppProvider extends Component {
     this.state = {
       loggedIn: false,
       user: [],
+      avatar: '',
 
       users: [],
       objects: [],
@@ -54,9 +55,12 @@ export class AppProvider extends Component {
     fetch(`${baseUrl}/users/${userId}`)
       .then(response => response.json())
       .then(json => {
+        let avatar = json.user[0].avatar_info[0].avatar_name
+
         return this.setState({
           user: json.user,
           loggedIn: true,
+          avatar: avatar,
         })
       })
       .then(()=>{
@@ -68,6 +72,7 @@ export class AppProvider extends Component {
     this.setState({
       loggedIn: false,
       user: [],
+      avatar: '',
       userLat: 0,
       userLong: 0,
       navError: false,
@@ -267,6 +272,7 @@ export class AppProvider extends Component {
           user: this.state.user,
           userLat: this.state.userLat,
           userLong: this.state.userLong,
+          avatar: this.state.avatar,
 
           users: this.state.users,
           objects: this.state.objects,
