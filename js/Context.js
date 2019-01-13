@@ -18,6 +18,7 @@ export class AppProvider extends Component {
       objects: [],
       droppedObjs: [],
       organizedDroppedObjs: [],
+      profileListSelect: 1,
       listSelect: 1,
 
       userLat: 0,
@@ -184,10 +185,27 @@ export class AppProvider extends Component {
       }
     }
 
-    console.log('this.state.obj' , 'obj to search', objToSearch)
     this.setState({
       listSelect: objId,
       objToSearch: objToSearch
+    })
+  }
+
+  profileListSelectFunc = (objId) =>{
+    var objToDrop = {}
+    var userObjects = this.state.user[0].objects
+
+    console.log('obj to drop', objId)
+    for(let i=0; i < userObjects.length; i++){
+      if(objId === userObjects[i].object_id){
+        objToDrop = userObjects[i]
+      }
+    }
+
+    console.log('this.state.obj' , 'obj to drop', objToDrop)
+    this.setState({
+      profileListSelect: objId,
+      objToDrop: objToDrop
     })
   }
 
@@ -279,6 +297,7 @@ export class AppProvider extends Component {
           droppedObjs: this.state.droppedObjs,
           organizedDroppedObjs: this.state.organizedDroppedObjs,
           listSelect: this.state.listSelect,
+          profileListSelect: this.state.profileListSelect,
 
           objToDrop: this.state.objToDrop,
           objToSearch: this.state.objToSearch,
@@ -291,6 +310,7 @@ export class AppProvider extends Component {
           calculatedObjPos: this.calculatedObjPos,
           organizeDroppedObj: this.organizeDroppedObj,
           listSelectFunc: this.listSelectFunc,
+          profileListSelectFunc: this.profileListSelectFunc
         }}
       >
         {children}

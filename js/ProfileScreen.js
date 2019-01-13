@@ -17,6 +17,8 @@ import { AppConsumer } from './Context';
 import { Actions } from 'react-native-router-flux';
 const gridBackground = require('./res/grid_background.png')
 
+import UserObjList from './UserObjList';
+
 
 export default class ProfileScreen extends Component {
 
@@ -27,7 +29,7 @@ export default class ProfileScreen extends Component {
   render() {
     return (
       <AppConsumer>
-        {({ user, avatar, objects, droppedObjs }) => (
+        {({ user, avatar, objects, droppedObjs, profileListSelect }) => (
           <ImageBackground style={styles.gridBackground} source={gridBackground}>
           <View style={styles.titleBox}>
             <Text style={{ fontSize: 40, fontWeight: 'bold', fontFamily: 'Helvetica' }}>
@@ -51,10 +53,45 @@ export default class ProfileScreen extends Component {
               </Text>
             </View>
           </View>
+          <View style={{ flex: 0, height: '40%', width:'80%', flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}>
+            <View style={{ flex: 1, alignSelf: 'stretch', flexDirection: 'row', backgroundColor: 'blue'}}>
+              <View style={styles.tableHeader}>
+                <Text style={styles.headerText}>
+                  Image
+                </Text>
+              </View>
+              <View style={styles.tableHeader}>
+                <Text style={styles.headerText}>
+                  Object Name
+                </Text>
+              </View>
+              <View style={styles.tableHeader}>
+                <Text style={styles.headerText}>
+                  Date Picked Up
+                </Text>
+              </View>
+            </View>
+            { this.makeTable(user, profileListSelect) }
+          </View>
           </ImageBackground>
         )}
       </AppConsumer>
     );
+  }
+
+  makeTable = (user, profileListSelect) => {
+    let userObjects = user[0].objects
+
+    return userObjects.map((obj, i) => {
+      return (
+        <UserObjList
+          key={i}
+          objectId={obj.object_id}
+          objectName={obj.object_name}
+          profileListSelect={profileListSelect}
+        />
+      )
+    })
   }
 
   renderImage = (avatar) =>{
@@ -197,5 +234,16 @@ var styles = StyleSheet.create({
     height: 100,
     width: 100,
     margin: 10,
+  },
+  tableHeader : {
+    flex: 1,
+    alignSelf: 'stretch',
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  headerText : {
+    fontSize: 15,
+    fontWeight: 'bold',
+    color: 'white'
   },
 });
