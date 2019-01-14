@@ -85,6 +85,18 @@ export default class ARSceneScreen extends Component {
               loop: true
             }}
           />
+          <Viro3DObject source={require('./res/arrow/scene.gltf')}
+            type="GLTF"
+            position={[objPosition.posX, 3, objPosition.posZ]}
+            visible={!this.state.fireworks}
+            rotation={[90,0,0]}
+            scale={[0.5, 0.5, 0.5]}
+            animation={{
+              name:'animateArrow',
+              run: true,
+              loop: true
+            }}
+          />
           <ViroParticleEmitter
             position={[objPosition.posX, 4, objPosition.posZ]}
             duration={1200}
@@ -498,6 +510,11 @@ ViroMaterials.createMaterials({
 ViroAnimations.registerAnimations({
     animateImage:{properties:{rotateY:"+=360"},
                   duration: 4000},
+    moveDown:{properties:{positionY:"-=1"},
+                  duration: 1000},
+    moveUp:{properties:{positionY:"+=1"},
+                  duration: 1000},
+    animateArrow:[["moveDown", "moveUp"],]
 });
 
 
