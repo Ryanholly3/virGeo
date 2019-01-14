@@ -108,6 +108,8 @@ export class AppProvider extends Component {
   }
 
   calculatedObjPos = (objPosition) =>{
+    console.log(objPosition)
+
     this.setState({
       objPosition: objPosition
     })
