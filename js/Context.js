@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Actions } from 'react-native-router-flux';
 
-var baseUrl = 'http://192.168.0.33:3101'
+var baseUrl = 'http://10.6.90.187:3101'
 
 export const AppContext = React.createContext();
 

@@ -36,7 +36,7 @@ export default class ARSceneScreen extends Component {
   constructor() {
     super();
     this.state={
-      objToSearch: {}
+      fireworks: false,
     }
   }
 
@@ -62,6 +62,16 @@ export default class ARSceneScreen extends Component {
   goldRender(){
     var exitArFunc = this.props.sceneNavigator.viroAppProps.exitAr
 
+    //Firework
+    const viroFireworkColors =["#ff2d2d","#42ff42","#00edff","#ffff00","#ffb5f8","#00ff1d","#00edff","#ffb14c", "#ff7cf4"];
+    const colorRand1 = viroFireworkColors[Math.floor((Math.random() * 5) + 0)];
+    const colorRand2 = viroFireworkColors[Math.floor((Math.random() * 5) + 0)];
+    const colorRand3 = viroFireworkColors[Math.floor((Math.random() * 5) + 0)];
+
+    const startColorRange1 = this.props.startColor == undefined ? colorRand1 : this.props.startColor;
+    const startColorRange2 = this.props.startColor == undefined ? colorRand2 : this.props.startColor;
+    const endColor = this.props.endColor == undefined ? colorRand3 : this.props.endColor;
+
     return (
       <AppConsumer>
         {({ user, objPosition, dropObj, pickUpObj, objToSearch }) => (
@@ -69,7 +79,8 @@ export default class ARSceneScreen extends Component {
           <ViroAmbientLight color="#FFFFFF" />
           <Viro3DObject source={require('./res/low-poly_gold_coin/scene.gltf')}
             type="GLTF"
-            position={[3 ,0, 0]}
+            position={[0 ,0, -3]}
+            visible={!this.state.fireworks}
             rotation={[0,0,0]}
             scale={[0.2, 0.2, 0.2]}
             onClick={()=> this.pickUp(objToSearch, pickUpObj, exitArFunc)}
@@ -77,6 +88,54 @@ export default class ARSceneScreen extends Component {
               name:'animateImage',
               run: true,
               loop: true
+            }}
+          />
+          <ViroParticleEmitter
+            position={[0, 4, -8]}
+            duration={1200}
+            delay={1000}
+            visible={true}
+            run={this.state.fireworks}
+            loop={true}
+            fixedToEmitter={true}
+
+            image={{
+              source:require("./res/particle_firework.png"),
+              height:0.1,
+              width:0.1,
+              bloomThreshold:0.0
+            }}
+
+            spawnBehavior={{
+              particleLifetime:[1200,1200],
+              emissionRatePerSecond:[0,0],
+              emissionBurst:[
+                {time:0, min:300, max:350, cycles:1}
+              ],
+              spawnVolume:{shape:"sphere", params:[0.15], spawnOnSurface:true},
+              maxParticles:1000
+            }}
+
+            particleAppearance={{
+              opacity:{
+                initialRange:[1.0, 1.0],
+                factor:"Time",
+                interpolation:[
+                  {endValue:0.0, interval:[800,1200]}
+                ]
+              },
+
+              color:{
+                initialRange:[startColorRange1, startColorRange2],
+                factor:"time",
+                interpolation:[
+                  {endValue:endColor, interval:[300,1200]}
+                ]
+              }
+            }}
+
+            particlePhysics={{
+              explosiveImpulse:{impulse:0.12 * 6, position:[0,0,0], decelerationPeriod:1.0},
             }}
           />
         </ViroARScene>
@@ -88,6 +147,16 @@ export default class ARSceneScreen extends Component {
   pennyRender(){
     var exitArFunc = this.props.sceneNavigator.viroAppProps.exitAr
 
+    //Firework
+    const viroFireworkColors =["#ff2d2d","#42ff42","#00edff","#ffff00","#ffb5f8","#00ff1d","#00edff","#ffb14c", "#ff7cf4"];
+    const colorRand1 = viroFireworkColors[Math.floor((Math.random() * 5) + 0)];
+    const colorRand2 = viroFireworkColors[Math.floor((Math.random() * 5) + 0)];
+    const colorRand3 = viroFireworkColors[Math.floor((Math.random() * 5) + 0)];
+
+    const startColorRange1 = this.props.startColor == undefined ? colorRand1 : this.props.startColor;
+    const startColorRange2 = this.props.startColor == undefined ? colorRand2 : this.props.startColor;
+    const endColor = this.props.endColor == undefined ? colorRand3 : this.props.endColor;
+
     return (
       <AppConsumer>
         {({ user, objPosition, dropObj, pickUpObj, objToSearch }) => (
@@ -95,6 +164,7 @@ export default class ARSceneScreen extends Component {
           <ViroAmbientLight color="#FFFFFF" />
           <Viro3DObject source={require('./res/penny_coin/scene.gltf')}
             type="GLTF"
+            visible={!this.state.fireworks}
             position={[0, 0, ]}
             rotation={[0,0,0]}
             scale={[0.001, 0.001, 0.001]}
@@ -103,6 +173,54 @@ export default class ARSceneScreen extends Component {
               name:'animateImage',
               run: true,
               loop: true
+            }}
+          />
+          <ViroParticleEmitter
+            position={[0, 4, -8]}
+            duration={1200}
+            delay={1000}
+            visible={true}
+            run={this.state.fireworks}
+            loop={true}
+            fixedToEmitter={true}
+
+            image={{
+              source:require("./res/particle_firework.png"),
+              height:0.1,
+              width:0.1,
+              bloomThreshold:0.0
+            }}
+
+            spawnBehavior={{
+              particleLifetime:[1200,1200],
+              emissionRatePerSecond:[0,0],
+              emissionBurst:[
+                {time:0, min:300, max:350, cycles:1}
+              ],
+              spawnVolume:{shape:"sphere", params:[0.15], spawnOnSurface:true},
+              maxParticles:1000
+            }}
+
+            particleAppearance={{
+              opacity:{
+                initialRange:[1.0, 1.0],
+                factor:"Time",
+                interpolation:[
+                  {endValue:0.0, interval:[800,1200]}
+                ]
+              },
+
+              color:{
+                initialRange:[startColorRange1, startColorRange2],
+                factor:"time",
+                interpolation:[
+                  {endValue:endColor, interval:[300,1200]}
+                ]
+              }
+            }}
+
+            particlePhysics={{
+              explosiveImpulse:{impulse:0.12 * 6, position:[0,0,0], decelerationPeriod:1.0},
             }}
           />
         </ViroARScene>
@@ -114,6 +232,16 @@ export default class ARSceneScreen extends Component {
   rubyRender(){
     var exitArFunc = this.props.sceneNavigator.viroAppProps.exitAr
 
+    //Firework
+    const viroFireworkColors =["#ff2d2d","#42ff42","#00edff","#ffff00","#ffb5f8","#00ff1d","#00edff","#ffb14c", "#ff7cf4"];
+    const colorRand1 = viroFireworkColors[Math.floor((Math.random() * 5) + 0)];
+    const colorRand2 = viroFireworkColors[Math.floor((Math.random() * 5) + 0)];
+    const colorRand3 = viroFireworkColors[Math.floor((Math.random() * 5) + 0)];
+
+    const startColorRange1 = this.props.startColor == undefined ? colorRand1 : this.props.startColor;
+    const startColorRange2 = this.props.startColor == undefined ? colorRand2 : this.props.startColor;
+    const endColor = this.props.endColor == undefined ? colorRand3 : this.props.endColor;
+
     return (
       <AppConsumer>
         {({ user, objPosition, dropObj, pickUpObj, objToSearch }) => (
@@ -122,6 +250,7 @@ export default class ARSceneScreen extends Component {
           <Viro3DObject source={require('./res/low_poly_ruby/scene.gltf')}
             resources={[require('./res/low_poly_ruby/scene.bin')]}
             type="GLTF"
+            visible={!this.state.fireworks}
             position={[0, 0, -1]}
             rotation={[0,0,0]}
             scale={[0.4, 0.4, 0.4]}
@@ -130,6 +259,54 @@ export default class ARSceneScreen extends Component {
               name:'animateImage',
               run: true,
               loop: true
+            }}
+          />
+          <ViroParticleEmitter
+            position={[0, 4, -8]}
+            duration={1200}
+            delay={1000}
+            visible={true}
+            run={this.state.fireworks}
+            loop={true}
+            fixedToEmitter={true}
+
+            image={{
+              source:require("./res/particle_firework.png"),
+              height:0.1,
+              width:0.1,
+              bloomThreshold:0.0
+            }}
+
+            spawnBehavior={{
+              particleLifetime:[1200,1200],
+              emissionRatePerSecond:[0,0],
+              emissionBurst:[
+                {time:0, min:300, max:350, cycles:1}
+              ],
+              spawnVolume:{shape:"sphere", params:[0.15], spawnOnSurface:true},
+              maxParticles:1000
+            }}
+
+            particleAppearance={{
+              opacity:{
+                initialRange:[1.0, 1.0],
+                factor:"Time",
+                interpolation:[
+                  {endValue:0.0, interval:[800,1200]}
+                ]
+              },
+
+              color:{
+                initialRange:[startColorRange1, startColorRange2],
+                factor:"time",
+                interpolation:[
+                  {endValue:endColor, interval:[300,1200]}
+                ]
+              }
+            }}
+
+            particlePhysics={{
+              explosiveImpulse:{impulse:0.12 * 6, position:[0,0,0], decelerationPeriod:1.0},
             }}
           />
         </ViroARScene>
@@ -141,6 +318,16 @@ export default class ARSceneScreen extends Component {
   diamondRender(){
     var exitArFunc = this.props.sceneNavigator.viroAppProps.exitAr
 
+    //Firework
+    const viroFireworkColors =["#ff2d2d","#42ff42","#00edff","#ffff00","#ffb5f8","#00ff1d","#00edff","#ffb14c", "#ff7cf4"];
+    const colorRand1 = viroFireworkColors[Math.floor((Math.random() * 5) + 0)];
+    const colorRand2 = viroFireworkColors[Math.floor((Math.random() * 5) + 0)];
+    const colorRand3 = viroFireworkColors[Math.floor((Math.random() * 5) + 0)];
+
+    const startColorRange1 = this.props.startColor == undefined ? colorRand1 : this.props.startColor;
+    const startColorRange2 = this.props.startColor == undefined ? colorRand2 : this.props.startColor;
+    const endColor = this.props.endColor == undefined ? colorRand3 : this.props.endColor;
+
     return (
       <AppConsumer>
         {({ user, objPosition, dropObj, pickUpObj, objToSearch }) => (
@@ -149,6 +336,7 @@ export default class ARSceneScreen extends Component {
           <Viro3DObject source={require('./res/diamond/scene.gltf')}
             resources={[require('./res/diamond/scene.bin')]}
             type="GLTF"
+            visible={!this.state.fireworks}
             position={[0, 0, -1]}
             rotation={[0,0,0]}
             scale={[0.2, 0.2, 0.2]}
@@ -157,6 +345,54 @@ export default class ARSceneScreen extends Component {
               name:'animateImage',
               run: true,
               loop: true
+            }}
+          />
+          <ViroParticleEmitter
+            position={[0, 4, -8]}
+            duration={1200}
+            delay={1000}
+            visible={true}
+            run={this.state.fireworks}
+            loop={true}
+            fixedToEmitter={true}
+
+            image={{
+              source:require("./res/particle_firework.png"),
+              height:0.1,
+              width:0.1,
+              bloomThreshold:0.0
+            }}
+
+            spawnBehavior={{
+              particleLifetime:[1200,1200],
+              emissionRatePerSecond:[0,0],
+              emissionBurst:[
+                {time:0, min:300, max:350, cycles:1}
+              ],
+              spawnVolume:{shape:"sphere", params:[0.15], spawnOnSurface:true},
+              maxParticles:1000
+            }}
+
+            particleAppearance={{
+              opacity:{
+                initialRange:[1.0, 1.0],
+                factor:"Time",
+                interpolation:[
+                  {endValue:0.0, interval:[800,1200]}
+                ]
+              },
+
+              color:{
+                initialRange:[startColorRange1, startColorRange2],
+                factor:"time",
+                interpolation:[
+                  {endValue:endColor, interval:[300,1200]}
+                ]
+              }
+            }}
+
+            particlePhysics={{
+              explosiveImpulse:{impulse:0.12 * 6, position:[0,0,0], decelerationPeriod:1.0},
             }}
           />
         </ViroARScene>
@@ -168,6 +404,16 @@ export default class ARSceneScreen extends Component {
   stickRender(){
     var exitArFunc = this.props.sceneNavigator.viroAppProps.exitAr
 
+    //Firework
+    const viroFireworkColors =["#ff2d2d","#42ff42","#00edff","#ffff00","#ffb5f8","#00ff1d","#00edff","#ffb14c", "#ff7cf4"];
+    const colorRand1 = viroFireworkColors[Math.floor((Math.random() * 5) + 0)];
+    const colorRand2 = viroFireworkColors[Math.floor((Math.random() * 5) + 0)];
+    const colorRand3 = viroFireworkColors[Math.floor((Math.random() * 5) + 0)];
+
+    const startColorRange1 = this.props.startColor == undefined ? colorRand1 : this.props.startColor;
+    const startColorRange2 = this.props.startColor == undefined ? colorRand2 : this.props.startColor;
+    const endColor = this.props.endColor == undefined ? colorRand3 : this.props.endColor;
+
     return (
       <AppConsumer>
         {({ user, objPosition, dropObj, pickUpObj, objToSearch }) => (
@@ -175,6 +421,7 @@ export default class ARSceneScreen extends Component {
           <ViroAmbientLight color="#FFFFFF" />
           <Viro3DObject source={require('./res/penny_coin/scene.gltf')}
             type="GLTF"
+            visible={!this.state.fireworks}
             position={[0, 0, -1]}
             rotation={[0,0,0]}
             scale={[0.001, 0.001, 0.001]}
@@ -183,6 +430,54 @@ export default class ARSceneScreen extends Component {
               name:'animateImage',
               run: true,
               loop: true
+            }}
+          />
+          <ViroParticleEmitter
+            position={[0, 4, -8]}
+            duration={1200}
+            delay={1000}
+            visible={true}
+            run={this.state.fireworks}
+            loop={true}
+            fixedToEmitter={true}
+
+            image={{
+              source:require("./res/particle_firework.png"),
+              height:0.1,
+              width:0.1,
+              bloomThreshold:0.0
+            }}
+
+            spawnBehavior={{
+              particleLifetime:[1200,1200],
+              emissionRatePerSecond:[0,0],
+              emissionBurst:[
+                {time:0, min:300, max:350, cycles:1}
+              ],
+              spawnVolume:{shape:"sphere", params:[0.15], spawnOnSurface:true},
+              maxParticles:1000
+            }}
+
+            particleAppearance={{
+              opacity:{
+                initialRange:[1.0, 1.0],
+                factor:"Time",
+                interpolation:[
+                  {endValue:0.0, interval:[800,1200]}
+                ]
+              },
+
+              color:{
+                initialRange:[startColorRange1, startColorRange2],
+                factor:"time",
+                interpolation:[
+                  {endValue:endColor, interval:[300,1200]}
+                ]
+              }
+            }}
+
+            particlePhysics={{
+              explosiveImpulse:{impulse:0.12 * 6, position:[0,0,0], decelerationPeriod:1.0},
             }}
           />
         </ViroARScene>
@@ -202,10 +497,13 @@ export default class ARSceneScreen extends Component {
     let objToSearchId = objToSearch.id
     let objToSearchObjectId = objToSearch.object_info[0].object_id
 
-    return pickUpObj(objToSearchId, objToSearchObjectId)
-    .then(()=>{
-      exitAr()
+    this.setState({
+      fireworks: true
     })
+
+    alert(`congratulations! You picked up ${objToSearch.object_info[0].object_name}`)
+    return pickUpObj(objToSearchId, objToSearchObjectId)
+
   }
 
 }
