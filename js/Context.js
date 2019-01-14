@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Actions } from 'react-native-router-flux';
 
-var baseUrl = 'http://192.168.1.61:3101'
+var baseUrl = 'http://192.168.0.33:3101'
 
 export const AppContext = React.createContext();
 
@@ -84,22 +84,24 @@ export class AppProvider extends Component {
   }
 
   fetchDroppedObjs(){
-    fetch(`${baseUrl}/dropped_objects`)
+    return fetch(`${baseUrl}/dropped_objects`)
       .then(response => response.json())
       .then(json => {
         this.setState({
           droppedObjs: json.objects
         })
+        return 'done'
       })
   }
 
   fetchUser(userId){
-    fetch(`${baseUrl}/users/${userId}`)
+    return fetch(`${baseUrl}/users/${userId}`)
       .then(response => response.json())
       .then(json => {
         this.setState({
           user: json.user,
         })
+        return 'done'
       })
   }
 
@@ -124,10 +126,10 @@ export class AppProvider extends Component {
 
         let calcDistance = 0
         for(let i=0; i< toBeOrganized.length;i++){
-          calcDistance = latLongToDistanceAway(userLat, userLong, toBeOrganized[i].latitude, toBeOrganized[i].longitude)
+          calcDistance = this.latLongToDistanceAway(userLat, userLong, toBeOrganized[i].latitude, toBeOrganized[i].longitude)
           toBeOrganized[i].distance = calcDistance
         }
-        var organized = selectionSort(toBeOrganized)
+        var organized = this.selectionSort(toBeOrganized)
         console.log('organized', organized)
         this.setState({
           organizedDroppedObjs: organized,
@@ -144,36 +146,70 @@ export class AppProvider extends Component {
 
     return 'done'
 
-    function selectionSort(array){
-      for(var i = 0; i < array.length; i++){
-        var min = i;
-        for(var j = i+1; j < array.length; j++){
-          if(array[j].distance < array[min].distance){
-           min = j;
-          }
+  }
+
+  reorganizeDroppedObj = () =>{
+    var toBeOrganized = this.state.droppedObjs
+
+    navigator.geolocation.stopObserving();
+    navigator.geolocation.watchPosition(
+      (position) => {
+        let userLat = position.coords.latitude
+        let userLong = position.coords.longitude
+
+        let calcDistance = 0
+        for(let i=0; i< toBeOrganized.length;i++){
+          calcDistance = this.latLongToDistanceAway(userLat, userLong, toBeOrganized[i].latitude, toBeOrganized[i].longitude)
+          toBeOrganized[i].distance = calcDistance
         }
-        var temp = array[i];
-        array[i] = array[min];
-        array[min] = temp;
+        var organized = this.selectionSort(toBeOrganized)
+        console.log('reorganized', organized)
+        this.setState({
+          organizedDroppedObjs: organized,
+          userLat: userLat,
+          userLong: userLong,
+        })
+
+      return organized
+
+      },
+      (error) => this.setState({ navError: true }),
+      { enableHighAccuracy: true, distanceFilter: 1, timeout: 10000, maximumAge: 10000 },
+    )
+
+    return 'done'
+
+  }
+
+  selectionSort(array){
+    for(var i = 0; i < array.length; i++){
+      var min = i;
+      for(var j = i+1; j < array.length; j++){
+        if(array[j].distance < array[min].distance){
+         min = j;
+        }
       }
-      return array;
-    };
-
-    function latLongToDistanceAway(lat1, long1, lat2, long2){
-      var radiusEarth = 6371e3;
-
-      //convert degrees to radians
-      var lat1r = (lat1 * Math.PI)/180
-      var lat2r = (lat2 * Math.PI)/180
-
-      //difference lat and difference long in radians
-      var dlat = (lat2 - lat1) * Math.PI / 180
-      var dlong = (long2 - long1) * Math.PI / 180
-
-      var a = Math.sin(dlat/2) * Math.sin(dlat/2) + Math.cos(lat1r) * Math.cos(lat2r) * Math.sin(dlong/2) * Math.sin(dlong/2);
-      var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-      return radiusEarth * c
+      var temp = array[i];
+      array[i] = array[min];
+      array[min] = temp;
     }
+    return array;
+  };
+
+  latLongToDistanceAway(lat1, long1, lat2, long2){
+    var radiusEarth = 6371e3;
+
+    //convert degrees to radians
+    var lat1r = (lat1 * Math.PI)/180
+    var lat2r = (lat2 * Math.PI)/180
+
+    //difference lat and difference long in radians
+    var dlat = (lat2 - lat1) * Math.PI / 180
+    var dlong = (long2 - long1) * Math.PI / 180
+
+    var a = Math.sin(dlat/2) * Math.sin(dlat/2) + Math.cos(lat1r) * Math.cos(lat2r) * Math.sin(dlong/2) * Math.sin(dlong/2);
+    var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+    return radiusEarth * c
   }
 
   listSelectFunc = (objId) =>{
@@ -209,45 +245,35 @@ export class AppProvider extends Component {
     })
   }
 
-  dropObj(objToDrop){
-    let userObjId = objToDrop.user_object_id
+  dropObj = (userObjectId, objectId) => {
+    let obj = {
+      latitude: this.state.userLat,
+      longitude: this.state.userLong,
+      object_id: objectId
+    }
+    console.log('obj', obj)
 
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        this.setState({
-          userLat: position.coords.latitude,
-          userLong: position.coords.longitude,
-        })
-
-        let obj = {
-          latitude: position.coords.latitude,
-          longitude: position.coords.longitude,
-          object_id: objToDrop.user_object_id
-        }
-        return obj
-      },
-      (error) => this.setState({ navError: true }),
-      { enableHighAccuracy: true, timeout: 20000, maximumAge: 10000 },
-    ).then((obj)=>{
-      return fetch(`${baseUrl}/dropped_objects`, {
-        method: 'POST',
-        body: JSON.stringify(obj),
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
-        }
-      })
+    return fetch(`${baseUrl}/dropped_objects`, {
+      method: 'POST',
+      body: JSON.stringify(obj),
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      }
     })
     .then(()=>{
       return this.fetchDroppedObjs()
     })
     .then(()=>{
-      return fetch(`${baseUrl}/user_objects/${userObjId}`, {
+      return this.reorganizeDroppedObj()
+    })
+    .then(()=>{
+      return fetch(`${baseUrl}/user_objects/${userObjectId}`, {
         method: 'DELETE',
       })
     })
     .then(()=>{
-      return this.fetchUser(this.state.user.virgeo_user_id)
+      return this.fetchUser(this.state.user[0].virgeo_user_id)
     })
   }
 

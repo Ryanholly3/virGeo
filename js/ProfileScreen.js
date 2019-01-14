@@ -10,7 +10,8 @@ import {
   PixelRatio,
   TouchableHighlight,
   ImageBackground,
-  Image
+  Image,
+  ScrollView
 } from 'react-native';
 
 import { AppConsumer } from './Context';
@@ -31,48 +32,53 @@ export default class ProfileScreen extends Component {
       <AppConsumer>
         {({ user, avatar, objects, droppedObjs, profileListSelect }) => (
           <ImageBackground style={styles.gridBackground} source={gridBackground}>
-          <View style={styles.titleBox}>
-            <Text style={{ fontSize: 40, fontWeight: 'bold', fontFamily: 'Helvetica' }}>
-              Hello,
-            </Text><Text> </Text>
-            <Text style={{ fontSize: 40, fontWeight: 'bold', fontFamily: 'Helvetica', color: 'gray' }}>
-              {user[0].user_name}
-            </Text><Text style={{ fontSize: 40, fontWeight: 'bold', fontFamily: 'Helvetica' }}>!</Text>
-          </View>
-          <View style={styles.profileInfoCard}>
-            { this.renderImage(avatar) }
-            <View style={styles.profileInfo}>
-              <Text style={{fontSize: 18, fontWeight: 'bold'}}>
-                Name: {user[0].full_name}
-              </Text>
-              <Text style={{fontSize: 18, fontWeight: 'bold'}}>
-                Level: {user[0].level}
-              </Text>
-              <Text style={{fontSize: 18, fontWeight: 'bold'}}>
-                Avatar: {avatar}
-              </Text>
+            <View style={styles.titleBox}>
+              <Text style={{ fontSize: 40, fontWeight: 'bold', fontFamily: 'Helvetica' }}>
+                Hello,
+              </Text><Text> </Text>
+              <Text style={{ fontSize: 40, fontWeight: 'bold', fontFamily: 'Helvetica', color: 'gray' }}>
+                {user[0].user_name}
+              </Text><Text style={{ fontSize: 40, fontWeight: 'bold', fontFamily: 'Helvetica' }}>!</Text>
             </View>
-          </View>
-          <View style={{ flex: 0, height: '40%', width:'80%', flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}>
-            <View style={{ flex: 1, alignSelf: 'stretch', flexDirection: 'row', backgroundColor: 'blue'}}>
-              <View style={styles.tableHeader}>
-                <Text style={styles.headerText}>
-                  Image
+            <View style={styles.profileInfoCard}>
+              { this.renderAvatar(avatar) }
+              <View style={styles.profileInfo}>
+                <Text style={{fontSize: 18, fontWeight: 'bold'}}>
+                  Name: {user[0].full_name}
                 </Text>
-              </View>
-              <View style={styles.tableHeader}>
-                <Text style={styles.headerText}>
-                  Object Name
+                <Text style={{fontSize: 18, fontWeight: 'bold'}}>
+                  Level: {user[0].level}
                 </Text>
-              </View>
-              <View style={styles.tableHeader}>
-                <Text style={styles.headerText}>
-                  Date Picked Up
+                <Text style={{fontSize: 18, fontWeight: 'bold'}}>
+                  Avatar: {avatar}
                 </Text>
               </View>
             </View>
-            { this.makeTable(user, profileListSelect) }
-          </View>
+            <View>
+              <Text style={styles.objectTitle}>
+                Your Objects
+              </Text>
+            </View>
+            <View style={{ flex: 0, height: '40%', width:'80%', flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}>
+              <View style={{ flex: 0, height: 40, alignSelf: 'stretch', flexDirection: 'row', backgroundColor: 'blue'}}>
+                <View style={styles.tableHeader}>
+                  <Text style={styles.headerText}>
+                    Object
+                  </Text>
+                </View>
+                <View style={styles.tableHeader}>
+                  <Text style={styles.headerText}>
+                    Name
+                  </Text>
+                </View>
+                <View style={styles.tableHeader}>
+                  <Text style={styles.headerText}>
+                    Date Found
+                  </Text>
+                </View>
+              </View>
+              { this.makeTable(user, profileListSelect) }
+            </View>
           </ImageBackground>
         )}
       </AppConsumer>
@@ -87,6 +93,7 @@ export default class ProfileScreen extends Component {
         <UserObjList
           key={i}
           objectId={obj.object_id}
+          userObjectId={obj.user_object_id}
           objectName={obj.object_name}
           profileListSelect={profileListSelect}
         />
@@ -94,7 +101,7 @@ export default class ProfileScreen extends Component {
     })
   }
 
-  renderImage = (avatar) =>{
+  renderAvatar = (avatar) =>{
     if(avatar === 'alien'){
       return(
         <Image
@@ -234,6 +241,13 @@ var styles = StyleSheet.create({
     height: 100,
     width: 100,
     margin: 10,
+  },
+  objectTitle : {
+    fontSize: 20,
+    fontWeight: 'bold',
+    fontFamily: 'Helvetica',
+    marginTop: 20,
+    marginBottom: 20
   },
   tableHeader : {
     flex: 1,

@@ -58,10 +58,11 @@ export default class DashboardScreen extends Component {
           <ImageBackground style={styles.gridBackground} source={gridBackground}>
             <View style={styles.titleBox}>
               <Text style={{ fontSize: 40, fontWeight: 'bold', fontFamily: 'Helvetica' }}>
-                DASH
+                Object
               </Text>
+              <Text style={{ fontSize: 40, fontWeight: 'bold', fontFamily: 'Helvetica' }}> </Text>
               <Text style={{ fontSize: 40, fontWeight: 'bold', fontFamily: 'Helvetica', color: 'gray' }}>
-                BOARD
+                Search
               </Text>
             </View>
             <View style={{ flex: 0, height: '60%', width:'80%', flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}>

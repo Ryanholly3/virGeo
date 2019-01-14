@@ -11,7 +11,8 @@ import {
   PixelRatio,
   TouchableOpacity,
   TouchableHighlight,
-  ImageBackground
+  ImageBackground,
+  Image
 } from 'react-native';
 
 import { AppConsumer } from './Context';
@@ -25,15 +26,16 @@ class UserObjList extends Component {
   }
 
   render() {
-    if(this.props.profileListSelect === this.props.objectId){
+    if(this.props.profileListSelect === this.props.userObjectId){
       return (
         <AppConsumer>
-          {({ profileListSelectFunc, objToDrop, userLat, userLong }) => (
-            <TouchableOpacity onPress={() => profileListSelectFunc(this.props.objectId)} style={{ flex: 1, alignSelf: 'stretch', flexDirection: 'row', backgroundColor: 'gray'}}>
+          {({ profileListSelectFunc, objToDrop, dropObj, userLat, userLong }) => (
+            <TouchableOpacity onPress={() => profileListSelectFunc(this.props.userObjectId)} style={{ flex: 1, alignSelf: 'stretch', flexDirection: 'row', backgroundColor: 'gray'}}>
               <View style={styles.tableItem}>
-                <Text style={styles.textStyles}>
-                  image!
-                </Text>
+                <Image
+                  style={styles.objectIcon}
+                  source={require(`./res/objIcons/goldCoin.png`)}
+                />
               </View>
               <View style={styles.tableItem}>
                 <Text style={styles.textStyles}>
@@ -41,9 +43,13 @@ class UserObjList extends Component {
                 </Text>
               </View>
               <View style={styles.tableItem}>
-                <Text style={styles.textStyles}>
-                  Date
-                </Text>
+                <View style={styles.dropObjButtonFlex}>
+                  <TouchableOpacity style={{width: '100%'}} onPress={() => dropObj(this.props.userObjectId, this.props.objectId)}>
+                    <View style={styles.dropObjButton}>
+                      <Text style={{color: 'white'}}>Drop</Text>
+                    </View>
+                  </TouchableOpacity>
+                </View>
               </View>
             </TouchableOpacity>
           )}
@@ -53,11 +59,12 @@ class UserObjList extends Component {
       return (
         <AppConsumer>
           {({ profileListSelectFunc }) => (
-            <TouchableOpacity onPress={() => profileListSelectFunc(this.props.objectId)} style={{ flex: 1, alignSelf: 'stretch', flexDirection: 'row', backgroundColor: 'lightgray'}}>
+            <TouchableOpacity onPress={() => profileListSelectFunc(this.props.userObjectId)} style={{ flex: 1, alignSelf: 'stretch', flexDirection: 'row', backgroundColor: 'lightgray'}}>
               <View style={styles.tableItem}>
-                <Text style={styles.textStyles}>
-                  image!
-                </Text>
+                <Image
+                  style={styles.objectIcon}
+                  source={require(`./res/objIcons/goldCoin.png`)}
+                />
               </View>
               <View style={styles.tableItem}>
                 <Text style={styles.textStyles}>
@@ -65,9 +72,6 @@ class UserObjList extends Component {
                 </Text>
               </View>
               <View style={styles.tableItem}>
-                <Text style={styles.textStyles}>
-                  Date
-                </Text>
               </View>
             </TouchableOpacity>
           )}
@@ -86,6 +90,24 @@ tableItem : {
 },
 textStyles : {
   fontSize: 15,
+},
+objectIcon : {
+  height: 30,
+  width: 30
+},
+dropObjButtonFlex : {
+  borderWidth: 2,
+  height: 40,
+  width: 40,
+  flex: 0,
+  flexDirection: 'row',
+  alignItems: 'center'
+},
+dropObjButton : {
+  flex: 1,
+  justifyContent: 'center',
+  alignItems: 'center',
+  backgroundColor: 'red',
 },
 })
 
