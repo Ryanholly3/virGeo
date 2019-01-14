@@ -60,9 +60,11 @@ export default class ARSceneScreen extends Component {
   }
 
   goldRender(){
+    var exitArFunc = this.props.sceneNavigator.viroAppProps.exitAr
+
     return (
       <AppConsumer>
-        {({ user, objPosition, dropObj, pickUpObj }) => (
+        {({ user, objPosition, dropObj, pickUpObj, objToSearch }) => (
         <ViroARScene>
           <ViroAmbientLight color="#FFFFFF" />
           <Viro3DObject source={require('./res/low-poly_gold_coin/scene.gltf')}
@@ -70,7 +72,7 @@ export default class ARSceneScreen extends Component {
             position={[3 ,0, 0]}
             rotation={[0,0,0]}
             scale={[0.2, 0.2, 0.2]}
-            onClick={this._onClick}
+            onClick={()=> this.pickUp(objToSearch, pickUpObj, exitArFunc)}
             animation={{
               name:'animateImage',
               run: true,
@@ -84,10 +86,11 @@ export default class ARSceneScreen extends Component {
   }
 
   pennyRender(){
+    var exitArFunc = this.props.sceneNavigator.viroAppProps.exitAr
 
     return (
       <AppConsumer>
-        {({ user, objPosition, dropObj, pickUpObj }) => (
+        {({ user, objPosition, dropObj, pickUpObj, objToSearch }) => (
         <ViroARScene>
           <ViroAmbientLight color="#FFFFFF" />
           <Viro3DObject source={require('./res/penny_coin/scene.gltf')}
@@ -95,7 +98,7 @@ export default class ARSceneScreen extends Component {
             position={[0, 0, ]}
             rotation={[0,0,0]}
             scale={[0.001, 0.001, 0.001]}
-            onClick={this._onClick}
+            onClick={()=> this.pickUp(objToSearch, pickUpObj, exitArFunc)}
             animation={{
               name:'animateImage',
               run: true,
@@ -109,9 +112,11 @@ export default class ARSceneScreen extends Component {
   }
 
   rubyRender(){
+    var exitArFunc = this.props.sceneNavigator.viroAppProps.exitAr
+
     return (
       <AppConsumer>
-        {({ user, objPosition, dropObj, pickUpObj }) => (
+        {({ user, objPosition, dropObj, pickUpObj, objToSearch }) => (
         <ViroARScene>
           <ViroAmbientLight color="#FFFFFF" />
           <Viro3DObject source={require('./res/low_poly_ruby/scene.gltf')}
@@ -120,7 +125,7 @@ export default class ARSceneScreen extends Component {
             position={[0, 0, -1]}
             rotation={[0,0,0]}
             scale={[0.4, 0.4, 0.4]}
-            onClick={this._onClick}
+            onClick={()=> this.pickUp(objToSearch, pickUpObj, exitArFunc)}
             animation={{
               name:'animateImage',
               run: true,
@@ -134,9 +139,11 @@ export default class ARSceneScreen extends Component {
   }
 
   diamondRender(){
+    var exitArFunc = this.props.sceneNavigator.viroAppProps.exitAr
+
     return (
       <AppConsumer>
-        {({ user, objPosition, dropObj, pickUpObj }) => (
+        {({ user, objPosition, dropObj, pickUpObj, objToSearch }) => (
         <ViroARScene>
           <ViroAmbientLight color="#FFFFFF" />
           <Viro3DObject source={require('./res/diamond/scene.gltf')}
@@ -145,7 +152,7 @@ export default class ARSceneScreen extends Component {
             position={[0, 0, -1]}
             rotation={[0,0,0]}
             scale={[0.2, 0.2, 0.2]}
-            onClick={this._onClick}
+            onClick={()=> this.pickUp(objToSearch, pickUpObj, exitArFunc)}
             animation={{
               name:'animateImage',
               run: true,
@@ -159,9 +166,11 @@ export default class ARSceneScreen extends Component {
   }
 
   stickRender(){
+    var exitArFunc = this.props.sceneNavigator.viroAppProps.exitAr
+
     return (
       <AppConsumer>
-        {({ user, objPosition, dropObj, pickUpObj }) => (
+        {({ user, objPosition, dropObj, pickUpObj, objToSearch }) => (
         <ViroARScene>
           <ViroAmbientLight color="#FFFFFF" />
           <Viro3DObject source={require('./res/penny_coin/scene.gltf')}
@@ -169,7 +178,7 @@ export default class ARSceneScreen extends Component {
             position={[0, 0, -1]}
             rotation={[0,0,0]}
             scale={[0.001, 0.001, 0.001]}
-            onClick={this._onClick}
+            onClick={()=> this.pickUp(objToSearch, pickUpObj, exitArFunc)}
             animation={{
               name:'animateImage',
               run: true,
@@ -189,12 +198,14 @@ export default class ARSceneScreen extends Component {
     )
   }
 
-  _onClick = () => {
-    // var answer = this.bearingPhoneToObj(39.7575767, -105.0069728, 39.757611, -105.006963)
-    alert('you clicked me!')
-    // this.setState({
-    //   pos: Math.random()*(-5)
-    // })
+  pickUp(objToSearch, pickUpObj, exitAr){
+    let objToSearchId = objToSearch.id
+    let objToSearchObjectId = objToSearch.object_info[0].object_id
+
+    return pickUpObj(objToSearchId, objToSearchObjectId)
+    .then(()=>{
+      exitAr()
+    })
   }
 
 }

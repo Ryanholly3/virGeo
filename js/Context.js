@@ -57,6 +57,7 @@ export class AppProvider extends Component {
       .then(response => response.json())
       .then(json => {
         let avatar = json.user[0].avatar_info[0].avatar_name
+        console.log('loginuser', json.user)
 
         return this.setState({
           user: json.user,
@@ -98,6 +99,7 @@ export class AppProvider extends Component {
     return fetch(`${baseUrl}/users/${userId}`)
       .then(response => response.json())
       .then(json => {
+        console.log('fetchuser', json.user)
         this.setState({
           user: json.user,
         })
@@ -277,14 +279,13 @@ export class AppProvider extends Component {
     })
   }
 
-  pickUpObj(objToPickUp){
-    let userObjId = objToPickUp.id
+  pickUpObj = (droppedObjectId, objectId) =>{
     let obj = {
       virgeo_user_id: this.state.user[0].virgeo_user_id,
-      object_id: this.state.user[0].objects.object_id,
+      object_id: objectId,
     }
 
-    fetch(`${baseUrl}/user_objects`, {
+    return fetch(`${baseUrl}/user_objects`, {
       method: 'POST',
       body: JSON.stringify(obj),
       headers: {
@@ -293,15 +294,19 @@ export class AppProvider extends Component {
       }
     })
     .then(()=>{
+      console.log('pickup test!', this.state.user[0].virgeo_user_id)
       return this.fetchUser(this.state.user[0].virgeo_user_id)
     })
     .then(()=>{
-      return fetch(`${baseUrl}/dropped_objects/${userObjId}`, {
+      return fetch(`${baseUrl}/dropped_objects/${droppedObjectId}`, {
         method: 'DELETE',
       })
     })
     .then(()=>{
       return this.fetchDroppedObjs()
+    })
+    .then(()=>{
+      return this.reorganizeDroppedObj()
     })
   }
 

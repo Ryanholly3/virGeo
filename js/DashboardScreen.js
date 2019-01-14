@@ -143,6 +143,7 @@ export default class DashboardScreen extends Component {
               worldAlignment={"GravityAndHeading"}
               viroAppProps={{
                 objToSearch: objToSearch,
+                exitAr: this._exitAr
               }}
             />
             <View style={{flex: 0, flexDirection: 'row',}}>
@@ -175,7 +176,7 @@ export default class DashboardScreen extends Component {
 
   }
 
-  _exitAr(){
+  _exitAr =() =>{
     this.setState({
       arOn: false,
     })
