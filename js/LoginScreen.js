@@ -73,7 +73,7 @@ export default class LoginScreen extends Component {
             <TextInput style={styles.textInputBox} placeholder={' enter password'}/>
           </View>
           <View style={styles.goButtonFlex}>
-            <TouchableOpacity style={{width: '100%'}} onPress={() => logIn(3)}>
+            <TouchableOpacity style={{width: '100%'}} onPress={() => logIn(1)}>
               <View style={styles.goButton}>
                 <Text style={{color: 'white'}}>GO</Text>
               </View>
@@ -113,7 +113,7 @@ export default class LoginScreen extends Component {
           </View>
           <TextInput style={styles.textInputBox} placeholder={' enter username'}/>
           <View style={styles.goButtonFlex}>
-            <TouchableOpacity style={{width: '100%'}} onPress={() => logIn(2)}>
+            <TouchableOpacity style={{width: '100%'}} onPress={() => logIn(1)}>
               <View style={styles.goButton}>
                 <Text style={{color: 'white'}}>GO</Text>
               </View>
