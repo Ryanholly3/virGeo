@@ -30,13 +30,8 @@ class UserObjList extends Component {
       return (
         <AppConsumer>
           {({ profileListSelectFunc, objToDrop, dropObj, userLat, userLong }) => (
-            <TouchableOpacity onPress={() => profileListSelectFunc(this.props.userObjectId)} style={{ flex: 1, alignSelf: 'stretch', flexDirection: 'row', backgroundColor: 'gray'}}>
-              <View style={styles.tableItem}>
-                <Image
-                  style={styles.objectIcon}
-                  source={require(`./res/objIcons/goldCoin.png`)}
-                />
-              </View>
+            <TouchableOpacity onPress={() => profileListSelectFunc(this.props.userObjectId)} style={{ flex: 1, justifyContent: 'space-between', flexDirection: 'row', backgroundColor: 'gray'}}>
+              { this.objIconRender(this.props.objectName) }
               <View style={styles.tableItem}>
                 <Text style={styles.textStyles}>
                   {this.props.objectName}
@@ -59,13 +54,8 @@ class UserObjList extends Component {
       return (
         <AppConsumer>
           {({ profileListSelectFunc }) => (
-            <TouchableOpacity onPress={() => profileListSelectFunc(this.props.userObjectId)} style={{ flex: 1, alignSelf: 'stretch', flexDirection: 'row', backgroundColor: 'lightgray'}}>
-              <View style={styles.tableItem}>
-                <Image
-                  style={styles.objectIcon}
-                  source={require(`./res/objIcons/goldCoin.png`)}
-                />
-              </View>
+            <TouchableOpacity onPress={() => profileListSelectFunc(this.props.userObjectId)} style={{ flex: 1, justifyContent: 'space-between',flexDirection: 'row', backgroundColor: 'lightgray'}}>
+              { this.objIconRender(this.props.objectName)}
               <View style={styles.tableItem}>
                 <Text style={styles.textStyles}>
                   {this.props.objectName}
@@ -79,12 +69,60 @@ class UserObjList extends Component {
       );
     }
   }
+
+  objIconRender = (objectName) =>{
+    if(objectName === 'gold'){
+      return(
+        <View style={styles.tableItem}>
+          <Image
+            style={styles.objectIcon}
+            source={require(`./res/objIcons/goldCoin.png`)}
+          />
+        </View>
+      )
+    } else if (objectName === 'ruby'){
+      return(
+        <View style={styles.tableItem}>
+          <Image
+            style={styles.objectIcon}
+            source={require(`./res/objIcons/ruby.png`)}
+          />
+        </View>
+      )
+    } else if (objectName === 'diamond'){
+      return(
+        <View style={styles.tableItem}>
+          <Image
+            style={styles.objectIcon}
+            source={require(`./res/objIcons/diamond.png`)}
+          />
+        </View>
+      )
+    } else if (objectName === 'penny'){
+      return(
+        <View style={styles.tableItem}>
+          <Image
+            style={styles.objectIcon}
+            source={require(`./res/objIcons/penny.png`)}
+          />
+        </View>
+      )
+    } else if (objectName === 'stick'){
+      return(
+        <View style={styles.tableItem}>
+          <Image
+            style={styles.objectIcon}
+            source={require(`./res/objIcons/stick.png`)}
+          />
+        </View>
+      )
+    }
+  }
 }
 
 var styles = StyleSheet.create({
 tableItem : {
   flex: 1,
-  alignSelf: 'stretch',
   alignItems: 'center',
   justifyContent: 'center'
 },
@@ -92,13 +130,14 @@ textStyles : {
   fontSize: 15,
 },
 objectIcon : {
-  height: 30,
-  width: 30
+  resizeMode: 'contain',
+  height: 40,
+  width: 40,
 },
 dropObjButtonFlex : {
   borderWidth: 2,
-  height: 40,
-  width: 40,
+  height: 35,
+  width: 35,
   flex: 0,
   flexDirection: 'row',
   alignItems: 'center'
