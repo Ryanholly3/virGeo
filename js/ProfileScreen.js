@@ -68,7 +68,7 @@ export default class ProfileScreen extends Component {
                 Inventory
               </Text>
             </View>
-            <View style={{ flex: 0, height: '20%', width:'80%', flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}>
+            <View style={{ flex: 0, height: '40%', width:'80%', flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}>
               <View style={{ flex: 0, height: 40, alignSelf: 'stretch', flexDirection: 'row', backgroundColor: 'blue'}}>
                 <View style={styles.tableHeader}>
                   <Text style={styles.headerText}>
