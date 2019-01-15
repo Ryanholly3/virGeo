@@ -65,7 +65,7 @@ export default class ProfileScreen extends Component {
             </View>
             <View>
               <Text style={styles.objectTitle}>
-                Your Objects
+                Inventory
               </Text>
             </View>
             <View style={{ flex: 0, height: '20%', width:'80%', flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}>
@@ -96,32 +96,140 @@ export default class ProfileScreen extends Component {
                 onRequestClose={() => {
                   Alert.alert('Modal has been closed.');
                 }}>
-                <View style={styles.avatarWindow}>
+                <ImageBackground style={styles.avatarWindow} source={gridBackground}>
+
                   <View>
-                    <Text>Avatar Selection</Text>
+                    <Text style={styles.titleText}>Avatar Selection</Text>
 
                     <View style={styles.avatarCard}>
-                      <View style={styles.avatarItem}>
-                        <Image
-                          style={styles.avatar}
-                          source={require(`./res/avatars/ghost.png`)}
-                        />
-                        <Text style={{fontSize: 15, fontWeight: 'bold'}}>
-                          {avatar}
-                        </Text>
+                      <View style={styles.avatarTrio}>
+                        <TouchableOpacity style={styles.avatarItem}>
+                          <Image
+                            style={styles.avatarModal}
+                            source={require(`./res/avatars/alien.png`)}
+                          />
+                          <Text style={{fontSize: 15, fontWeight: 'bold'}}>
+                            alien
+                          </Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.avatarItem}>
+                          <Image
+                            style={styles.avatarModal}
+                            source={require(`./res/avatars/cactus.png`)}
+                          />
+                          <Text style={{fontSize: 15, fontWeight: 'bold'}}>
+                            cactus
+                          </Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.avatarItem}>
+                          <Image
+                            style={styles.avatarModal}
+                            source={require(`./res/avatars/cerberus.png`)}
+                          />
+                          <Text style={{fontSize: 15, fontWeight: 'bold'}}>
+                            cerberus
+                          </Text>
+                        </TouchableOpacity>
+                      </View>
+                      <View style={styles.avatarTrio}>
+                        <TouchableOpacity style={styles.avatarItem}>
+                          <Image
+                            style={styles.avatarModal}
+                            source={require(`./res/avatars/cow.png`)}
+                          />
+                          <Text style={{fontSize: 15, fontWeight: 'bold'}}>
+                            cow
+                          </Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.avatarItem}>
+                          <Image
+                            style={styles.avatarModal}
+                            source={require(`./res/avatars/cricket.png`)}
+                          />
+                          <Text style={{fontSize: 15, fontWeight: 'bold'}}>
+                            cricket
+                          </Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.avatarItem}>
+                          <Image
+                            style={styles.avatarModal}
+                            source={require(`./res/avatars/death.png`)}
+                          />
+                          <Text style={{fontSize: 15, fontWeight: 'bold'}}>
+                            death
+                          </Text>
+                        </TouchableOpacity>
+                      </View>
+                      <View style={styles.avatarTrio}>
+                        <TouchableOpacity style={styles.avatarItem}>
+                          <Image
+                            style={styles.avatarModal}
+                            source={require(`./res/avatars/dinosaur.png`)}
+                          />
+                          <Text style={{fontSize: 15, fontWeight: 'bold'}}>
+                            dinosaur
+                          </Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.avatarItem}>
+                          <Image
+                            style={styles.avatarModal}
+                            source={require(`./res/avatars/dolphin.png`)}
+                          />
+                          <Text style={{fontSize: 15, fontWeight: 'bold'}}>
+                            dolphin
+                          </Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.avatarItem}>
+                          <Image
+                            style={styles.avatarModal}
+                            source={require(`./res/avatars/ghost.png`)}
+                          />
+                          <Text style={{fontSize: 15, fontWeight: 'bold'}}>
+                            ghost
+                          </Text>
+                        </TouchableOpacity>
+                      </View>
+                      <View style={styles.avatarTrio}>
+                        <TouchableOpacity style={styles.avatarItem}>
+                          <Image
+                            style={styles.avatarModal}
+                            source={require(`./res/avatars/robot.png`)}
+                          />
+                          <Text style={{fontSize: 15, fontWeight: 'bold'}}>
+                            robot
+                          </Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.avatarItem}>
+                          <Image
+                            style={styles.avatarModal}
+                            source={require(`./res/avatars/seagull.png`)}
+                          />
+                          <Text style={{fontSize: 15, fontWeight: 'bold'}}>
+                            seagull
+                          </Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.avatarItem}>
+                          <Image
+                            style={styles.avatarModal}
+                            source={require(`./res/avatars/shark.png`)}
+                          />
+                          <Text style={{fontSize: 15, fontWeight: 'bold'}}>
+                            shark
+                          </Text>
+                        </TouchableOpacity>
                       </View>
                     </View>
 
                     <View style={{flex: 0, flexDirection: 'row',}}>
                       <TouchableOpacity style={styles.exitButtonFlex} onPress={()=> this.setModalVisible(!this.state.modalVisible)}>
                         <View style={styles.exitButton}>
-                          <Text style={{color: 'white'}}>EXIT Avatar Selection</Text>
+                          <Text style={{color: 'white'}}>EXIT</Text>
                         </View>
                       </TouchableOpacity>
                     </View>
 
                   </View>
-                </View>
+                </ImageBackground>
               </Modal>
 
           </ImageBackground>
@@ -155,7 +263,6 @@ export default class ProfileScreen extends Component {
           <Image
             style={styles.avatar}
             source={require(`./res/avatars/alien.png`)}
-            onClick={() => this.setModalVisible(true)}
           />
         </TouchableOpacity>
       )
@@ -167,7 +274,6 @@ export default class ProfileScreen extends Component {
           <Image
             style={styles.avatar}
             source={require(`./res/avatars/cactus.png`)}
-            onClick={() => this.setModalVisible(true)}
           />
         </TouchableOpacity>
       )
@@ -179,7 +285,6 @@ export default class ProfileScreen extends Component {
           <Image
             style={styles.avatar}
             source={require(`./res/avatars/cerberus.png`)}
-            onClick={() => this.setModalVisible(true)}
           />
         </TouchableOpacity>
       )
@@ -191,7 +296,6 @@ export default class ProfileScreen extends Component {
           <Image
             style={styles.avatar}
             source={require(`./res/avatars/cow.png`)}
-            onClick={() => this.setModalVisible(true)}
           />
         </TouchableOpacity>
       )
@@ -203,7 +307,6 @@ export default class ProfileScreen extends Component {
           <Image
             style={styles.avatar}
             source={require(`./res/avatars/cricket.png`)}
-            onClick={() => this.setModalVisible(true)}
           />
         </TouchableOpacity>
       )
@@ -215,7 +318,6 @@ export default class ProfileScreen extends Component {
           <Image
             style={styles.avatar}
             source={require(`./res/avatars/death.png`)}
-            onClick={() => this.setModalVisible(true)}
           />
         </TouchableOpacity>
       )
@@ -227,7 +329,6 @@ export default class ProfileScreen extends Component {
           <Image
             style={styles.avatar}
             source={require(`./res/avatars/dinosaur.png`)}
-            onClick={() => this.setModalVisible(true)}
           />
         </TouchableOpacity>
       )
@@ -239,7 +340,6 @@ export default class ProfileScreen extends Component {
           <Image
             style={styles.avatar}
             source={require(`./res/avatars/dolphin.png`)}
-            onClick={() => this.setModalVisible(true)}
           />
         </TouchableOpacity>
       )
@@ -251,7 +351,6 @@ export default class ProfileScreen extends Component {
           <Image
             style={styles.avatar}
             source={require(`./res/avatars/ghost.png`)}
-            onClick={() => this.setModalVisible(true)}
           />
         </TouchableOpacity>
       )
@@ -263,7 +362,6 @@ export default class ProfileScreen extends Component {
           <Image
             style={styles.avatar}
             source={require(`./res/avatars/robot.png`)}
-            onClick={() => this.setModalVisible(true)}
           />
         </TouchableOpacity>
       )
@@ -286,7 +384,6 @@ export default class ProfileScreen extends Component {
           <Image
             style={styles.avatar}
             source={require(`./res/avatars/shark.png`)}
-            onClick={() => this.setModalVisible(true)}
           />
         </TouchableOpacity>
       )
@@ -298,7 +395,6 @@ export default class ProfileScreen extends Component {
           <Image
             style={styles.avatar}
             source={require(`./res/avatars/squid.png`)}
-            onClick={() => this.setModalVisible(true)}
           />
         </TouchableOpacity>
       )
@@ -324,9 +420,11 @@ var styles = StyleSheet.create({
   titleText: {
     paddingTop: 30,
     paddingBottom: 20,
-    color:'#fff',
+    color:'black',
+    fontWeight: 'bold',
+    fontFamily: 'helvetica',
     textAlign:'center',
-    fontSize : 25
+    fontSize : 40
   },
   profileInfoCard : {
     width: '80%',
@@ -337,7 +435,7 @@ var styles = StyleSheet.create({
     flex: 0,
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'flex-start'
+    justifyContent: 'space-around'
   },
   profileInfo : {
     height: 80,
@@ -347,8 +445,13 @@ var styles = StyleSheet.create({
     alignItems: 'flex-start',
   },
   avatar: {
-    height: 80,
-    width: 80,
+    height: 90,
+    width: 90,
+    margin: 10,
+  },
+  avatarModal: {
+    height: 60,
+    width: 60,
     margin: 10,
   },
   avatarWindow : {
@@ -360,14 +463,24 @@ var styles = StyleSheet.create({
     justifyContent: 'center',
   },
   avatarCard : {
-    backgroundColor: 'blue',
-    width: '80%',
-    height: '60%',
+    flex: 0,
+    flexDirection: 'column',
+    justifyContent: 'space-evenly',
+    backgroundColor: 'gray',
+    width: 300,
+    height: 520,
+  },
+  avatarTrio:{
+    flex: 0,
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    alignItems: 'center',
   },
   avatarItem : {
     flex: 0,
-    height: 120,
-    width: 120,
+    height: 110,
+    width: 80,
+    borderWidth: 2,
     flexDirection: 'column',
     alignItems: 'center',
     backgroundColor: 'lightgray',
@@ -383,7 +496,8 @@ var styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'red',
+    backgroundColor: 'blue',
+    borderWidth: 2,
   },
   objectTitle : {
     fontSize: 20,
