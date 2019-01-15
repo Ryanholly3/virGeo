@@ -30,7 +30,7 @@ class UserObjList extends Component {
       return (
         <AppConsumer>
           {({ profileListSelectFunc, objToDrop, dropObj, userLat, userLong }) => (
-            <TouchableOpacity onPress={() => profileListSelectFunc(this.props.userObjectId)} style={{ flex: 1, justifyContent: 'space-between', flexDirection: 'row', backgroundColor: 'gray'}}>
+            <TouchableOpacity onPress={() => profileListSelectFunc(this.props.userObjectId)} style={{ flex: 1, justifyContent: 'space-between', flexDirection: 'row', backgroundColor: '#9e9e9e'}}>
               { this.objIconRender(this.props.objectName) }
               <View style={styles.tableItem}>
                 <Text style={styles.textStyles}>
@@ -41,7 +41,7 @@ class UserObjList extends Component {
                 <View style={styles.dropObjButtonFlex}>
                   <TouchableOpacity style={{width: '100%'}} onPress={() => dropObj(this.props.userObjectId, this.props.objectId)}>
                     <View style={styles.dropObjButton}>
-                      <Text style={{color: 'white'}}>Drop</Text>
+                      <Text style={{color: 'white',fontFamily: 'Avenir'}}>Drop</Text>
                     </View>
                   </TouchableOpacity>
                 </View>
@@ -128,6 +128,8 @@ tableItem : {
 },
 textStyles : {
   fontSize: 15,
+  fontFamily: 'Avenir',
+  fontWeight: 'bold'
 },
 objectIcon : {
   resizeMode: 'contain',
@@ -146,7 +148,7 @@ dropObjButton : {
   flex: 1,
   justifyContent: 'center',
   alignItems: 'center',
-  backgroundColor: 'red',
+  backgroundColor: '#e53935',
 },
 })
 

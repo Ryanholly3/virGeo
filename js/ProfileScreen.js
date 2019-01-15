@@ -42,23 +42,23 @@ export default class ProfileScreen extends Component {
         {({ user, avatar, objects, droppedObjs, profileListSelect }) => (
           <ImageBackground style={styles.gridBackground} source={gridBackground}>
             <View style={styles.titleBox}>
-              <Text style={{ fontSize: 40, fontWeight: 'bold', fontFamily: 'Helvetica' }}>
+              <Text style={{ fontSize: 40, fontFamily: 'Avenir' }}>
                 Hello,
               </Text><Text> </Text>
-              <Text style={{ fontSize: 40, fontWeight: 'bold', fontFamily: 'Helvetica', color: 'gray' }}>
+              <Text style={{ fontSize: 40, fontWeight: 'bold', fontFamily: 'Avenir', color: 'gray' }}>
                 {user[0].user_name}
-              </Text><Text style={{ fontSize: 40, fontWeight: 'bold', fontFamily: 'Helvetica' }}>!</Text>
+              </Text><Text style={{ fontSize: 40, fontFamily: 'Avenir' }}>!</Text>
             </View>
             <View style={styles.profileInfoCard}>
               { this.renderAvatar(avatar) }
               <View style={styles.profileInfo}>
-                <Text style={{fontSize: 18, fontWeight: 'bold'}}>
+                <Text style={{fontSize: 18, fontWeight: 'bold', fontFamily: 'Avenir'}}>
                   Name: {user[0].full_name}
                 </Text>
-                <Text style={{fontSize: 18, fontWeight: 'bold'}}>
+                <Text style={{fontSize: 18, fontWeight: 'bold', fontFamily: 'Avenir'}}>
                   Level: {user[0].level}
                 </Text>
-                <Text style={{fontSize: 18, fontWeight: 'bold'}}>
+                <Text style={{fontSize: 18, fontWeight: 'bold', fontFamily: 'Avenir'}}>
                   Avatar: {avatar}
                 </Text>
               </View>
@@ -68,8 +68,8 @@ export default class ProfileScreen extends Component {
                 Inventory
               </Text>
             </View>
-            <View style={{ flex: 0, height: '40%', width:'80%', flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}>
-              <View style={{ flex: 0, height: 40, alignSelf: 'stretch', flexDirection: 'row', backgroundColor: 'blue'}}>
+            <View style={{ flex: 0, height: '40%', borderWidth: 3, width:'80%', flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}>
+              <View style={{ flex: 0, height: 40, alignSelf: 'stretch', flexDirection: 'row', backgroundColor: '#2196f3'}}>
                 <View style={styles.tableHeader}>
                   <Text style={styles.headerText}>
                     Object
@@ -108,7 +108,7 @@ export default class ProfileScreen extends Component {
                             style={styles.avatarModal}
                             source={require(`./res/avatars/alien.png`)}
                           />
-                          <Text style={{fontSize: 15, fontWeight: 'bold'}}>
+                          <Text style={{fontSize: 15, fontWeight: 'bold', fontFamily: 'Avenir'}}>
                             alien
                           </Text>
                         </TouchableOpacity>
@@ -117,7 +117,7 @@ export default class ProfileScreen extends Component {
                             style={styles.avatarModal}
                             source={require(`./res/avatars/cactus.png`)}
                           />
-                          <Text style={{fontSize: 15, fontWeight: 'bold'}}>
+                          <Text style={{fontSize: 15, fontWeight: 'bold', fontFamily: 'Avenir'}}>
                             cactus
                           </Text>
                         </TouchableOpacity>
@@ -126,7 +126,7 @@ export default class ProfileScreen extends Component {
                             style={styles.avatarModal}
                             source={require(`./res/avatars/cerberus.png`)}
                           />
-                          <Text style={{fontSize: 15, fontWeight: 'bold'}}>
+                          <Text style={{fontSize: 15, fontWeight: 'bold', fontFamily: 'Avenir'}}>
                             cerberus
                           </Text>
                         </TouchableOpacity>
@@ -137,7 +137,7 @@ export default class ProfileScreen extends Component {
                             style={styles.avatarModal}
                             source={require(`./res/avatars/cow.png`)}
                           />
-                          <Text style={{fontSize: 15, fontWeight: 'bold'}}>
+                          <Text style={{fontSize: 15, fontWeight: 'bold', fontFamily: 'Avenir'}}>
                             cow
                           </Text>
                         </TouchableOpacity>
@@ -146,7 +146,7 @@ export default class ProfileScreen extends Component {
                             style={styles.avatarModal}
                             source={require(`./res/avatars/cricket.png`)}
                           />
-                          <Text style={{fontSize: 15, fontWeight: 'bold'}}>
+                          <Text style={{fontSize: 15, fontWeight: 'bold', fontFamily: 'Avenir'}}>
                             cricket
                           </Text>
                         </TouchableOpacity>
@@ -155,7 +155,7 @@ export default class ProfileScreen extends Component {
                             style={styles.avatarModal}
                             source={require(`./res/avatars/death.png`)}
                           />
-                          <Text style={{fontSize: 15, fontWeight: 'bold'}}>
+                          <Text style={{fontSize: 15, fontWeight: 'bold', fontFamily: 'Avenir'}}>
                             death
                           </Text>
                         </TouchableOpacity>
@@ -166,7 +166,7 @@ export default class ProfileScreen extends Component {
                             style={styles.avatarModal}
                             source={require(`./res/avatars/dinosaur.png`)}
                           />
-                          <Text style={{fontSize: 15, fontWeight: 'bold'}}>
+                          <Text style={{fontSize: 15, fontWeight: 'bold', fontFamily: 'Avenir'}}>
                             dinosaur
                           </Text>
                         </TouchableOpacity>
@@ -175,7 +175,7 @@ export default class ProfileScreen extends Component {
                             style={styles.avatarModal}
                             source={require(`./res/avatars/dolphin.png`)}
                           />
-                          <Text style={{fontSize: 15, fontWeight: 'bold'}}>
+                          <Text style={{fontSize: 15, fontWeight: 'bold', fontFamily: 'Avenir'}}>
                             dolphin
                           </Text>
                         </TouchableOpacity>
@@ -184,7 +184,7 @@ export default class ProfileScreen extends Component {
                             style={styles.avatarModal}
                             source={require(`./res/avatars/ghost.png`)}
                           />
-                          <Text style={{fontSize: 15, fontWeight: 'bold'}}>
+                          <Text style={{fontSize: 15, fontWeight: 'bold', fontFamily: 'Avenir'}}>
                             ghost
                           </Text>
                         </TouchableOpacity>
@@ -195,7 +195,7 @@ export default class ProfileScreen extends Component {
                             style={styles.avatarModal}
                             source={require(`./res/avatars/robot.png`)}
                           />
-                          <Text style={{fontSize: 15, fontWeight: 'bold'}}>
+                          <Text style={{fontSize: 15, fontWeight: 'bold', fontFamily: 'Avenir'}}>
                             robot
                           </Text>
                         </TouchableOpacity>
@@ -204,7 +204,7 @@ export default class ProfileScreen extends Component {
                             style={styles.avatarModal}
                             source={require(`./res/avatars/seagull.png`)}
                           />
-                          <Text style={{fontSize: 15, fontWeight: 'bold'}}>
+                          <Text style={{fontSize: 15, fontWeight: 'bold', fontFamily: 'Avenir'}}>
                             seagull
                           </Text>
                         </TouchableOpacity>
@@ -213,7 +213,7 @@ export default class ProfileScreen extends Component {
                             style={styles.avatarModal}
                             source={require(`./res/avatars/shark.png`)}
                           />
-                          <Text style={{fontSize: 15, fontWeight: 'bold'}}>
+                          <Text style={{fontSize: 15, fontWeight: 'bold', fontFamily: 'Avenir'}}>
                             shark
                           </Text>
                         </TouchableOpacity>
@@ -223,7 +223,7 @@ export default class ProfileScreen extends Component {
                     <View style={{flex: 0, flexDirection: 'row',}}>
                       <TouchableOpacity style={styles.exitButtonFlex} onPress={()=> this.setModalVisible(!this.state.modalVisible)}>
                         <View style={styles.exitButton}>
-                          <Text style={{color: 'white'}}>EXIT</Text>
+                          <Text style={{color: 'white', fontFamily: 'Avenir'}}>EXIT</Text>
                         </View>
                       </TouchableOpacity>
                     </View>
@@ -422,13 +422,13 @@ var styles = StyleSheet.create({
     paddingBottom: 20,
     color:'black',
     fontWeight: 'bold',
-    fontFamily: 'helvetica',
+    fontFamily: 'Avenir',
     textAlign:'center',
     fontSize : 40
   },
   profileInfoCard : {
     width: '80%',
-    height: '20%',
+    height: '25%',
     backgroundColor: 'lightgray',
     borderColor: 'black',
     borderWidth: 3,
@@ -438,16 +438,16 @@ var styles = StyleSheet.create({
     justifyContent: 'space-around'
   },
   profileInfo : {
-    height: 80,
+    height: 100,
     flex: 0,
     flexDirection: 'column',
     justifyContent: 'space-between',
     alignItems: 'flex-start',
   },
   avatar: {
-    height: 90,
-    width: 90,
-    margin: 10,
+    height: 110,
+    width: 110,
+    margin: 5,
   },
   avatarModal: {
     height: 60,
@@ -502,7 +502,7 @@ var styles = StyleSheet.create({
   objectTitle : {
     fontSize: 20,
     fontWeight: 'bold',
-    fontFamily: 'Helvetica',
+    fontFamily: 'Avenir',
     marginTop: 20,
     marginBottom: 20
   },
@@ -515,6 +515,7 @@ var styles = StyleSheet.create({
   headerText : {
     fontSize: 15,
     fontWeight: 'bold',
-    color: 'white'
+    color: 'white',
+    fontFamily: 'Avenir'
   },
 });

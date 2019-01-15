@@ -11,7 +11,8 @@ import {
   TouchableOpacity,
   TouchableHighlight,
   Button,
-  ImageBackground
+  ImageBackground,
+  Image
 } from 'react-native';
 
 import {
@@ -54,19 +55,23 @@ export default class DashboardScreen extends Component {
   dashboardMode(){
     return (
       <AppConsumer>
-        {({ droppedObjs, organizedDroppedObjs, organizeDroppedObj, objToSearch, userLat, userLong, calculatedObjPos, listSelect }) => (
+        {({ avatar, droppedObjs, organizedDroppedObjs, organizeDroppedObj, objToSearch, userLat, userLong, calculatedObjPos, listSelect }) => (
           <ImageBackground style={styles.gridBackground} source={gridBackground}>
-            <View style={styles.titleBox}>
-              <Text style={{ fontSize: 40, fontWeight: 'bold', fontFamily: 'Helvetica' }}>
-                Object
-              </Text>
-              <Text style={{ fontSize: 40, fontWeight: 'bold', fontFamily: 'Helvetica' }}> </Text>
-              <Text style={{ fontSize: 40, fontWeight: 'bold', fontFamily: 'Helvetica', color: 'gray' }}>
-                Search
-              </Text>
+
+            <View style={styles.header}>
+              {this.renderAvatarDash(avatar)}
+              <View style={styles.titleBox}>
+                <Text style={styles.titleTextBlack}>
+                  Object
+                </Text>
+                <Text style={styles.titleTextGray}>
+                  Search
+                </Text>
+              </View>
             </View>
-            <View style={{ flex: 0, height: '60%', width:'80%', flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}>
-              <View style={{ flex: 1, alignSelf: 'stretch', flexDirection: 'row', backgroundColor: 'blue'}}>
+
+            <View style={{ flex: 0, height: '60%', borderWidth: 3, width:'80%', flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}>
+              <View style={{ flex: 1, alignSelf: 'stretch', flexDirection: 'row', backgroundColor: '#2196f3'}}>
                 <View style={styles.tableHeader}>
                   <Text style={styles.headerText}>
                     Latitude
@@ -114,7 +119,7 @@ export default class DashboardScreen extends Component {
         <View style={styles.arButtonFlex}>
           <TouchableOpacity style={{width: '100%'}} onPress={() => this.enterAR(objToSearch, userLat, userLong, calculatedObjPos)}>
             <View style={styles.arButton1}>
-              <Text style={{color: 'white'}}>ENTER AR MODE</Text>
+              <Text style={{color: 'white', fontFamily: 'Avenir'}}>ENTER AR MODE</Text>
             </View>
           </TouchableOpacity>
         </View>
@@ -124,7 +129,7 @@ export default class DashboardScreen extends Component {
         <View style={styles.arButtonFlex}>
           <TouchableOpacity disabled={true} style={{width: '100%'}} onPress={() => this.enterAR(objToSearch, userLat, userLong, calculatedObjPos)}>
             <View style={styles.arButton2}>
-              <Text style={{color: 'white'}}>TOO FAR AWAY</Text>
+              <Text style={{color: 'white', fontFamily: 'Avenir'}}>TOO FAR AWAY</Text>
             </View>
           </TouchableOpacity>
         </View>
@@ -235,6 +240,127 @@ export default class DashboardScreen extends Component {
     // ${headingPhoneToObj}, objX: ${objX}, objZ: ${objZ}`
   }
 
+  renderAvatarDash(avatar){
+    if(avatar === 'alien'){
+      return(
+        <View style={styles.avatarTile}>
+          <Image
+            style={styles.avatar}
+            source={require(`./res/avatars/alien.png`)}
+          />
+        </View>
+      )
+    } else if (avatar === 'cactus'){
+      return(
+        <View style={styles.avatarTile}>
+          <Image
+            style={styles.avatar}
+            source={require(`./res/avatars/cactus.png`)}
+          />
+        </View>
+      )
+    } else if (avatar === 'cerberus'){
+      return(
+        <View style={styles.avatarTile}>
+          <Image
+            style={styles.avatar}
+            source={require(`./res/avatars/cerberus.png`)}
+          />
+        </View>
+      )
+    } else if (avatar === 'cow'){
+      return(
+        <View style={styles.avatarTile}>
+          <Image
+            style={styles.avatar}
+            source={require(`./res/avatars/cow.png`)}
+          />
+        </View>
+      )
+    } else if (avatar === 'cricket'){
+      return(
+        <View style={styles.avatarTile}>
+          <Image
+            style={styles.avatar}
+            source={require(`./res/avatars/cricket.png`)}
+          />
+        </View>
+      )
+    } else if (avatar === 'death'){
+      return(
+        <View style={styles.avatarTile}>
+          <Image
+            style={styles.avatar}
+            source={require(`./res/avatars/death.png`)}
+          />
+        </View>
+      )
+    } else if (avatar === 'dinosaur'){
+      return(
+        <View style={styles.avatarTile}>
+          <Image
+            style={styles.avatar}
+            source={require(`./res/avatars/dinosaur.png`)}
+          />
+        </View>
+      )
+    } else if (avatar === 'dolphin'){
+      return(
+        <View style={styles.avatarTile}>
+          <Image
+            style={styles.avatar}
+            source={require(`./res/avatars/dolphin.png`)}
+          />
+        </View>
+      )
+    } else if (avatar === 'ghost'){
+      return(
+        <View style={styles.avatarTile}>
+          <Image
+            style={styles.avatar}
+            source={require(`./res/avatars/ghost.png`)}
+          />
+        </View>
+      )
+    } else if (avatar === 'robot'){
+      return(
+        <View style={styles.avatarTile}>
+          <Image
+            style={styles.avatar}
+            source={require(`./res/avatars/robot.png`)}
+          />
+        </View>
+      )
+    } else if (avatar === 'seagull'){
+      return(
+        <View style={styles.avatarTile}>
+          <Image
+            style={styles.avatar}
+            source={require(`./res/avatars/seagull.png`)}
+          />
+        </View>
+      )
+    } else if (avatar === 'shark'){
+      return(
+        <View style={styles.avatarTile}>
+          <Image
+            style={styles.avatar}
+            source={require(`./res/avatars/shark.png`)}
+          />
+        </View>
+      )
+    } else if (avatar === 'squid'){
+      return(
+        <View style={styles.avatarTile}>
+          <Image
+            style={styles.avatar}
+            source={require(`./res/avatars/squid.png`)}
+          />
+        </View>
+      )
+    }
+  }
+
 }
 
 var styles = StyleSheet.create({
@@ -251,10 +377,24 @@ var styles = StyleSheet.create({
   },
   titleBox : {
     flex: 0,
-    flexDirection: 'row',
+    flexDirection: 'column',
+    marginRight: 40,
     height: 90,
+    width: 120,
     alignItems: 'center'
   },
+  titleTextBlack : {
+    fontSize: 40,
+    fontWeight: 'bold',
+    fontFamily: 'Avenir'
+  },
+  titleTextGray : {
+    fontSize: 40,
+    fontWeight: 'bold',
+    fontFamily: 'Avenir',
+    color: 'gray'
+  },
+
   exitButtonFlex : {
     flex: 1,
     flexDirection: 'row',
@@ -265,7 +405,7 @@ var styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'red',
+    backgroundColor: '#e53935',
   },
   tableHeader : {
     flex: 1,
@@ -275,11 +415,11 @@ var styles = StyleSheet.create({
   },
   headerText : {
     fontSize: 15,
+    fontFamily: 'Avenir',
     fontWeight: 'bold',
     color: 'white'
   },
   arButtonFlex : {
-    borderWidth: 2,
     height: 40,
     width: '100%',
     flex: 0,
@@ -290,13 +430,34 @@ var styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'green',
+    backgroundColor: '#4caf50',
   },
   arButton2 : {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'red',
+    backgroundColor: '#e53935',
+  },
+  header : {
+    flex: 0,
+    height: 130,
+    width: '80%',
+    flexDirection: 'row',
+    justifyContent: 'space-between'
+  },
+  avatar: {
+    height: 90,
+    width: 90,
+    margin: 10,
+  },
+  avatarTile : {
+    flex: 0,
+    height: 110,
+    width: 110,
+    borderWidth: 3,
+    flexDirection: 'column',
+    alignItems: 'center',
+    backgroundColor: 'lightgray',
   },
 
 });

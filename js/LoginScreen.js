@@ -53,29 +53,29 @@ export default class LoginScreen extends Component {
           <View style={styles.loginSigninFlex}>
             <TouchableOpacity style={{width: '50%'}} onPress={this.displayLogin}>
               <View style={styles.buttonGray}>
-                <Text style={{color: 'blue'}}>Login</Text>
+                <Text style={styles.logSignText}>Login</Text>
               </View>
             </TouchableOpacity>
             <TouchableOpacity style={{width: '50%'}} onPress={this.displaySignup}>
             <View style={styles.buttonWhite}>
-              <Text style={{color: 'blue'}}>Signup</Text>
+              <Text style={styles.logSignText}>Signup</Text>
             </View>
             </TouchableOpacity>
           </View>
           <View style={styles.userPassBox}>
             <View style={{height: 30, width: 200, flex: 0, justifyContent: 'center'}}>
-              <Text>Username</Text>
+              <Text style={styles.boxText}>Username</Text>
             </View>
             <TextInput style={styles.textInputBox} placeholder={' enter username'} />
             <View style={{height: 30, width: 200, flex: 0, justifyContent: 'center'}}>
-              <Text>Password</Text>
+              <Text style={styles.boxText}>Password</Text>
             </View>
             <TextInput style={styles.textInputBox} placeholder={' enter password'}/>
           </View>
           <View style={styles.goButtonFlex}>
             <TouchableOpacity style={{width: '100%'}} onPress={() => logIn(1)}>
               <View style={styles.goButton}>
-                <Text style={{color: 'white'}}>GO</Text>
+                <Text style={{color: 'white', fontFamily: 'Avenir', fontWeight: 'bold'}}>GO</Text>
               </View>
             </TouchableOpacity>
           </View>
@@ -91,31 +91,31 @@ export default class LoginScreen extends Component {
           <View style={styles.loginSigninFlex}>
             <TouchableOpacity style={{width: '50%'}} onPress={this.displayLogin}>
               <View style={styles.buttonWhite}>
-                <Text style={{color: 'blue'}}>Login</Text>
+                <Text style={styles.logSignText}>Login</Text>
               </View>
             </TouchableOpacity>
             <TouchableOpacity style={{width: '50%'}} onPress={this.displaySignup}>
             <View style={styles.buttonGray}>
-              <Text style={{color: 'blue'}}>Signup</Text>
+              <Text style={styles.logSignText}>Signup</Text>
             </View>
             </TouchableOpacity>
           </View>
           <View style={{height: 30, width: 200, flex: 0, justifyContent: 'center'}}>
-            <Text>Full Name</Text>
+            <Text style={styles.boxText}>Full Name</Text>
           </View>
           <TextInput style={styles.textInputBox} placeholder={' enter full name'}/>
           <View style={{height: 30, width: 200, flex: 0, justifyContent: 'center'}}>
-            <Text>Username</Text>
+            <Text style={styles.boxText}>Username</Text>
           </View>
           <TextInput style={styles.textInputBox} placeholder={' enter username'} />
           <View style={{height: 30, width: 200, flex: 0, justifyContent: 'center'}}>
-            <Text>Password</Text>
+            <Text style={styles.boxText}>Password</Text>
           </View>
           <TextInput style={styles.textInputBox} placeholder={' enter username'}/>
           <View style={styles.goButtonFlex}>
             <TouchableOpacity style={{width: '100%'}} onPress={() => logIn(1)}>
               <View style={styles.goButton}>
-                <Text style={{color: 'white'}}>GO</Text>
+                <Text style={{color: 'white', fontFamily: 'Avenir', fontWeight: 'bold'}}>GO</Text>
               </View>
             </TouchableOpacity>
           </View>
@@ -133,17 +133,17 @@ export default class LoginScreen extends Component {
             source={gridBackground}
           >
             <View style={styles.titleBox}>
-              <Text style={{ fontSize: 70, fontWeight: 'bold', fontFamily: 'Helvetica' }}>
+              <Text style={{ fontSize: 70, fontWeight: 'bold', fontFamily: 'Avenir' }}>
                 VIR
               </Text>
-              <Text style={{ fontSize: 70, fontWeight: 'bold', fontFamily: 'Helvetica', color: 'gray' }}>
+              <Text style={{ fontSize: 70, fontWeight: 'bold', fontFamily: 'Avenir', color: 'gray' }}>
                 GEO
               </Text>
             </View>
             <View style={styles.captionBox}>
-              <Text style={{fontSize: 18}}>a </Text><Text style={{fontSize: 18, fontWeight: 'bold'}}>vir</Text><Text style={{fontSize: 18}}>tual </Text>
-              <Text style={{ fontSize: 18, color: 'gray', fontWeight: 'bold'}}>geo</Text>
-              <Text style={{fontSize: 18}}>
+              <Text style={{fontSize: 18, fontFamily: 'Avenir'}}>a </Text><Text style={{fontSize: 18, fontWeight: 'bold', fontFamily: 'Avenir'}}>vir</Text><Text style={{fontSize: 18, fontFamily: 'Avenir'}}>tual </Text>
+              <Text style={{ fontSize: 18, color: 'gray', fontWeight: 'bold', fontFamily: 'Avenir'}}>geo</Text>
+              <Text style={{fontSize: 18, fontFamily: 'Avenir'}}>
                 caching app
               </Text>
             </View>
@@ -198,6 +198,17 @@ var styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center'
   },
+  logSignText : {
+    color: '#2196f3',
+    fontFamily: 'Avenir',
+    fontWeight: 'bold'
+  },
+  boxText : {
+    color: 'black',
+    fontFamily: 'Avenir',
+    fontSize: 15,
+    fontWeight: 'bold'
+  },
   buttonGray : {
     flex: 1,
     justifyContent: 'center',
@@ -239,7 +250,7 @@ var styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'blue',
+    backgroundColor: '#2196f3',
   },
   titleText: {
     paddingTop: 30,
