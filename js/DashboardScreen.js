@@ -55,7 +55,7 @@ export default class DashboardScreen extends Component {
   dashboardMode(){
     return (
       <AppConsumer>
-        {({ avatar, droppedObjs, organizedDroppedObjs, organizeDroppedObj, objToSearch, userLat, userLong, calculatedObjPos, listSelect }) => (
+        {({ avatar, trackObjToSearch, droppedObjs, organizedDroppedObjs, organizeDroppedObj, objToSearch, userLat, userLong, calculatedObjPos, listSelect }) => (
           <ImageBackground style={styles.gridBackground} source={gridBackground}>
 
             <View style={styles.header}>
@@ -84,7 +84,7 @@ export default class DashboardScreen extends Component {
                 </View>
               </View>
               { this.makeTable(organizedDroppedObjs, listSelect) }
-              { this.enterArButton(objToSearch, userLat, userLong, calculatedObjPos) }
+              { this.enterArButton(objToSearch, trackObjToSearch, userLat, userLong, calculatedObjPos) }
             </View>
           </ImageBackground>
         )}
@@ -106,12 +106,12 @@ export default class DashboardScreen extends Component {
     })
   }
 
-  enterArButton = (objToSearch, userLat, userLong, calculatedObjPos)=>{
+  enterArButton = (objToSearch, trackObjToSearch, userLat, userLong, calculatedObjPos)=>{
     console.log('distance', objToSearch.distance)
     if(objToSearch.distance < 900){
       return(
         <View style={styles.arButtonFlex}>
-          <TouchableOpacity style={{width: '100%'}} onPress={() => this.enterAR(objToSearch, userLat, userLong, calculatedObjPos)}>
+          <TouchableOpacity style={{width: '100%'}} onPress={() => this.enterAR(objToSearch, trackObjToSearch, userLat, userLong, calculatedObjPos)}>
             <View style={styles.arButton1}>
               <Text style={{color: 'white', fontFamily: 'Avenir'}}>ENTER AR MODE</Text>
             </View>
@@ -121,7 +121,7 @@ export default class DashboardScreen extends Component {
     } else {
       return (
         <View style={styles.arButtonFlex}>
-          <TouchableOpacity disabled={true} style={{width: '100%'}} onPress={() => this.enterAR(objToSearch, userLat, userLong, calculatedObjPos)}>
+          <TouchableOpacity disabled={true} style={{width: '100%'}} onPress={() => this.enterAR(objToSearch, trackObjToSearch, userLat, userLong, calculatedObjPos)}>
             <View style={styles.arButton2}>
               <Text style={{color: 'white', fontFamily: 'Avenir'}}>TOO FAR AWAY</Text>
             </View>
@@ -134,7 +134,7 @@ export default class DashboardScreen extends Component {
   getARNavigator() {
     return (
       <AppConsumer>
-        {({ objToSearch, calculatedObjPos }) => (
+        {({ reorganizeDroppedObj, trackDistance, objToSearch, calculatedObjPos }) => (
           <View style={styles.flex}>
             <ViroARSceneNavigator
               apiKey="912A3CB8-1A43-42D2-BFDF-2659B6DA962E"
@@ -146,9 +146,15 @@ export default class DashboardScreen extends Component {
               }}
             />
             <View style={{flex: 0, flexDirection: 'row',}}>
-              <TouchableOpacity style={styles.exitButtonFlex} onPress={() => this._exitAr()}>
+              <View style={{flex: 1}}>
+                  <View style={styles.arInfo}>
+                    <Text style={{color: 'white', fontSize: 18, fontFamily: 'Avenir'}}>Object Type: {objToSearch.object_info[0].category}</Text>
+                    <Text style={{color: 'white', fontSize: 18, fontFamily: 'Avenir'}}>Dist(m):{trackDistance.toFixed(1)} </Text>
+                  </View>
+              </View>
+              <TouchableOpacity style={styles.exitButtonFlex} onPress={() => this._exitAr(reorganizeDroppedObj)}>
                 <View style={styles.exitButton}>
-                  <Text style={{color: 'white'}}>EXIT AR MODE</Text>
+                  <Text style={{color: 'white', fontSize: 18, fontFamily: 'Avenir'}}>EXIT AR MODE</Text>
                 </View>
               </TouchableOpacity>
             </View>
@@ -158,7 +164,7 @@ export default class DashboardScreen extends Component {
     );
   }
 
-  enterAR(objToSearch, userLat, userLong, calculatedObjPos){
+  enterAR(objToSearch, trackObjToSearch, userLat, userLong, calculatedObjPos){
     console.log('objToSearch', objToSearch, 'userLat', userLat, 'userLong', userLong)
 
     var objLat = objToSearch.latitude
@@ -168,6 +174,8 @@ export default class DashboardScreen extends Component {
       .then((objPos)=>{
         return calculatedObjPos(objPos)
       }).then(()=>{
+        return trackObjToSearch(objToSearch)
+      }).then(()=>{
         return this.setState({
           arOn: true,
         })
@@ -175,7 +183,9 @@ export default class DashboardScreen extends Component {
 
   }
 
-  _exitAr =() =>{
+  _exitAr =(reorganizeDroppedObj) =>{
+
+    reorganizeDroppedObj()
     this.setState({
       arOn: false,
     })
@@ -395,8 +405,15 @@ var styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center'
   },
+  arInfo : {
+    height: 60,
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'gray',
+  },
   exitButton : {
-    height: 40,
+    height: 60,
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',

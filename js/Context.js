@@ -27,7 +27,8 @@ export class AppProvider extends Component {
 
       objToDrop: [],
       objToSearch: {},
-      objPosition: {}
+      objPosition: {},
+      trackDistance: 0,
     }
   }
 
@@ -57,7 +58,6 @@ export class AppProvider extends Component {
       .then(response => response.json())
       .then(json => {
         let avatar = json.user[0].avatar_info[0].avatar_name
-        console.log('loginuser', json.user)
 
         return this.setState({
           user: json.user,
@@ -99,7 +99,6 @@ export class AppProvider extends Component {
     return fetch(`${baseUrl}/users/${userId}`)
       .then(response => response.json())
       .then(json => {
-        console.log('fetchuser', json.user)
         this.setState({
           user: json.user,
         })
@@ -113,6 +112,30 @@ export class AppProvider extends Component {
     this.setState({
       objPosition: objPosition
     })
+  }
+
+  trackObjToSearch = (obj) =>{
+    navigator.geolocation.stopObserving()
+    navigator.geolocation.watchPosition(
+      (position) => {
+        console.log('tracking')
+        let userLat = position.coords.latitude
+        let userLong = position.coords.longitude
+
+        let calcDistance = 0
+        calcDistance = this.latLongToDistanceAway(userLat, userLong, obj.latitude, obj.longitude)
+
+        this.setState({
+          trackDistance: calcDistance
+        })
+
+      return 'tracked'
+
+      },
+      (error) => this.setState({ navError: true }),
+      { enableHighAccuracy: true, distanceFilter: 1, timeout: 10000, maximumAge: 10000 },
+    )
+    return 'tracked'
   }
 
   organizeDroppedObj = (objs) =>{
@@ -235,14 +258,13 @@ export class AppProvider extends Component {
     var objToDrop = {}
     var userObjects = this.state.user[0].objects
 
-    console.log('obj to drop', objId)
+
     for(let i=0; i < userObjects.length; i++){
       if(objId === userObjects[i].object_id){
         objToDrop = userObjects[i]
       }
     }
 
-    console.log('this.state.obj' , 'obj to drop', objToDrop)
     this.setState({
       profileListSelect: objId,
       objToDrop: objToDrop
@@ -255,7 +277,6 @@ export class AppProvider extends Component {
       longitude: this.state.userLong,
       object_id: objectId
     }
-    console.log('obj', obj)
 
     return fetch(`${baseUrl}/dropped_objects`, {
       method: 'POST',
@@ -296,7 +317,6 @@ export class AppProvider extends Component {
       }
     })
     .then(()=>{
-      console.log('pickup test!', this.state.user[0].virgeo_user_id)
       return this.fetchUser(this.state.user[0].virgeo_user_id)
     })
     .then(()=>{
@@ -335,6 +355,7 @@ export class AppProvider extends Component {
           objToDrop: this.state.objToDrop,
           objToSearch: this.state.objToSearch,
           objPosition: this.state.objPosition,
+          trackDistance: this.state.trackDistance,
 
           logIn: this.logIn,
           logOut: this.logOut,
@@ -342,8 +363,10 @@ export class AppProvider extends Component {
           dropObj: this.dropObj,
           calculatedObjPos: this.calculatedObjPos,
           organizeDroppedObj: this.organizeDroppedObj,
+          reorganizeDroppedObj: this.reorganizeDroppedObj,
           listSelectFunc: this.listSelectFunc,
-          profileListSelectFunc: this.profileListSelectFunc
+          profileListSelectFunc: this.profileListSelectFunc,
+          trackObjToSearch: this.trackObjToSearch,
         }}
       >
         {children}
