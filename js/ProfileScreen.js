@@ -500,8 +500,7 @@ var styles = StyleSheet.create({
     borderWidth: 2,
   },
   objectTitle : {
-    fontSize: 20,
-    fontWeight: 'bold',
+    fontSize: 30,
     fontFamily: 'Avenir',
     marginTop: 20,
     marginBottom: 20

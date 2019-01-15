@@ -74,12 +74,7 @@ export default class DashboardScreen extends Component {
               <View style={{ flex: 1, alignSelf: 'stretch', flexDirection: 'row', backgroundColor: '#2196f3'}}>
                 <View style={styles.tableHeader}>
                   <Text style={styles.headerText}>
-                    Latitude
-                  </Text>
-                </View>
-                <View style={styles.tableHeader}>
-                  <Text style={styles.headerText}>
-                    Longitude
+                    Object Type
                   </Text>
                 </View>
                 <View style={styles.tableHeader}>
@@ -103,8 +98,7 @@ export default class DashboardScreen extends Component {
         <DroppedObjList
           key={i}
           objectId={obj.id}
-          latitude={obj.latitude}
-          longitude={obj.longitude}
+          objectType={obj.object_info[0].category}
           distance={obj.distance}
           listSelect={listSelect}
         />

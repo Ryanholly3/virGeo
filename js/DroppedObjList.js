@@ -39,12 +39,7 @@ class DroppedObjList extends Component {
             <TouchableOpacity onPress={() => listSelectFunc(this.props.objectId)} style={{ flex: 1, alignSelf: 'stretch', flexDirection: 'row', backgroundColor: 'gray'}}>
               <View style={styles.tableItem}>
                 <Text style={styles.textStyles}>
-                  {this.props.latitude.toFixed(5)}
-                </Text>
-              </View>
-              <View style={styles.tableItem}>
-                <Text style={styles.textStyles}>
-                  {this.props.longitude.toFixed(5)}
+                  {this.props.objectType}
                 </Text>
               </View>
               <View style={styles.tableItem}>
@@ -63,12 +58,7 @@ class DroppedObjList extends Component {
             <TouchableOpacity onPress={() => listSelectFunc(this.props.objectId)} style={{ flex: 1, alignSelf: 'stretch', flexDirection: 'row', backgroundColor: 'lightgray'}}>
               <View style={styles.tableItem}>
                 <Text style={styles.textStyles}>
-                  {this.props.latitude.toFixed(5)}
-                </Text>
-              </View>
-              <View style={styles.tableItem}>
-                <Text style={styles.textStyles}>
-                  {this.props.longitude.toFixed(5)}
+                  {this.props.objectType}
                 </Text>
               </View>
               <View style={styles.tableItem}>
