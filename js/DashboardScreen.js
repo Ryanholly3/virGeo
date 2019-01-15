@@ -62,7 +62,7 @@ export default class DashboardScreen extends Component {
               {this.renderAvatarDash(avatar)}
               <View style={styles.titleBox}>
                 <Text style={styles.titleTextBlack}>
-                  Object
+                  Virtual
                 </Text>
                 <Text style={styles.titleTextGray}>
                   Search
@@ -373,17 +373,18 @@ var styles = StyleSheet.create({
     flex: 0,
     flexDirection: 'column',
     marginRight: 40,
-    height: 90,
-    width: 120,
+    height: 110,
+    width: 150,
+    justifyContent: 'center',
     alignItems: 'center'
   },
   titleTextBlack : {
-    fontSize: 40,
+    fontSize: 50,
     fontWeight: 'bold',
     fontFamily: 'Avenir'
   },
   titleTextGray : {
-    fontSize: 40,
+    fontSize: 50,
     fontWeight: 'bold',
     fontFamily: 'Avenir',
     color: 'gray'
@@ -435,9 +436,11 @@ var styles = StyleSheet.create({
   header : {
     flex: 0,
     height: 130,
+    marginBottom: 20,
     width: '80%',
     flexDirection: 'row',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
+    alignItems: 'center'
   },
   avatar: {
     height: 90,
