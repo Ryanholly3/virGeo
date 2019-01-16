@@ -52,12 +52,12 @@ export default class LoginScreen extends Component {
         <View style={styles.loginSignupCard}>
           <View style={styles.loginSigninFlex}>
             <TouchableOpacity style={{width: '50%'}} onPress={this.displayLogin}>
-              <View style={styles.buttonGray}>
+              <View style={styles.loginGray}>
                 <Text style={styles.logSignText}>Login</Text>
               </View>
             </TouchableOpacity>
             <TouchableOpacity style={{width: '50%'}} onPress={this.displaySignup}>
-            <View style={styles.buttonWhite}>
+            <View style={styles.signupWhite}>
               <Text style={styles.logSignText}>Signup</Text>
             </View>
             </TouchableOpacity>
@@ -75,7 +75,7 @@ export default class LoginScreen extends Component {
           <View style={styles.goButtonFlex}>
             <TouchableOpacity style={{width: '100%'}} onPress={() => logIn(1)}>
               <View style={styles.goButton}>
-                <Text style={{color: 'white', fontFamily: 'Avenir', fontWeight: 'bold'}}>GO</Text>
+                <Text style={{color: 'white', fontSize: 18, letterSpacing: 1, fontFamily: 'Avenir', fontWeight: 'bold'}}>GO</Text>
               </View>
             </TouchableOpacity>
           </View>
@@ -90,12 +90,12 @@ export default class LoginScreen extends Component {
         <View style={styles.loginSignupCard}>
           <View style={styles.loginSigninFlex}>
             <TouchableOpacity style={{width: '50%'}} onPress={this.displayLogin}>
-              <View style={styles.buttonWhite}>
+              <View style={styles.loginWhite}>
                 <Text style={styles.logSignText}>Login</Text>
               </View>
             </TouchableOpacity>
             <TouchableOpacity style={{width: '50%'}} onPress={this.displaySignup}>
-            <View style={styles.buttonGray}>
+            <View style={styles.signupGray}>
               <Text style={styles.logSignText}>Signup</Text>
             </View>
             </TouchableOpacity>
@@ -115,7 +115,7 @@ export default class LoginScreen extends Component {
           <View style={styles.goButtonFlex}>
             <TouchableOpacity style={{width: '100%'}} onPress={() => logIn(1)}>
               <View style={styles.goButton}>
-                <Text style={{color: 'white', fontFamily: 'Avenir', fontWeight: 'bold'}}>GO</Text>
+                <Text style={{color: 'white', fontSize: 18, letterSpacing: 1, fontFamily: 'Avenir', fontWeight: 'bold'}}>GO</Text>
               </View>
             </TouchableOpacity>
           </View>
@@ -133,17 +133,17 @@ export default class LoginScreen extends Component {
             source={gridBackground}
           >
             <View style={styles.titleBox}>
-              <Text style={{ fontSize: 70, fontWeight: 'bold', fontFamily: 'Avenir' }}>
+              <Text style={{ fontSize: 75, fontWeight: 'bold', letterSpacing: 2, fontFamily: 'Avenir' }}>
                 VIR
               </Text>
-              <Text style={{ fontSize: 70, fontWeight: 'bold', fontFamily: 'Avenir', color: 'gray' }}>
+              <Text style={{ fontSize: 75, fontWeight: 'bold', letterSpacing: 2, fontFamily: 'Avenir', color: 'gray' }}>
                 GEO
               </Text>
             </View>
             <View style={styles.captionBox}>
-              <Text style={{fontSize: 18, fontFamily: 'Avenir'}}>a </Text><Text style={{fontSize: 18, fontWeight: 'bold', fontFamily: 'Avenir'}}>vir</Text><Text style={{fontSize: 18, fontFamily: 'Avenir'}}>tual </Text>
-              <Text style={{ fontSize: 18, color: 'gray', fontWeight: 'bold', fontFamily: 'Avenir'}}>geo</Text>
-              <Text style={{fontSize: 18, fontFamily: 'Avenir'}}>
+              <Text style={{fontSize: 20, letterSpacing: 1, fontFamily: 'Avenir'}}>a </Text><Text style={{fontSize: 20, fontWeight: 'bold', letterSpacing: 1, fontFamily: 'Avenir'}}>vir</Text><Text style={{fontSize: 20, letterSpacing: 1, fontFamily: 'Avenir'}}>tual </Text>
+              <Text style={{ fontSize: 20, color: 'gray', letterSpacing: 1, fontWeight: 'bold', letterSpacing: 1, fontFamily: 'Avenir'}}>geo</Text>
+              <Text style={{fontSize: 20, letterSpacing: 1, fontFamily: 'Avenir'}}>
                 caching app
               </Text>
             </View>
@@ -179,11 +179,12 @@ var styles = StyleSheet.create({
     justifyContent: 'flex-start'
   },
   loginSignupCard : {
-    width: '60%',
+    width: '70%',
     height: '50%',
     backgroundColor: 'gray',
     borderColor: 'black',
     borderWidth: 3,
+    borderRadius: 10,
     flex: 0,
     flexDirection: 'column',
     alignItems: 'center',
@@ -191,31 +192,64 @@ var styles = StyleSheet.create({
   },
   loginSigninFlex : {
     marginTop: 20,
-    borderWidth: 2,
     height: 40,
-    width: 200,
+    width: 220,
     flex: 0,
     flexDirection: 'row',
     alignItems: 'center'
   },
   logSignText : {
     color: '#2196f3',
+    letterSpacing: 1,
     fontFamily: 'Avenir',
     fontWeight: 'bold'
   },
   boxText : {
     color: 'black',
     fontFamily: 'Avenir',
-    fontSize: 15,
+    fontSize: 18,
+    letterSpacing: 1,
     fontWeight: 'bold'
   },
-  buttonGray : {
+  loginGray : {
+    borderTopWidth: 2,
+    borderLeftWidth: 2,
+    borderBottomWidth: 2,
+    borderTopLeftRadius: 10,
+    borderBottomLeftRadius: 10,
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'lightgray',
   },
-  buttonWhite : {
+  signupWhite : {
+    borderTopWidth: 2,
+    borderRightWidth: 2,
+    borderBottomWidth: 2,
+    borderTopRightRadius: 10,
+    borderBottomRightRadius: 10,
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'white',
+  },
+  signupGray : {
+    borderTopWidth: 2,
+    borderRightWidth: 2,
+    borderBottomWidth: 2,
+    borderTopRightRadius: 10,
+    borderBottomRightRadius: 10,
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'lightgray',
+  },
+  loginWhite : {
+    borderTopWidth: 2,
+    borderLeftWidth: 2,
+    borderBottomWidth: 2,
+    borderTopLeftRadius: 10,
+    borderBottomLeftRadius: 10,
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
@@ -223,10 +257,10 @@ var styles = StyleSheet.create({
   },
   textInputBox : {
     height: 40,
-    width: 200,
+    width: 220,
     backgroundColor: 'white',
-    borderColor: 'black',
     borderWidth: 2,
+    borderRadius: 5,
   },
   userPassBox : {
     height: 80,
@@ -239,15 +273,16 @@ var styles = StyleSheet.create({
   goButtonFlex : {
     marginTop: 10,
     marginBottom: 20,
-    borderWidth: 2,
     height: 40,
-    width: 200,
+    width: 220,
     flex: 0,
     flexDirection: 'row',
     alignItems: 'center'
   },
   goButton : {
     flex: 1,
+    borderWidth: 2,
+    borderRadius: 10,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#2196f3',

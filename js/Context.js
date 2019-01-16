@@ -258,12 +258,15 @@ export class AppProvider extends Component {
     var objToDrop = {}
     var userObjects = this.state.user[0].objects
 
+    console.log('user_object_id:', objId)
 
     for(let i=0; i < userObjects.length; i++){
-      if(objId === userObjects[i].object_id){
+      if(objId === userObjects[i].user_object_id){
         objToDrop = userObjects[i]
       }
     }
+
+    console.log('user_object:', objToDrop)
 
     this.setState({
       profileListSelect: objId,

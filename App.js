@@ -3,7 +3,8 @@
 import React, { Component } from 'react';
 import {
   View,
-  Text
+  Text,
+  StyleSheet
 } from "react-native";
 
 import { AppProvider } from './js/Context';
@@ -35,6 +36,7 @@ export default class App extends Component{
             />
             <Scene
               tabs={true}
+              labelStyle={styles.tabBar}
               tabBarPosition="top"
               headerMode="none"
               key="tabbar"
@@ -62,3 +64,12 @@ export default class App extends Component{
     );
   }
 }
+var styles = StyleSheet.create({
+  tabBar : {
+    color: 'white',
+    fontFamily: 'Avenir',
+    fontSize: 15,
+    fontWeight: 'bold',
+    letterSpacing: 1
+  }
+})

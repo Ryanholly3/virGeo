@@ -179,6 +179,18 @@ export default class ARSceneScreen extends Component {
               loop: true
             }}
           />
+          <Viro3DObject source={require('./res/arrow/scene.gltf')}
+            type="GLTF"
+            position={[objPosition.posX, 3, objPosition.posZ]}
+            visible={!this.state.fireworks}
+            rotation={[90,0,0]}
+            scale={[0.5, 0.5, 0.5]}
+            animation={{
+              name:'animateArrow',
+              run: true,
+              loop: true
+            }}
+          />
           <ViroParticleEmitter
             position={[objPosition.posX, 4, objPosition.posZ]}
             duration={1200}
@@ -257,6 +269,18 @@ export default class ARSceneScreen extends Component {
             onClick={()=> this.pickUp(objToSearch, pickUpObj, exitArFunc)}
             animation={{
               name:'animateImage',
+              run: true,
+              loop: true
+            }}
+          />
+          <Viro3DObject source={require('./res/arrow/scene.gltf')}
+            type="GLTF"
+            position={[objPosition.posX, 3, objPosition.posZ]}
+            visible={!this.state.fireworks}
+            rotation={[90,0,0]}
+            scale={[0.5, 0.5, 0.5]}
+            animation={{
+              name:'animateArrow',
               run: true,
               loop: true
             }}
@@ -343,6 +367,18 @@ export default class ARSceneScreen extends Component {
               loop: true
             }}
           />
+          <Viro3DObject source={require('./res/arrow/scene.gltf')}
+            type="GLTF"
+            position={[objPosition.posX, 3, objPosition.posZ]}
+            visible={!this.state.fireworks}
+            rotation={[90,0,0]}
+            scale={[0.5, 0.5, 0.5]}
+            animation={{
+              name:'animateArrow',
+              run: true,
+              loop: true
+            }}
+          />
           <ViroParticleEmitter
             position={[objPosition.posX, 4, objPosition.posZ]}
             duration={1200}
@@ -411,7 +447,7 @@ export default class ARSceneScreen extends Component {
         {({ user, objPosition, dropObj, pickUpObj, objToSearch }) => (
         <ViroARScene>
           <ViroAmbientLight color="#FFFFFF" />
-          <Viro3DObject source={require('./res/penny_coin/scene.gltf')}
+          <Viro3DObject source={require('./res/wood_stick_04/scene.gltf')}
             type="GLTF"
             visible={!this.state.fireworks}
             position={[objPosition.posX, 0, objPosition.posZ]}
@@ -420,6 +456,18 @@ export default class ARSceneScreen extends Component {
             onClick={()=> this.pickUp(objToSearch, pickUpObj, exitArFunc)}
             animation={{
               name:'animateImage',
+              run: true,
+              loop: true
+            }}
+          />
+          <Viro3DObject source={require('./res/arrow/scene.gltf')}
+            type="GLTF"
+            position={[objPosition.posX, 3, objPosition.posZ]}
+            visible={!this.state.fireworks}
+            rotation={[90,0,0]}
+            scale={[0.5, 0.5, 0.5]}
+            animation={{
+              name:'animateArrow',
               run: true,
               loop: true
             }}

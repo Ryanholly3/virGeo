@@ -36,7 +36,7 @@ class DroppedObjList extends Component {
       return (
         <AppConsumer>
           {({ listSelectFunc, objToSearch, calculatedObjPos }) => (
-            <TouchableOpacity onPress={() => listSelectFunc(this.props.objectId)} style={{ flex: 1, alignSelf: 'stretch', flexDirection: 'row', backgroundColor: 'gray'}}>
+            <TouchableOpacity onPress={() => listSelectFunc(this.props.objectId)} style={{ flex: 1, alignSelf: 'stretch', flexDirection: 'row', backgroundColor: '#9e9e9e'}}>
               <View style={styles.tableItem}>
                 <Text style={styles.textStyles}>
                   {this.props.objectType}
@@ -82,7 +82,9 @@ tableItem : {
   justifyContent: 'center'
 },
 textStyles : {
+  letterSpacing: 1,
   fontSize: 15,
+  fontWeight: 'bold'
 },
 })
 

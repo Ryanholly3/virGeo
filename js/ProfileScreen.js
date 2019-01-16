@@ -39,7 +39,7 @@ export default class ProfileScreen extends Component {
   render() {
     return (
       <AppConsumer>
-        {({ user, avatar, objects, droppedObjs, profileListSelect }) => (
+        {({ user, dropObj, avatar, objects, droppedObjs, profileListSelect }) => (
           <ImageBackground style={styles.gridBackground} source={gridBackground}>
             <View style={styles.titleBox}>
               <Text style={{ fontSize: 40, fontFamily: 'Avenir' }}>
@@ -52,24 +52,24 @@ export default class ProfileScreen extends Component {
             <View style={styles.profileInfoCard}>
               { this.renderAvatar(avatar) }
               <View style={styles.profileInfo}>
-                <Text style={{fontSize: 18, fontWeight: 'bold', fontFamily: 'Avenir'}}>
+                <Text style={{fontSize: 18, letterSpacing: 1, fontFamily: 'Avenir'}}>
                   Name: {user[0].full_name}
                 </Text>
-                <Text style={{fontSize: 18, fontWeight: 'bold', fontFamily: 'Avenir'}}>
+                <Text style={{fontSize: 18, letterSpacing: 1, fontFamily: 'Avenir'}}>
                   Level: {user[0].level}
                 </Text>
-                <Text style={{fontSize: 18, fontWeight: 'bold', fontFamily: 'Avenir'}}>
+                <Text style={{fontSize: 18, letterSpacing: 1, fontFamily: 'Avenir'}}>
                   Avatar: {avatar}
                 </Text>
               </View>
             </View>
             <View>
               <Text style={styles.objectTitle}>
-                Inventory
+                INVENTORY
               </Text>
             </View>
-            <View style={{ flex: 0, height: '40%', borderWidth: 3, width:'80%', flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}>
-              <View style={{ flex: 0, height: 40, alignSelf: 'stretch', flexDirection: 'row', backgroundColor: '#2196f3'}}>
+            <View style={styles.inventoryTable}>
+              <View style={styles.inventoryHeader}>
                 <View style={styles.tableHeader}>
                   <Text style={styles.headerText}>
                     Object
@@ -82,11 +82,18 @@ export default class ProfileScreen extends Component {
                 </View>
                 <View style={styles.tableHeader}>
                   <Text style={styles.headerText}>
-                    Drop Object
+                    Type
                   </Text>
                 </View>
               </View>
               { this.makeTable(user, profileListSelect) }
+              <View style={styles.dropButtonFlex}>
+                <TouchableOpacity style={{width: '100%'}} onPress={() => this.dropObj(user, profileListSelect, dropObj)}>
+                  <View style={styles.dropButton}>
+                    <Text style={{color: 'white', fontSize: 18, letterSpacing: 1, fontFamily: 'Avenir'}}>DROP OBJECT</Text>
+                  </View>
+                </TouchableOpacity>
+              </View>
             </View>
 
               <Modal
@@ -223,7 +230,7 @@ export default class ProfileScreen extends Component {
                     <View style={{flex: 0, flexDirection: 'row',}}>
                       <TouchableOpacity style={styles.exitButtonFlex} onPress={()=> this.setModalVisible(!this.state.modalVisible)}>
                         <View style={styles.exitButton}>
-                          <Text style={{color: 'white', fontFamily: 'Avenir'}}>EXIT</Text>
+                          <Text style={{color: 'white', letterSpacing: 1, fontFamily: 'Avenir'}}>EXIT</Text>
                         </View>
                       </TouchableOpacity>
                     </View>
@@ -248,10 +255,23 @@ export default class ProfileScreen extends Component {
           objectId={obj.object_id}
           userObjectId={obj.user_object_id}
           objectName={obj.object_name}
+          objectType={obj.category}
           profileListSelect={profileListSelect}
         />
       )
     })
+  }
+
+  dropObj = (user, profileListSelect, dropObj) =>{
+    let obj = user[0].objects
+    let objId;
+
+    for(let i= 0; i < obj.length;i++){
+      if(obj[i].user_object_id === profileListSelect){
+        objId = obj[i].object_id
+      }
+    }
+    dropObj(profileListSelect, objId)
   }
 
   renderAvatar = (avatar) =>{
@@ -432,6 +452,7 @@ var styles = StyleSheet.create({
     backgroundColor: 'lightgray',
     borderColor: 'black',
     borderWidth: 3,
+    borderRadius: 10,
     flex: 0,
     flexDirection: 'row',
     alignItems: 'center',
@@ -505,7 +526,8 @@ var styles = StyleSheet.create({
     borderLeftWidth: 3,
   },
   objectTitle : {
-    fontSize: 30,
+    letterSpacing: 5,
+    fontSize: 20,
     fontFamily: 'Avenir',
     marginTop: 20,
     marginBottom: 20
@@ -518,8 +540,44 @@ var styles = StyleSheet.create({
   },
   headerText : {
     fontSize: 15,
+    letterSpacing: 1,
     fontWeight: 'bold',
     color: 'white',
     fontFamily: 'Avenir'
   },
+  dropButtonFlex : {
+    height: 40,
+    width: '100%',
+    flex: 0,
+    flexDirection: 'row',
+    alignItems: 'center'
+  },
+  dropButton : {
+    flex: 1,
+    borderBottomLeftRadius: 7,
+    borderBottomRightRadius: 7,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#e53935',
+  },
+  inventoryTable : {
+    flex: 0,
+    height: '40%',
+    borderWidth: 3,
+    borderRadius: 10,
+    width:'80%',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  inventoryHeader : {
+    flex: 0,
+    height: 40,
+    borderTopLeftRadius: 7,
+    borderTopRightRadius: 7,
+    alignSelf: 'stretch',
+    flexDirection: 'row',
+    backgroundColor: '#2196f3'
+  },
+
 });

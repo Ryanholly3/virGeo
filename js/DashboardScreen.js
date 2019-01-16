@@ -113,7 +113,7 @@ export default class DashboardScreen extends Component {
         <View style={styles.arButtonFlex}>
           <TouchableOpacity style={{width: '100%'}} onPress={() => this.enterAR(objToSearch, trackObjToSearch, userLat, userLong, calculatedObjPos)}>
             <View style={styles.arButton1}>
-              <Text style={{color: 'white', fontFamily: 'Avenir'}}>ENTER AR MODE</Text>
+              <Text style={{color: 'white', fontSize: 18, letterSpacing: 1, fontFamily: 'Avenir'}}>ENTER AR MODE</Text>
             </View>
           </TouchableOpacity>
         </View>
@@ -123,7 +123,7 @@ export default class DashboardScreen extends Component {
         <View style={styles.arButtonFlex}>
           <TouchableOpacity disabled={true} style={{width: '100%'}} onPress={() => this.enterAR(objToSearch, trackObjToSearch, userLat, userLong, calculatedObjPos)}>
             <View style={styles.arButton2}>
-              <Text style={{color: 'white', fontFamily: 'Avenir'}}>TOO FAR AWAY</Text>
+              <Text style={{color: 'white', fontSize: 18, letterSpacing: 1, fontFamily: 'Avenir'}}>TOO FAR AWAY</Text>
             </View>
           </TouchableOpacity>
         </View>
@@ -148,13 +148,13 @@ export default class DashboardScreen extends Component {
             <View style={{flex: 0, flexDirection: 'row',}}>
               <View style={{flex: 1}}>
                   <View style={styles.arInfo}>
-                    <Text style={{color: 'white', fontSize: 18, fontFamily: 'Avenir'}}>Object Type: {objToSearch.object_info[0].category}</Text>
-                    <Text style={{color: 'white', fontSize: 18, fontFamily: 'Avenir'}}>Dist(m):{trackDistance.toFixed(1)} </Text>
+                    <Text style={{color: 'white', fontSize: 18, letterSpacing: 1, fontFamily: 'Avenir'}}>Type: {objToSearch.object_info[0].category}</Text>
+                    <Text style={{color: 'white', fontSize: 18, letterSpacing: 1, fontFamily: 'Avenir'}}>Dist (m): {trackDistance.toFixed(1)} </Text>
                   </View>
               </View>
               <TouchableOpacity style={styles.exitButtonFlex} onPress={() => this._exitAr(reorganizeDroppedObj)}>
                 <View style={styles.exitButton}>
-                  <Text style={{color: 'white', fontSize: 18, fontFamily: 'Avenir'}}>EXIT AR MODE</Text>
+                  <Text style={{color: 'white', fontSize: 18, letterSpacing: 1, fontFamily: 'Avenir'}}>EXIT AR MODE</Text>
                 </View>
               </TouchableOpacity>
             </View>
@@ -427,6 +427,7 @@ var styles = StyleSheet.create({
   },
   headerText : {
     fontSize: 15,
+    letterSpacing: 1,
     fontFamily: 'Avenir',
     fontWeight: 'bold',
     color: 'white'
@@ -469,6 +470,7 @@ var styles = StyleSheet.create({
     height: 110,
     width: 110,
     borderWidth: 3,
+    borderRadius: 10,
     flexDirection: 'column',
     alignItems: 'center',
     backgroundColor: 'lightgray',

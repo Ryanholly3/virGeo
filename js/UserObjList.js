@@ -38,13 +38,9 @@ class UserObjList extends Component {
                 </Text>
               </View>
               <View style={styles.tableItem}>
-                <View style={styles.dropObjButtonFlex}>
-                  <TouchableOpacity style={{width: '100%'}} onPress={() => dropObj(this.props.userObjectId, this.props.objectId)}>
-                    <View style={styles.dropObjButton}>
-                      <Text style={{color: 'white',fontFamily: 'Avenir'}}>Drop</Text>
-                    </View>
-                  </TouchableOpacity>
-                </View>
+                <Text style={styles.textStyles}>
+                  {this.props.objectType}
+                </Text>
               </View>
             </TouchableOpacity>
           )}
@@ -62,6 +58,9 @@ class UserObjList extends Component {
                 </Text>
               </View>
               <View style={styles.tableItem}>
+                <Text style={styles.textStyles}>
+                  {this.props.objectType}
+                </Text>
               </View>
             </TouchableOpacity>
           )}
@@ -128,6 +127,7 @@ tableItem : {
 },
 textStyles : {
   fontSize: 15,
+  letterSpacing: 1,
   fontFamily: 'Avenir',
   fontWeight: 'bold'
 },
