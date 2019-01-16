@@ -36,10 +36,10 @@ export default class App extends Component{
             />
             <Scene
               tabs={true}
-              labelStyle={styles.tabBar}
               tabBarPosition="top"
               headerMode="none"
               key="tabbar"
+              labelStyle={styles.tabBar}
               hideTabBar={false}
             >
               <Scene

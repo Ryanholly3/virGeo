@@ -65,7 +65,7 @@ export default class ProfileScreen extends Component {
             </View>
             <View>
               <Text style={styles.objectTitle}>
-                INVENTORY
+                Inventory
               </Text>
             </View>
             <View style={styles.inventoryTable}>
@@ -527,9 +527,10 @@ var styles = StyleSheet.create({
   },
   objectTitle : {
     letterSpacing: 5,
-    fontSize: 20,
+    fontSize: 25,
     fontFamily: 'Avenir',
     marginTop: 20,
+    fontWeight: 'bold',
     marginBottom: 20
   },
   tableHeader : {

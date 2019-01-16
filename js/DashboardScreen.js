@@ -70,8 +70,8 @@ export default class DashboardScreen extends Component {
               </View>
             </View>
 
-            <View style={{ flex: 0, height: '60%', borderWidth: 3, width:'80%', flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}>
-              <View style={{ flex: 1, alignSelf: 'stretch', flexDirection: 'row', backgroundColor: '#2196f3'}}>
+            <View style={{ flex: 0, height: '60%', borderWidth: 3, borderRadius: 10, width:'80%', flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}>
+              <View style={{ flex: 1, borderTopLeftRadius: 7, borderTopRightRadius: 7, alignSelf: 'stretch', flexDirection: 'row', backgroundColor: '#2196f3'}}>
                 <View style={styles.tableHeader}>
                   <Text style={styles.headerText}>
                     Object Type
@@ -111,7 +111,7 @@ export default class DashboardScreen extends Component {
     if(objToSearch.distance < 900){
       return(
         <View style={styles.arButtonFlex}>
-          <TouchableOpacity style={{width: '100%'}} onPress={() => this.enterAR(objToSearch, trackObjToSearch, userLat, userLong, calculatedObjPos)}>
+          <TouchableOpacity style={{width: '100%' }} onPress={() => this.enterAR(objToSearch, trackObjToSearch, userLat, userLong, calculatedObjPos)}>
             <View style={styles.arButton1}>
               <Text style={{color: 'white', fontSize: 18, letterSpacing: 1, fontFamily: 'Avenir'}}>ENTER AR MODE</Text>
             </View>
@@ -121,7 +121,7 @@ export default class DashboardScreen extends Component {
     } else {
       return (
         <View style={styles.arButtonFlex}>
-          <TouchableOpacity disabled={true} style={{width: '100%'}} onPress={() => this.enterAR(objToSearch, trackObjToSearch, userLat, userLong, calculatedObjPos)}>
+          <TouchableOpacity disabled={true} style={{width: '100%' }} onPress={() => this.enterAR(objToSearch, trackObjToSearch, userLat, userLong, calculatedObjPos)}>
             <View style={styles.arButton2}>
               <Text style={{color: 'white', fontSize: 18, letterSpacing: 1, fontFamily: 'Avenir'}}>TOO FAR AWAY</Text>
             </View>
@@ -444,12 +444,16 @@ var styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#4caf50',
+    borderBottomLeftRadius: 7,
+    borderBottomRightRadius: 7,
   },
   arButton2 : {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#e53935',
+    borderBottomLeftRadius: 7,
+    borderBottomRightRadius: 7,
   },
   header : {
     flex: 0,
