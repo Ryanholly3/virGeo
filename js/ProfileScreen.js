@@ -59,20 +59,20 @@ export default class ProfileScreen extends Component {
                   Level: {user[0].level}
                 </Text>
                 <Text style={{fontSize: 18, letterSpacing: 1, fontFamily: 'Avenir'}}>
-                  Avatar: {avatar}
+                  Character: {avatar}
                 </Text>
               </View>
             </View>
             <View>
               <Text style={styles.objectTitle}>
-                Inventory
+                Your Collection
               </Text>
             </View>
             <View style={styles.inventoryTable}>
               <View style={styles.inventoryHeader}>
                 <View style={styles.tableHeader}>
                   <Text style={styles.headerText}>
-                    Object
+                    Item
                   </Text>
                 </View>
                 <View style={styles.tableHeader}>
@@ -106,7 +106,7 @@ export default class ProfileScreen extends Component {
                 <ImageBackground style={styles.avatarWindow} source={gridBackground}>
 
                   <View>
-                    <Text style={styles.titleText}>Avatar Selection</Text>
+                    <Text style={styles.titleText}>Character Selection</Text>
 
                     <View style={styles.avatarCard}>
                       <View style={styles.avatarTrio}>
@@ -491,7 +491,9 @@ var styles = StyleSheet.create({
     borderRightWidth: 3,
     borderLeftWidth: 3,
     borderTopWidth: 3,
-    width: 300,
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
+    width: 350,
     height: 520,
   },
   avatarTrio:{
@@ -503,8 +505,10 @@ var styles = StyleSheet.create({
   avatarItem : {
     flex: 0,
     height: 110,
-    width: 80,
+    width: 90,
     borderWidth: 2,
+    borderRadius: 10,
+
     flexDirection: 'column',
     alignItems: 'center',
     backgroundColor: 'lightgray',
@@ -524,6 +528,8 @@ var styles = StyleSheet.create({
     borderRightWidth: 3,
     borderBottomWidth: 3,
     borderLeftWidth: 3,
+    borderBottomLeftRadius: 10,
+    borderBottomRightRadius: 10,
   },
   objectTitle : {
     letterSpacing: 5,

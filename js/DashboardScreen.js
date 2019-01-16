@@ -62,10 +62,10 @@ export default class DashboardScreen extends Component {
               {this.renderAvatarDash(avatar)}
               <View style={styles.titleBox}>
                 <Text style={styles.titleTextBlack}>
-                  Virtual
+                  Items
                 </Text>
                 <Text style={styles.titleTextGray}>
-                  Search
+                  Near You
                 </Text>
               </View>
             </View>
@@ -74,12 +74,12 @@ export default class DashboardScreen extends Component {
               <View style={{ flex: 1, borderTopLeftRadius: 7, borderTopRightRadius: 7, alignSelf: 'stretch', flexDirection: 'row', backgroundColor: '#2196f3'}}>
                 <View style={styles.tableHeader}>
                   <Text style={styles.headerText}>
-                    Object Type
+                    Item Type
                   </Text>
                 </View>
                 <View style={styles.tableHeader}>
                   <Text style={styles.headerText}>
-                    Dist (m)
+                    Distance Away (m)
                   </Text>
                 </View>
               </View>
@@ -382,19 +382,20 @@ var styles = StyleSheet.create({
   titleBox : {
     flex: 0,
     flexDirection: 'column',
-    marginRight: 40,
     height: 110,
-    width: 150,
+    width: 220,
     justifyContent: 'center',
     alignItems: 'center'
   },
   titleTextBlack : {
-    fontSize: 50,
+    fontSize: 45,
+    letterSpacing: 1,
     fontWeight: 'bold',
     fontFamily: 'Avenir'
   },
   titleTextGray : {
-    fontSize: 50,
+    fontSize: 45,
+    letterSpacing: 1,
     fontWeight: 'bold',
     fontFamily: 'Avenir',
     color: 'gray'
