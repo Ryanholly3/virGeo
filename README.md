@@ -37,16 +37,16 @@ Users can drop virtual items in physical space, or pick up virtual items that ot
 
 ## Screenshots
 
-* Login
+### Login
 <img src="https://user-images.githubusercontent.com/28697083/51402485-dba29900-1b0a-11e9-899c-d40e49b9a1db.PNG" width="300">
 
-* Profile
+### Profile
 <img src="https://user-images.githubusercontent.com/28697083/51402515-ec530f00-1b0a-11e9-8bd4-e4d100d7db1d.PNG" width="300">
 
-* Character Selection
+### Character Selection
 <img src="https://user-images.githubusercontent.com/28697083/51402564-0db3fb00-1b0b-11e9-8d53-54c4e20f778a.PNG" width="300">
 
-* Dashboard
+### Dashboard
 <img src="https://user-images.githubusercontent.com/28697083/51402540-fd038500-1b0a-11e9-9129-73de35b4b81b.PNG" width="300">
 
 
