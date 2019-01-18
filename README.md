@@ -50,7 +50,7 @@ Users can drop virtual items in physical space, or pick up virtual items that ot
 <img src="https://user-images.githubusercontent.com/28697083/51402540-fd038500-1b0a-11e9-9129-73de35b4b81b.PNG" width="300">
 
 
-## AR demo
+## Augmented Reality Demo
 ![virgeodemo](https://user-images.githubusercontent.com/28697083/51401162-5d90c300-1b07-11e9-95ee-989a7707bbab.gif)
 
 ## Technologies Used
