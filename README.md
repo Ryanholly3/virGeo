@@ -1,5 +1,5 @@
-# VirGeo
-## A virtual scavenger hung app
+# VirGeo -- a virtual scavenger hunt app
+
 
 View repository for project back-end [HERE](https://github.com/Ryanholly3/virGeo-server).
 
@@ -17,7 +17,7 @@ cd virGeo
 npm install
 ```
 
-Sign up for a Viro Media API key: [Viro Media](https://viromedia.com/). In 'virGeo/js/DashboardScreen.js', add your Viro Media API key into the ViroARSceneNavigator component, under 'apiKey='.
+Sign up for a Viro Media API key: [Viro Media](https://viromedia.com/). In ```javascript 'virGeo/js/DashboardScreen.js', ``` add your Viro Media API key into the ViroARSceneNavigator component, under 'apiKey='.
 
 Run [server](https://github.com/Ryanholly3/virGeo-server) for this project.
 
