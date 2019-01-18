@@ -37,13 +37,13 @@ Users can drop virtual items in physical space, or pick up virtual items that ot
 
 ## Screenshots
 
-![Login Page](https://user-images.githubusercontent.com/28697083/51402485-dba29900-1b0a-11e9-899c-d40e49b9a1db.PNG)
+![Login Page](https://user-images.githubusercontent.com/28697083/51402485-dba29900-1b0a-11e9-899c-d40e49b9a1db.PNGv=4&s=200)
 
-![Profile Page](https://user-images.githubusercontent.com/28697083/51402515-ec530f00-1b0a-11e9-8bd4-e4d100d7db1d.PNG)
+![Profile Page](https://user-images.githubusercontent.com/28697083/51402515-ec530f00-1b0a-11e9-8bd4-e4d100d7db1d.PNGv=4&s=200)
 
-![Character Selection](https://user-images.githubusercontent.com/28697083/51402564-0db3fb00-1b0b-11e9-8d53-54c4e20f778a.PNG)
+![Character Selection](https://user-images.githubusercontent.com/28697083/51402564-0db3fb00-1b0b-11e9-8d53-54c4e20f778a.PNGv=4&s=200)
 
-![Dashboard](https://user-images.githubusercontent.com/28697083/51402540-fd038500-1b0a-11e9-9129-73de35b4b81b.PNG)
+![Dashboard](https://user-images.githubusercontent.com/28697083/51402540-fd038500-1b0a-11e9-9129-73de35b4b81b.PNGv=4&s=200)
 
 
 ## AR demo
