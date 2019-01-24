@@ -108,7 +108,7 @@ export default class DashboardScreen extends Component {
 
   enterArButton = (objToSearch, trackObjToSearch, userLat, userLong, calculatedObjPos)=>{
     console.log('distance', objToSearch.distance)
-    if(objToSearch.distance < 900){
+    if(objToSearch.distance < 10000){
       return(
         <View style={styles.arButtonFlex}>
           <TouchableOpacity style={{width: '100%' }} onPress={() => this.enterAR(objToSearch, trackObjToSearch, userLat, userLong, calculatedObjPos)}>
@@ -170,6 +170,7 @@ export default class DashboardScreen extends Component {
     var objLat = objToSearch.latitude
     var objLong = objToSearch.longitude
 
+
     this._mapVirtual(userLat, userLong, objLat, objLong)
       .then((objPos)=>{
         return calculatedObjPos(objPos)
@@ -222,7 +223,8 @@ export default class DashboardScreen extends Component {
     var y = Math.sin(dlong) * Math.cos(lat2r);
     var x = (Math.cos(lat1r) * Math.sin(lat2r)) - (Math.sin(lat1r) * Math.cos(lat2r) * Math.cos(dlong));
     var brng = (Math.atan2(y, x) * 180) / Math.PI
-    //returned in degrees between -180 and +180
+    brng = (brng + 360) % 360
+    //returned in degrees between 0-360
     console.log('bearing', brng)
     return brng
   }
@@ -234,6 +236,8 @@ export default class DashboardScreen extends Component {
 
     let radiansPhoneToObj = (headingPhoneToObj * Math.PI) / 180
 
+
+    //must invert Z because camera faces -Z
     let objZ = -1 * (Math.cos(radiansPhoneToObj) * distBetweenPhoneObj)
     let objX = Math.sin(radiansPhoneToObj) * distBetweenPhoneObj
     console.log('objZ', objZ, 'objX', objX)
