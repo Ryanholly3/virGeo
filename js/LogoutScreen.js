@@ -29,14 +29,16 @@ export default class LogoutScreen extends Component {
       <AppConsumer>
         {({ user, users, logOut, logIn }) => (
           <ImageBackground style={styles.gridBackground} source={gridBackground}>
-            <View>
-              <Text>
-                Are you sure you'd like to log out?
-              </Text>
+            <View style={styles.logoutPage}>
+              <View style={styles.titleContainer}>
+                <Text style={styles.title}>
+                  Are you sure you'd like to log out?
+                </Text>
+              </View>
               <View style={styles.logOutButtonFlex}>
                 <TouchableOpacity style={{width: '100%'}} onPress={() => logOut()}>
                   <View style={styles.logOutButton}>
-                    <Text style={{color: 'white'}}>Log out</Text>
+                    <Text style={styles.buttonText}>Log out</Text>
                   </View>
                 </TouchableOpacity>
               </View>
@@ -57,6 +59,26 @@ var styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center'
   },
+  logoutPage : {
+    width: '100%',
+    height: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  titleContainer : {
+    width: '80%'
+  },
+  title : {
+    letterSpacing: 5,
+    fontSize: 25,
+    fontFamily: 'Avenir',
+    marginTop: 20,
+    fontWeight: 'bold',
+    marginBottom: 20,
+    textAlign: 'center'
+  },
   logOutButtonFlex : {
     marginTop: 10,
     borderWidth: 2,
@@ -70,6 +92,12 @@ var styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'gray',
+    backgroundColor: 'lightgray',
+  },
+  buttonText : {
+    color: 'black',
+    letterSpacing: 1,
+    fontSize: 18,
+    fontFamily: 'Avenir',
   },
 });
