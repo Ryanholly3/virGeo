@@ -51,6 +51,24 @@ export class AppProvider extends Component {
     })
   }
 
+  async reLogIn(){
+    const userResponse = await fetch(`${baseUrl}/users`)
+    const objResponse = await fetch(`${baseUrl}/objects`)
+    const droppedObjResponse = await fetch(`${baseUrl}/dropped_objects`)
+
+    const userjson = await userResponse.json();
+    const objjson = await objResponse.json();
+    const droppedObjjson = await droppedObjResponse.json();
+    const organizedDroppedObjs = await this.organizeDroppedObj(droppedObjjson.objects)
+
+    this.setState({
+      users: userjson.virgeo_users,
+      objects: objjson.objects,
+      droppedObjs: droppedObjjson.objects,
+      objToSearch: organizedDroppedObjs[0],
+    })
+  }
+
 
 
   logIn = (userId) =>{
@@ -71,6 +89,7 @@ export class AppProvider extends Component {
   }
 
   logOut = () =>{
+
     this.setState({
       loggedIn: false,
       user: [],
@@ -81,7 +100,12 @@ export class AppProvider extends Component {
       objToDrop: [],
       objToSearch: [],
     })
-    Actions.login()
+    .then(()=>{
+      return this.reLogIn()
+    })
+    .then(()=>{
+      return Actions.login()
+    })
   }
 
   fetchDroppedObjs(){
