@@ -43,7 +43,7 @@ export default class LogoutScreen extends Component {
               <View style={styles.logOutButtonFlex}>
                 <TouchableOpacity style={{width: '100%'}} onPress={() => logOut()}>
                   <View style={styles.logOutButton}>
-                    <Text style={styles.buttonText}>Yes</Text>
+                    <Text style={styles.buttonText}>Yes plz</Text>
                   </View>
                 </TouchableOpacity>
               </View>
